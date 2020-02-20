@@ -1,0 +1,146 @@
+$TTL 1M
+@		SOA	ns1.kloenk.de. hostmaster.kloenk.de. (
+    2020021803  	; serial (yyyymmdd##)
+    3600            ; refresh
+    1000            ; retry
+    604800          ; expiry
+    600             ; minimum ttl
+)
+	
+	NS	ns2.he.net.
+	NS	ns4.he.net.
+	NS	ns3.he.net.
+	NS	ns5.he.net.
+
+	AAAA	2001:41d0:1004:1629:1337:0187::
+	A	51.254.249.187
+
+
+;kloenk.de.	IN	MX	1	mail.kloenk.de.
+		IN	MX	1	mail.kloenk.de.
+@		IN	MX	2	mail.kloenk.de.
+
+	TXT	"v=spf1 +a +mx -all"
+_dmarc		TXT	"v=DMARC1;p=reject;pct=100;rua=mailto:postmaster@kloenk.de"
+
+;drachensegler.kloenk.de.	IN	MX	1	mail.kloenk.de.
+drachensegler	IN	MX	1	mail.kloenk.de.
+drachensegler	TXT	"v=spf1 +a +mx -all"
+_dmarc.drachensegler	TXT	"v=DMARC1;p=reject;pct=100;rua=mailto:postmaster@kloenk.de"
+
+;ad.kloenk.de.	IN	MX	1	mail.kloenk.de.
+ad		IN	MX	1	mail.kloenk.de.
+ad		TXT	"v=spf1 +a +mx -all"
+_dmarc.ad	TXT	"v=DMARC1;p=reject;pct=100;rua=mailto:postmaster@kloenk.de"
+
+mail		AAAA	2001:41d0:1004:1629:1337:0187::
+mail		AAAA    2a0f:4ac0:f199::1
+mail		A	51.254.249.187
+mail		A	195.39.246.49
+
+www.mail		AAAA	2001:41d0:1004:1629:1337:0187::
+www.mail		A	51.254.249.187
+
+lists		AAAA	2001:41d0:1004:1629:1337:0187::
+lists		A	51.254.249.187
+
+www.lists		AAAA	2001:41d0:1004:1629:1337:0187::
+www.lists		A	51.254.249.187
+
+imap		AAAA	2001:41d0:1004:1629:1337:0187::
+imap		A	51.254.249.187
+
+smtp		AAAA	2001:41d0:1004:1629:1337:0187::
+smtp		A	51.254.249.187
+
+ns2		AAAA	2001:41d0:1004:1629:1337:0187::
+ns2		A	51.254.249.182
+
+grafana	A	51.254.249.187
+grafana	AAAA	2001:41d0:1004:1629:1337:0187::
+
+git		AAAA	2001:41d0:1004:1629:1337:0187::
+git		A	51.254.249.187
+
+codi		AAAA	2001:41d0:1004:1629:1337:0187::
+codi		A	51.254.249.187
+
+fwd		A	51.254.249.187
+fwd		AAAA	2001:41d0:1004:1629:1337:0187::
+
+schule          A       51.254.249.187
+schule          AAAA    2001:41d0:1004:1629:1337:0187::
+
+firefox          A       51.254.249.187
+firefox          AAAA    2001:41d0:1004:1629:1337:0187::
+
+quassel          A       51.254.249.187
+quassel          AAAA    2001:41d0:1004:1629:1337:0187::
+
+;hubble			A		192.168.42.1
+hubble			A 	51.254.249.187
+;hubble			AAAA	2001:41d0:1004:1629:1337:0187:1:0
+hubble			AAAA  2001:41d0:1004:1629:1337:0187::
+
+kloenkX			A 195.39.246.50
+kloenkX			AAAA 2a0f:4ac0:f199::6
+
+titan			A	192.168.42.3
+titan			AAAA 2001:41d0:1004:1629:1337:187:1:3
+
+atom		A	192.168.42.7
+atom		AAAA 2001:41d0:1004:1629:1337:187:1:7
+
+netbox		A	51.254.249.180
+netbox		AAAA	2001:41d0:1004:16ad:c0ff:ee:0:180
+netbox		CAA	0	issue letsencrypt.org
+
+; ftb server
+_minecraft._tcp.ftb	SRV	1	1	25565	144.76.19.168
+_minercaft._tcp		SRV	1	1	25565	144.76.19.168
+
+; lennart ts entrys
+_ts3._udp.ts	SRV	1	1	790	web.xorit.de.
+_ts3._udp.ts3	SRV	1	1	790	web.xorit.de.
+_ts3._udp.ftb	SRV	1	1	790	web.xorit.de.
+
+; facharbeit survey system
+survey		A 51.254.249.180
+survey		CAA 0 issue letsencrypt.org
+
+hydra	CNAME	hydra.pbb.lc.
+gurke   CNAME   gurke.pbb.lc
+
+yougen  A  195.39.247.9
+
+
+io.yougen  A    195.39.247.9
+io.yougen  AAAA 2a0f:4ac0:119::10
+
+hydra.yougen  A    195.39.247.9
+hydra.yougen  AAAA 2a0f:4ac0:119::10
+
+git.yougen A 195.39.247.9
+git.yougen AAAA 2a0f:4ac0:119::10 
+
+punkte A 195.39.247.9
+
+
+; llg entrys
+*.llg	CNAME	ll.qc.to.
+llg	CNAME ll.qc.to.
+
+*		A	51.254.249.187
+*		AAAA	2001:41d0:1004:1629:1337:0187::
+
+
+;github challenge
+_github-challenge-cli-inc	TXT	a5adaebc78
+
+
+_keybase	TXT	keybase-site-verification=n3RwwRVq6MG7e3g7qxYuDfmkBzsWMBSOk7TP_-DLsoI
+
+; dkim keys
+mail._domainkey IN TXT "v=DKIM1; k=rsa; " "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDJ5QgJzy63zC5f7qwHn3sgVrjDLaoLLX3ZnQNbmNms4+OJxNgBlb9uqTNqCEV9ScUX/2V+6IY2TqdhdWaNBif+agsym2UvNbCpvyZt5UFEJsGFoccNLR4iDkBKr8uplaW7GTBf5sUfbPQ2ens7mKvNEa5BMCXQI5oNa1Q6MKLjxwIDAQAB"
+mail._domainkey.ad	IN	TXT	"v=DKIM1; k=rsa; " "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC9prC9mhToqsOTwauczmv3hQdsO2n5mE2hJdl8O/VnLxHJV7WZrfyUhT8WO++4jY25e0SJ0Hlv1LFX9WbQMD7oqUIeb5iLzoAAHsPros/obfDqFX7tRMzVKcrOF5zmhV/HD8U/3MRNH2Cj7/tid564qw0i4XuXYgxHl/ow5c7OHwIDAQAB"
+mail._domainkey.drachensegler	IN	TXT	"v=DKIM1; k=rsa; " "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDEEgSIeGxjIT5+HqaHlVTt0hL1QPYcidXeJsUgOa1bzfSybD/S0n9tNZidjr+pw2lResdZlyIJ7ozjBMp8MqD0mDDaRwqmy1jTQIFjSDwIORkjRzz4T+m6o3xAcpNrsvfbiOAj02EP5+1OF+0Y6YkdNWeZ2z2/XmL6eoTAYocRuQIDAQAB"

@@ -1,0 +1,30 @@
+{
+    "go.gopath": "/home/kloenk/Programmieren/go",
+    "files.autoSave": "afterDelay",
+    "[cpp]": {
+        
+    },
+    "git.autofetch": true,
+    "workbench.startupEditor": "newUntitledFile",
+    "todo-tree.defaultHighlight": {
+        "icon": "alert",
+        "type": "text",
+        "foreground": "red",
+        "background": "white",
+        "opacity": 50,
+        "iconColour": "blue"
+    },
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "C_Cpp.updateChannel": "Insiders",
+    "workbench.colorTheme": "Visual Studio Dark",
+    "git-graph.fetchAvatars": true,
+    "files.autoSaveDelay": 100,
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "editor.rulers": [ 80 ]
+}

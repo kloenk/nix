@@ -1,0 +1,62 @@
+{
+    "modules-left": ["sway/workspaces", "sway/mode", "tray"],
+    "modules-center": ["clock"],
+    "modules-right": ["network#wlp2s0", "network#bond0", "load", "temperature", "pulseaudio", "battery"],
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true
+    },
+
+    "clock": {
+       "format": "{:%a %Y-%m-%d %H:%M:%S}",
+			 "interval": 1
+    },
+    "temperature": {
+			  "interval": 1,
+			  "critical-threshold": 90,
+        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+				"format-icons": ["\uf2cb", "\uf2ca", "\uf2c9", "\uf2c8", "\uf2c7"],
+        "format": "{icon} {temperatureC}°C"
+    },
+    "cpu": {
+        "format": "\uf2db {}%"
+    },
+    "memory": {
+        "format": "\uf0c9 {}%"
+    },
+    "battery": {
+        "format": "{icon} {capacity}% {time}",
+				"states": {
+					"warning": 30,
+					"critical": 20
+				},
+				"format-charging": "{icon} \uf0e7 {capacity}%",
+        "format-icons": ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240"],
+				"interval": 10
+    },
+    "network#wlp2s0": {
+        "interface": "wlp2s0",
+        "format-wifi-linked": "\uf1eb {essid} ({signalStrength}%)",
+        "format-wifi": "\uf1eb {essid} ({signalStrength}%) √",
+				"tooltip-format": "{ipaddr}/{cidr}",
+        "format-disconnected": "\uf1eb \uf00d"
+    },
+    "network#bond0": {
+        "interface": "bond0",
+        "format-ethernet-linked": "\uf0ac",
+        "format-ethernet": "\uf0ac √",
+				"tooltip-format": "{ifname} {ipaddr}/{cidr}",
+        "format-disconnected": "\uf0ac \uf00d"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "\uf026",
+        "format-icons": ["\uf027", "\uf028"]
+    },
+    "custom/watts": {
+        "format": "{}W",
+        "interval": 30,
+        "exec": "waybar-battery-discharge"
+    }
+}
