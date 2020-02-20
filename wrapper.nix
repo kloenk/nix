@@ -1,5 +1,5 @@
 { ... }:
 
 {
-inherit (import ./default.nix { secrets = toString ./../../.password-store; }) deploy;
+inherit (import ./default.nix { secrets = toString ./../../.password-store; nixpkgs = toString ../nixpkgs; }) deploy;
 }
