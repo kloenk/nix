@@ -33,6 +33,10 @@ in {
     hostname = "gurke.pbb.lc:62954";
     prometheusExporters = [ "node-exporter" "nginx-exporter" ];
   };
+  polyus = {
+    hostname = "polyus.kloenk.de:62954";
+    prometheusExporters = [ "node-exporter" "nginx-exporter" ];
+  };
   # for wireguard only
   combahton = {
     wireguard.publicKey = "9azKCE2ZgWYo0kWD8ezsWDWD3YMlFrxXia23q5ENLm8=";

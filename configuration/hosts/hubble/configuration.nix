@@ -26,7 +26,6 @@ in {
 
     ../../default.nix
     ../../common
-    ../../common/collectd.nix
     ../../bgp
 
     # fallback for detection
@@ -193,31 +192,13 @@ in {
   #users.users.kloenk.packages = [ pkgs.docker ];
 
   # auto update/garbage collector
-  system.autoUpgrade.enable = true;
+  #system.autoUpgrade.enable = true;
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 14d";
 
   # fix tar gz error in autoupdate
   systemd.services.nixos-upgrade.path = with pkgs; [  gnutar xz.bin gzip config.nix.package.out ];
 
-  security.sudo.extraConfig = ''
-     collectd ALL=(root) NOPASSWD: ${pkgs.wireguard-tools}/bin/wg show all transfer
-   '';
-
-   services.collectd2.extraConfig = ''
-     LoadPlugin exec
-
-     <Plugin exec>
-       Exec collectd "${pkgs.collectd-wireguard}/bin/collectd-wireguard"
-     </Plugin>
-   '';
-
-  # collectd write to prometheus
-  services.collectd2.plugins.write_prometheus.options.Port = "9103";
-  services.collectd2.plugins.network.options = {
-    Listen = "0.0.0.0";
-  };
-  networking.firewall.allowedUDPPorts = [ 25826 ];
 
   services.bgp = {
     enable = true;

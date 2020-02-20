@@ -3,8 +3,8 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./ip.nix
 
-    ./hydra.nix
     ../../common/pbb.nix
 
     ../../default.nix
@@ -22,7 +22,7 @@
   security.acme.email = "ca@kloenk.de";
   security.acme.acceptTerms = true;
   
-  networking.hostName = "gurke";
+  networking.hostName = "polyus";
   networking.dhcpcd.enable = false;
   networking.useDHCP = false;
   networking.nameservers = [ "8.8.8.8" ];
@@ -30,19 +30,7 @@
   systemd.network.networks = {
     "30-enp1s0" = {
       name = "enp1s0";
-      addresses = [
-        { addressConfig.Address = "195.39.246.6/28"; }
-        { addressConfig.Address = "2a0f:4ac0:42::6/64"; }
-      ];
-      routes = [
-        {
-          routeConfig.Gateway = "195.39.246.1";
-          routeConfig.GatewayOnLink = true;
-        } {
-          routeConfig.Gateway = "2a0f:4ac0:42::1";
-          routeConfig.GatewayOnLink = true;
-        }
-      ];
+      DHCP = "yes";
     };
     "10-lo" = {
       name = "lo";

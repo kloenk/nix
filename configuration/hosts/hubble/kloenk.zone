@@ -1,6 +1,6 @@
 $TTL 1M
 @		SOA	ns1.kloenk.de. hostmaster.kloenk.de. (
-    2020021803  	; serial (yyyymmdd##)
+    2020022001  	; serial (yyyymmdd##)
     3600            ; refresh
     1000            ; retry
     604800          ; expiry
@@ -110,6 +110,9 @@ survey		CAA 0 issue letsencrypt.org
 
 hydra	CNAME	hydra.pbb.lc.
 gurke   CNAME   gurke.pbb.lc
+
+polyus	A	195.39.247.10
+polyus  AAAA	2a0f:4ac0::10
 
 yougen  A  195.39.247.9
 

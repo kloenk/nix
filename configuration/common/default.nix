@@ -246,6 +246,11 @@
             port = 62954;
             user = "kloenk";
           };
+          polyus = {
+            hostname = "polyus.kloenk.de";
+            port = 62954;
+            user = "kloenk";
+          };
         };
       };
 

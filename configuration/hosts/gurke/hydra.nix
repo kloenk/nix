@@ -16,6 +16,7 @@
     hydraURL = "hydra.pbb.lc";
     port = 3015;
     listenHost = "127.0.0.1";
+    logo = ./hydra.png;
     #useSubstitutes = true;
     notificationSender = "hydra@pbb.lc";
     # Todo mail

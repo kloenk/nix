@@ -49,32 +49,4 @@
         }
       ];
     };
-  services.collectd2.extraConfig = ''
-    <Plugin "bind">
-      URL "http://localhost:8053/"
-      OpCodes         true
-      QTypes          true
-      
-      ServerStats     true
-      ZoneMaintStats  true
-      ResolverStats   false
-      MemoryStats     true
-      
-      <View "_default">
-        QTypes        true
-        ResolverStats true
-        CacheRRSets   true
-        
-        Zone "127.in-addr.arpa/IN"
-      </View>
-
-      <View "kloenk">
-        QTypes        true
-        ResolverStats true
-        CacheRRSets   true
-        
-        Zone "kloenk.de/IN"
-      </View>
-    </Plugin>
-  '';
 }

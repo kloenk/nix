@@ -182,7 +182,14 @@ in {
           if (65535, 0) ~ bgp_community then {
             bgp_local_pref = 0;
           }
-          if net_default() then accept;
+          if net_default() then { 
+            if proto != "netcup" && proto != "netcup4" then {
+              bgp_path.prepend(65249);
+              bgp_path.prepend(65249);
+              bgp_path.prepend(65249);
+            }
+            accept;
+          }
           reject;
         };
         export filter {
@@ -216,7 +223,14 @@ in {
           if (65535, 0) ~ bgp_community then {
             bgp_local_pref = 0;
           }
-          if net_default() then accept;
+          if net_default() then { 
+            if proto != "netcup" && proto != "netcup4" then {
+              bgp_path.prepend(65249);
+              bgp_path.prepend(65249);
+              bgp_path.prepend(65249);
+            }
+            accept;
+          }
           reject;
         };
         export filter {
