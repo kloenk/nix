@@ -34,9 +34,6 @@
   };
 
   # use localhost for builds
-  nix.extraOptions = ''
-    allowed-uris = https://git.pbb.lc ; https://github.com ; https://cgit.krebsco.de ; https://gitlab.com
-  '';
   
   nix.buildMachines = [
     {
