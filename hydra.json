@@ -14,7 +14,7 @@
         "nixpkgs": { "type": "git", "value": "git://github.com/NixOS/nixpkgs.git master", "emailresponsible": false },
 	"krops" : { "type": "git", "value": "git://github.com/nyantec/krops master", "emailresponsible": false },
 	"home-manager": { "type": "git", "value": "git://github.com/rycee/home-manager.git master", "emailresponsible": false },
-	"nixos-mailserver": { "type": "local path", "value": "/var/nixos-mailserver/", "emailresponsible": false },
-	"jblock": { "type": "local path", "value": "/var/empty/", "emailresponsible": false }
+	"nixos-mailserver": { "type": "path", "value": "/var/nixos-mailserver/", "emailresponsible": false },
+	"jblock": { "type": "path", "value": "/var/empty/", "emailresponsible": false }
     }
 }
