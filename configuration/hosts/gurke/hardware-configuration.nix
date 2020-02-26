@@ -23,12 +23,12 @@
       fsType = "xfs";
     };
 
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/80232e11-dbfd-465e-adaa-7f27c69fd0b1";
-      fsType = "xfs";
-      neededForBoot = true;
-      options = [ "noatime" ];
-    };
+ # fileSystems."/nix" =
+ #   { device = "/dev/disk/by-uuid/80232e11-dbfd-465e-adaa-7f27c69fd0b1";
+ #     fsType = "xfs";
+ #     neededForBoot = true;
+ #     options = [ "noatime" ];
+ #   };
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/b9be4fb4-dad8-4650-a9d5-ed11d3d6316f"; }

@@ -34,6 +34,7 @@ in {
   networking.extraHosts = ''
     172.16.0.1 airlink.local unit.local
     192.168.42.1 prometheus.kloenk.de alertmanager.kloenk.de
+    127.0.0.1 kloenkx.kloenk.de
   '';
   networking.nameservers = [ "1.1.1.1" "10.0.0.2" ];
 

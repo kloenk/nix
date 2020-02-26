@@ -1,6 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
+  # acme foo
+  security.acme.email = lib.mkDefault "ca@kloenk.de";
+  security.acme.acceptTerms = true;
+ 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
   services.nginx = {
     enable = true;

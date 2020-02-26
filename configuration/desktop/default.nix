@@ -71,7 +71,7 @@ in {
     vscodium
 
     # web browser
-    firefox
+    firefox-wayland
     qutebrowser
   ];
 

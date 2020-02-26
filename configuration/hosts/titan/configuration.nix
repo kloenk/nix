@@ -10,7 +10,6 @@ in {
     ../../default.nix
     
     ../../common
-    ../../common/collectd.nix
     ../../desktop
     ../../desktop/sway.nix
 
@@ -22,12 +21,14 @@ in {
 
   nixpkgs.config.allowUnfree = true;
 
+  networking.useDHCP = false;
+  networking.interfaces.enp4s0.useDHCP = true;
   networking.hostName = "titan";
   networking.extraHosts = ''
     172.16.0.1 airlink.local unit.local
     192.168.178.248	atom.fritz.box
   '';
-  networking.nameservers = [ "192.168.178.248" "1.0.0.1" ];
+  networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
   networking.search = [ "fritz.box" "kloenk.de" ];
 
   # disable firewall
@@ -53,7 +54,7 @@ in {
 
     barrier
 
-    # minecraft
+    minecraft
     multimc
     #ftb
 
@@ -90,13 +91,6 @@ in {
     Enable=Source,Sink,Media,Socket
   ";
   hardware.pulseaudio.zeroconf.discovery.enable = true;
-
-  services.collectd2.plugins = {
-    network.options.Server = "51.254.249.187";
-    sensors.hasConfig = false;
-    processes.hasConfig = false;
-  };
-
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

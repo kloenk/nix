@@ -22,6 +22,8 @@
     # Todo mail
   };
 
+  services.hydra.debugServer = true;
+
   services.nginx.virtualHosts."hydra.pbb.lc" = {
     enableACME = true;
     forceSSL = true;
@@ -41,7 +43,7 @@
       hostName = "localhost";
       system = "x86_64-linux";
       supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
-      maxJobs = 20;
+      maxJobs = 8; # 20;
     }
   ];
 }

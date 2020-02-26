@@ -1,9 +1,9 @@
 { ... }:
 
 {
-  imports = [
-    ./deluge.nix
-    ./ferm2
-    ./secrets
-  ];
+	imports = [
+		./deluge.nix
+		./ferm2
+		./secrets
+	];
 }

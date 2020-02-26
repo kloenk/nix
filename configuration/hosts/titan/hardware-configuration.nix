@@ -27,7 +27,7 @@
     "usbhid"
     "sd_mod"
   ];
-  boot.kernelModules = [ "kvm-amd" "nouveau" ];
+  boot.kernelModules = [ "kvm-amd" "amdgpu" ];
   boot.extraModulePackages = [
     config.boot.kernelPackages.acpi_call
     config.boot.kernelPackages.wireguard
@@ -38,20 +38,10 @@
       fsType = "xfs";
     };
 
-  #boot.initrd.luks.reusePassphrases = true;
-  #boot.initrd.luks.devices."cryptRoot".device = "/dev/sda4";
-
-
   fileSystems."/boot"  = {
     device = "/dev/disk/by-id/ata-Samsung_SSD_860_EVO_1TB_S3Z9NB0M344364P-part1";
     fsType = "ntfs";
   };
-
-  #fileSystems."/home/kloenk/kloenkX" = {
-  #  device = "192.168.178.42:/kloenk";
-  #  fsType = "nfs";
-  #  options = ["x-systemd.automount" "noauto"];
-  #};
 
   swapDevices = [
     { device = "/dev/disk/by-label/nixos-swap"; }
@@ -62,5 +52,5 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 
   boot.consoleLogLevel = 0;
-  boot.kernelParams = [ "quiet" ];
+  boot.kernelParams = [ "quiet" "amdgpu.cik_support=1" "amdgpu.si_support=1" ];
 }

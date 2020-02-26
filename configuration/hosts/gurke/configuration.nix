@@ -27,6 +27,10 @@
   networking.useDHCP = false;
   networking.nameservers = [ "8.8.8.8" ];
 
+  users.users.pbb.openssh.authorizedKeys.keys = [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBLztxsM/lUG8RAF5jQTrZuPIux6RiE8hoh1hvoCVal+ytNP8H76rOLkP+NHoEmF+tfiQCj5FIogr1xTWUanUhCSIXf2g6pr9msIALjvNz6v5No5W4f9M5weMG37s3C7qWQNGJHwpFV2ZdsgRQKgyesXNaKTwyVrfj+hPB/O0PosccSgVw9lJGXiCpqpicp57PLUZsrPhIcYnSyy2JhD/8NzO+BR4C1PQubgp1edzyLLS2tZed3/PkMnQh+rrFDaeUKm0HOkCYv6ZXLq0JuJor1FlETIMtg/z3oUvyUrkUfBBf0PYYrpeXn8u0qMk7luCDqNPwWiwH7e5i32jy6/K9+pk5yiMwaLgjwZYuAfjOTbVMf1TqkkFl8BXzQqzSzm+dsZKnEiDAERo3iWEcLeq9uaYYjiIDWNgm3G3BMJlw22VECr7T3kgXTfxwrqr3Jzu8npd1PIOR83ByseegC1wTw3hmq8rLKuYdEUp0kSzYzC2ciGfpamKcGEnxvkXAz0E= pbb@amalthea"
+  ];
+
   systemd.network.networks = {
     "30-enp1s0" = {
       name = "enp1s0";

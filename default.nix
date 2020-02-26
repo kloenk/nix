@@ -7,32 +7,32 @@
 }:
 
 let
-  sources = {
-    inherit krops home-manager nixpkgs nixos-mailserver jblock secrets;
-  };
+	sources = {
+		inherit krops home-manager nixpkgs nixos-mailserver jblock secrets;
+	};
 in {
-  #inherit (import ./lib/krops.nix sources) deploy;
-  inherit (import ./lib/nixos-config.nix sources) configs;
-  #tools.kexec_tarball = import ./lib/kexec-tarball.nix sources;
-  #tools.isoImage = import ./lib/iso-image.nix sources;
-  pkgs = import ./pkgs sources;
+	inherit (import ./lib/krops.nix sources) deploy;
+	inherit (import ./lib/nixos-config.nix sources) configs;
+	#tools.kexec_tarball = import ./lib/kexec-tarball.nix sources;
+	#tools.isoImage = import ./lib/iso-image.nix sources;
+	pkgs = import ./pkgs sources;
 }
 
 #let
-#  hosts = import ./configuration/hosts;
-#  pkgs = import ./sources/nixpkgs { };
+#	hosts = import ./configuration/hosts;
+#	pkgs = import ./sources/nixpkgs { };
 #in {
-#  deploy = import ./lib/krops.nix;
-#  kexec_tarball = import ./lib/kexec-tarball.nix;
-#  isoImage = import ./lib/iso-image.nix;
-#  # pkgs = import ./configuration/pkgs;
+#	deploy = import ./lib/krops.nix;
+#	kexec_tarball = import ./lib/kexec-tarball.nix;
+#	isoImage = import ./lib/iso-image.nix;
+#	# pkgs = import ./configuration/pkgs;
 #
-#  update-sources = pkgs.writeScript "update-sources" ''
-#    #!${pkgs.stdenv.shell}
-#    set -xe
-#    cd ${toString ./.}
-#    git submodule foreach git pull
-#    git add sources
-#    git commit -m "update submodules"
-#  '';
+#	update-sources = pkgs.writeScript "update-sources" ''
+#		#!${pkgs.stdenv.shell}
+#		set -xe
+#		cd ${toString ./.}
+#		git submodule foreach git pull
+#		git add sources
+#		git commit -m "update submodules"
+#	'';
 #}
