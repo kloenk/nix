@@ -13,7 +13,7 @@ let
 	};
 in {
   #inherit (import ./lib/nixos-config.nix sources) configs;
-  jobsets = import ./lib/kexec-tarball.nix sources;
+  jobsets.iso = import ./lib/iso-image.nix sources;
   #pkgs = import ./pkgs sources;
 } // (if hydra then {} else {
 	inherit (import ./lib/krops.nix sources) deploy;
