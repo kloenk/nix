@@ -4,6 +4,7 @@
 , nixos-mailserver ? fetchTarball "https://git.kloenk.de/kloenk/nixos-mailserver/archive/master.tar.gz"
 , jblock ? fetchTarball "https://git.kloenk.de/kloenk/jblock/archive/master.tar.gz"
 , secrets ? /var/src/secrets
+, hydra ? false
 }:
 
 let
@@ -11,11 +12,12 @@ let
 		inherit krops home-manager nixpkgs nixos-mailserver jblock secrets;
 	};
 in {
-	inherit (import ./lib/krops.nix sources) deploy;
 	inherit (import ./lib/nixos-config.nix sources) configs;
-	#tools.kexec_tarball = import ./lib/kexec-tarball.nix sources;
-	#tools.isoImage = import ./lib/iso-image.nix sources;
 	pkgs = import ./pkgs sources;
+} // (if hydra then {} else {
+	inherit (import ./lib/krops.nix sources) deploy;
+	tools.kexec_tarball = import ./lib/kexec-tarball.nix sources;
+	tools.isoImage = import ./lib/iso-image.nix sources;
 }
 
 #let
