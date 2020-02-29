@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, nixos-mailserver,  ... }@sources:
+{ nixpkgs, home-manager, nixos-mailserver, secrets, ... }@sources:
 
 let
   pkgs = import nixpkgs {};
@@ -20,6 +20,7 @@ let
       (home-manager + "/nixos")
       nixos-mailserver
     ];
+    krops.secrets.source-path = toString secrets;
   }) nixosHosts;
 in {
   configs = lib.mapAttrs (name: eval: eval.config.system.build.toplevel) evals;
