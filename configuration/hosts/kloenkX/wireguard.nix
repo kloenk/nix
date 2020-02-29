@@ -53,13 +53,13 @@
   networking.wireguard.interfaces = {
     llg0 = {
       ips = [ "192.168.43.10" "2001:41d0:1004:1629:1337:187:43:10/120" ];
-      privateKeyFile = toString <secrets/llg0.key>;
+      privateKeyFile = toString /var/src/secrets/llg0.key;
       peers = [ {
         publicKey = "Ll0Zb5I3L8H4WCzowkh13REiXcxmoTgSKi01NrzKiCM=";
         allowedIPs = [ "192.168.43.0/24" "2001:41d0:1004:1629:1337:187:43:0/120" "10.0.0.0/8" ];
         endpoint = "51.254.249.187:51822";
         persistentKeepalive = 21;
-        presharedKeyFile = toString <secrets/llg0.psk>;
+        presharedKeyFile = toString /var/src/secrets/llg0.psk;
       } ];
 
       allowedIPsAsRoutes = false;

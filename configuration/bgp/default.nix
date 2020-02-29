@@ -96,10 +96,10 @@ in {
 
 			function net_local() {
 				if net.type = NET_IP4 then return net ~ [
-					195.39.246.48/28+
+					195.39.246.49/32
 				];
 				return net ~ [
-					2a0f:4ac0:f199::/48+
+					2a0f:4ac0:f199::1/128
 				];
 			}
 			function net_bogon() {

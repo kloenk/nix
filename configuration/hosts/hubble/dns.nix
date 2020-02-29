@@ -1,6 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
-{
+let
+  kloenk_zone = pkgs.writeText "kloenk.zone" (builtins.readFile (toString ./kloenk.zone));
+  
+in {
   networking.firewall = {
     allowedTCPPorts = [ 53 ];
     allowedUDPPorts = [ 53 ];
@@ -31,7 +34,7 @@
         {
           name = "kloenk.de";
           master = true;
-          file = toString ./kloenk.zone;
+          file = kloenk_zone;
           slaves = [ "159.69.179.160" "51.254.249.185" "51.254.249.182" "216.218.133.2" "2001:470:600::2" "5.45.100.14" "164.132.31.112" ];
           #also-notify { 159.69.179.160; 51.254.249.185; 192.168.42.4; 51.254.249.182; 192.168.42.7; 216.218.133.2; 2001:470:600::2; 5.45.100.14; 164.132.31.112; };
           #allow-transfer { 159.69.179.160; 51.254.249.185; 192.168.42.4; 51.254.249.182; 192.168.42.7; 216.218.133.2; 2001:470:600::2; 5.45.100.14; 164.132.31.112; };

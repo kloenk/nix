@@ -1,7 +1,7 @@
 { ... }:
 
 let
-  secrets = import <secrets/mail.nix>;
+  secrets = import /var/src/secrets/mail.nix;
 
 in {
   fileSystems."/var/vmail" = {
@@ -10,7 +10,7 @@ in {
   };
 
   imports = [
-    <sources/nixos-mailserver>
+   # <sources/nixos-mailserver>
   ];
 
   networking.firewall.allowedTCPPorts = [ 143 587 25 465 993 ];

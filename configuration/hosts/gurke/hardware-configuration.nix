@@ -23,6 +23,13 @@
       fsType = "xfs";
     };
 
+    fileSystems."/nix" = {
+      device = "/dev/disk/by-uuid/5a6324cc-2313-4d93-b640-f6f39d408c65";
+      fsType = "xfs";
+      neededForBoot = true;
+      options = [ "noatime" ];
+    };
+
  # fileSystems."/nix" =
  #   { device = "/dev/disk/by-uuid/80232e11-dbfd-465e-adaa-7f27c69fd0b1";
  #     fsType = "xfs";

@@ -4,7 +4,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  hardware.cpu.amd.updateMicrocode = true;
+  hardware.cpu.intel.updateMicrocode = true;
 
   #boot.loader.systemd-boot.enable = true;
   boot.loader.grub.enable = true;
@@ -27,7 +27,7 @@
     "usbhid"
     "sd_mod"
   ];
-  boot.kernelModules = [ "kvm-amd" "amdgpu" ];
+  boot.kernelModules = [ "kvm-intel" "amdgpu" ];
   boot.extraModulePackages = [
     config.boot.kernelPackages.acpi_call
     config.boot.kernelPackages.wireguard
@@ -47,10 +47,10 @@
     { device = "/dev/disk/by-label/nixos-swap"; }
   ];
 
-  nix.maxJobs = lib.mkDefault 4;
+  nix.maxJobs = lib.mkDefault 8;
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 
   boot.consoleLogLevel = 0;
-  boot.kernelParams = [ "quiet" "amdgpu.cik_support=1" "amdgpu.si_support=1" ];
+  boot.kernelParams = [ "quiet" "radeon.cik_support=0" "amdgpu.cik_support=1" "radeon.si_support=0" "amdgpu.si_support=1" ];
 }

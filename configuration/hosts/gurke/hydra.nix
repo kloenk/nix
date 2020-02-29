@@ -1,6 +1,9 @@
 { pkgs, config, ... }:
 
 {
+
+   nixpkgs.config.allowBroken = true;
+
   services.postgresql = {
     enable = true;
     ensureDatabases = [ "hydra" ];
@@ -36,6 +39,26 @@
     locations."/".proxyPass = "http://127.0.0.1:3015";
   };
 
+  # serve as cache
+  services.nix-serve = {
+    enable = true;
+    secretKeyFile = config.krops.secrets.files."cache-priv-key.pem".path;
+  };
+
+  krops.secrets.files."cache-priv-key.pem".owner = "nix-store";
+  users.users.nix-store.extraGroups = [ "keys" ];
+
+  services.nginx.virtualHosts."cache.kloenk.de" = {
+    #serverAliases = [ "cache" "binarycache" "binarychache.kloenk.de" ];
+    enableACME = true;
+    forceSSL = true;
+    locations."/".extraConfig = ''
+      proxy_pass http://localhost:${toString config.services.nix-serve.port};
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    '';
+  };
   # use localhost for builds
   
   nix.buildMachines = [

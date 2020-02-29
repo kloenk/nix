@@ -29,11 +29,11 @@ in {
   #networking.interfaces.bond0.useDHCP = true;
   networking.wireless.enable = true;
   networking.wireless.interfaces = [ "wlp2s0" ];
-  networking.wireless.networks = import <secrets/wifi.nix>;
+  networking.wireless.networks = import /var/src/secrets/wifi.nix;
   networking.wireless.userControlled.enable = true;
   networking.extraHosts = ''
     172.16.0.1 airlink.local unit.local
-    192.168.42.1 prometheus.kloenk.de alertmanager.kloenk.de
+    195.39.246.49 prometheus.kloenk.de alertmanager.kloenk.de
     127.0.0.1 kloenkx.kloenk.de
   '';
   networking.nameservers = [ "1.1.1.1" "10.0.0.2" ];
@@ -80,7 +80,7 @@ in {
 
   #services.logind.lidSwitch = "ignore";
   services.tlp.enable = true;
-  home-manager.users.kloenk.programs.ssh.matchBlocks.hubble-encrypt.identityFile = toString <secrets/id_rsa>;
+  home-manager.users.kloenk.programs.ssh.matchBlocks.hubble-encrypt.identityFile = toString /var/src/secrets/id_rsa;
   users.users.kloenk.initialPassword = "foobaar";
   users.users.kloenk.packages = with pkgs; [
     lm_sensors

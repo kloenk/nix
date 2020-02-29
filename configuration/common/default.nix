@@ -2,15 +2,16 @@
 
 {
 	imports = [
-		<modules>
-		<sources/home-manager/nixos>
+    #<modules>
+    ../../modules
+    #<sources/home-manager/nixos>
 		./nginx
 		./node-exporter
 		./zsh
 	];
 
 	nixpkgs.overlays = [
-		(self: super: import <pkgs> { pkgs = super; })
+		(self: super: import ../../pkgs { pkgs = super; })
 	];
 
 	environment.variables.NIX_PATH = lib.mkOverride 25 "/var/src";
@@ -114,7 +115,7 @@
 				userName = "Finn Behrens";
 				userEmail = "me@kloenk.de";
 				extraConfig = {
-					core.editor = "${pkgs.vim}/bin/vim";
+          #core.editor = "${pkgs.vim}/bin/vim";
 					color.ui = true;
 				};
 			};
@@ -255,13 +256,17 @@
 			};
 
 	vim = {
-		enable = true;
+    enable = true;
+    settings = {
+      expandtab = true;
+      tabstop = 2;
+    };
 		extraConfig = ''
 			set viminfo='20,<1000
-			set tabstop=2
-			set shiftwidth=2
-			set expandtab
-		'';
+      set shiftwidth=2
+      set nu
+    '';
+    plugins = with pkgs; [ vimPlugins.rust-vim vimPlugins.tabular	vimPlugins.vim-nix vimPlugins.vim-table-mode ];
 	};
 		};
 

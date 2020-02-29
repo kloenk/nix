@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  jblock = <sources/jblock>;
+  jblock = toString /var/src/sources/jblock;
 in {
   home-manager.useUserPackages = true;
 

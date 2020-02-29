@@ -34,7 +34,7 @@ in {
         smtp_from = "alertmanager@kloenk.de";
         smtp_smarthost = "kloenk.de:587";
         smtp_auth_username = "alertmanager@kloenk.de";
-        smtp_auth_password = lib.fileContents <secrets/alertmanager/mail>; #FIXME: don't copy to nix store #FIXME2: make random password every time
+        smtp_auth_password = lib.fileContents /var/src/secrets/alertmanager/mail; #FIXME: don't copy to nix store #FIXME2: make random password every time
       };
       route = {
         group_by = [ "alertname" "cluster" "service" ];

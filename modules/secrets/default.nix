@@ -28,7 +28,7 @@ let
       };
       source-path = mkOption {
         type = types.str;
-        default = toString <secrets> + "/${config.name}";
+        default =  "/var/src/secrets/${config.name}";
       };
     };
   });

@@ -19,7 +19,7 @@ in {
 	};
 	titan = {
 		#hostname = "kloenk@titan.kloenk.de:62954";
-		hostname = "kloenk@192.168.178.171:62954";
+		hostname = "kloenk@192.168.178.59:62954";
 		prometheusExporters = [ "node-exporter" "nginx-exporter" "wireguard" ];
 	};
 	atom = {
