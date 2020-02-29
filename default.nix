@@ -12,8 +12,8 @@ let
 		inherit krops home-manager nixpkgs nixos-mailserver jblock secrets;
 	};
 in {
-	inherit (import ./lib/nixos-config.nix sources) configs;
-	pkgs = import ./pkgs sources;
+	inherit (import ./lib/nixos-config.nix sources) jobsets;
+  #pkgs = import ./pkgs sources;
 } // (if hydra then {} else {
 	inherit (import ./lib/krops.nix sources) deploy;
 	tools.kexec_tarball = import ./lib/kexec-tarball.nix sources;
