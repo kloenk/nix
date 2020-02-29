@@ -18,7 +18,7 @@ in {
 	inherit (import ./lib/krops.nix sources) deploy;
 	tools.kexec_tarball = import ./lib/kexec-tarball.nix sources;
 	tools.isoImage = import ./lib/iso-image.nix sources;
-}
+})
 
 #let
 #	hosts = import ./configuration/hosts;
