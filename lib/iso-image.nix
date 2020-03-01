@@ -1,9 +1,14 @@
+{ nixpkgs, home-manager, ...}:
+
 let 
-	nixos = import ../sources/nixpkgs/nixos {
+	nixos = import (nixpkgs + "/nixos") {
 		configuration = { lib, ... }: {
 			imports = [
-				../sources/nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix
-				../sources/nixpkgs/nixos/modules/installer/cd-dvd/channel.nix
+        #../sources/nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix
+        #../sources/nixpkgs/nixos/modules/installer/cd-dvd/channel.nix
+        (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
+        (nixpkgs + "/nixos/modules/installer/cd-dvd/channel.nix")
+        (home-manager + "/nixos")
 				../configuration/common
 			];
 			networking.useDHCP = false;
