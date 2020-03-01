@@ -12,7 +12,7 @@ let
 		inherit krops home-manager nixpkgs nixos-mailserver jblock secrets;
 	};
 in {
-  #inherit (import ./lib/nixos-config.nix sources) configs;
+  inherit (import ./lib/nixos-config.nix sources) configs baseConfig;
   jobsets.iso = import ./lib/iso-image.nix sources;
   #pkgs = import ./pkgs sources;
 } // (if hydra then {} else {

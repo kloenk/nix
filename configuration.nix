@@ -2,22 +2,20 @@
   config
 , pkgs
 , lib
+#, hardware-configuration ? ./hardware-configuration.nix
+, hasHardware ? true
+, home-manager ? fetchTarball "https://github.com/rycee/home-manager/archive/master.tar.gz"
 , ...}:
 
-in
+let
 	grubDev = "/dev/sda";
 	interface = "eno0";
 	hostname = "nixos";
 	supportedFilesystems = [ ];
-let {
-	imports = [
-  	./hardware-configuration.nix
-		(builtins.fetchGit {
-  		url = "https://github.com/rycee/home-manager/";
-			rev = "d677556e62ab524cb6fcbc20b8b1fb32964db021";
-			#sha256 = "17kdp4vflyvqiq1phy7x5mfrcgy5c02c0a0p0n5yjf8yilvcldr4";
-		} + "/nixos")
-	];
+in {
+  imports = [
+    #(home-manager + "/nixos")
+	];# ++ (if hasHardware then ./hardware-configuration.nix else []);
 
 	boot.loader.grub = {
 			enable = true;
@@ -43,11 +41,11 @@ let {
 	security.sudo.wheelNeedsPassword = false;
 
 	i18n = {
-		Font = "Lat2-Terminus16";
 		KeyMap = "neo";
 		defaultLocale = "en_US.UTF-8";
-	};
-
+  };
+  console.keyMap = "neo";
+	console.font = "Lat2-Terminus16";
 	time.timeZone = "Europe/Berlin";
 
 	environment.systemPackages = with pkgs; [
