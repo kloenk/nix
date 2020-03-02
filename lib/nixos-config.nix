@@ -22,16 +22,11 @@ let
     ];
     krops.secrets.source-path = toString secrets;
   }) nixosHosts;
-#  hardwareConf = pkgs.writeText "hardware-configuration.nix" ''
-#    { ... }:
-#    {
-#      
-#    }
-#  '';
   smallConf = evalConfig {
     modules = [
-      ../configuration.nix #{ home-manage = home-manager; hasHardware = false; }
+      ../configuration.nix { hydra = true; }
       (home-manager + "/nixos")
+      sourcesModule
     ];
   };
 in {

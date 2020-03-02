@@ -1,10 +1,8 @@
+{ hydra ? false, ... }:
 {
   config
 , pkgs
 , lib
-#, hardware-configuration ? ./hardware-configuration.nix
-, hasHardware ? true
-, home-manager ? fetchTarball "https://github.com/rycee/home-manager/archive/master.tar.gz"
 , ...}:
 
 let
@@ -14,8 +12,10 @@ let
 	supportedFilesystems = [ ];
 in {
   imports = [
-    #(home-manager + "/nixos")
-	];# ++ (if hasHardware then ./hardware-configuration.nix else []);
+  ] ++ (if hydra then [] else [
+    ./hardware-configuration.nix
+    ((fetchTarball "https://github.com/rycee/home-manager/archive/master.tar.gz") + "/nixos")
+  ]);
 
 	boot.loader.grub = {
 			enable = true;
