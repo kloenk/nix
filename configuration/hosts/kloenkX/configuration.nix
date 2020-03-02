@@ -22,7 +22,28 @@ in {
 
   services.logind.lidSwitchDocked = "ignore";
 
-  boot.tmpOnTmpfs = true;
+  #boot.tmpOnTmpfs = true;
+  hardware.enableRedistributableFirmware = true;
+  hardware.cpu.intel.updateMicrocode = true;
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "nodev";
+  boot.loader.grub.splashImage = ../../boot.png;
+  boot.initrd.availableKernelModules = [
+    "i915"
+  ];
+  boot.initrd.luks.reusePassphrases = true;
+  systemd.services.coreboot-battery-treshold = {
+    serviceConfig.Type = "oneshot";
+    wantedBy = [ "multi-user.target" ];
+    path = with pkgs; [ ectool ];
+    script = ''
+      ectool -w 0xb0 -z 0x46
+      ectool -w 0xb1 -z 0x5a
+    '';
+  };
+  boot.consoleLogLevel = 0;
+  boot.kernelParams = [ "quiet" ];
+
 
   networking.hostName = "kloenkX";
   networking.useDHCP = false;

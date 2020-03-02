@@ -4,123 +4,38 @@
 { config, lib, pkgs, ... }:
 
 {
-  hardware.enableRedistributableFirmware = true;
-  
-  hardware.cpu.intel.updateMicrocode = true;
+  imports =
+    [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
+    ];
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "nodev";
-  boot.loader.grub.splashImage = ../../boot.png;
-
-  # f2fs support
-  boot.supportedFilesystems = [ "f2fs" "ext2" "nfs" "cifs" ];
-
-  # taken from hardware-configuration.nix
-  boot.initrd.availableKernelModules = [
-   "i915"         # fixes coreboot stage 1 graphics
-   "aes_x86_64"
-   "aesni_intel"
-   "cryptd"
-   "xhci_pci"
-   "ehci_pci"
-   "ahci"
-   "usb_storage"
-   "sd_mod"
-   "sdhci_pci"
-  ];
-  boot.kernelModules = [ "kvm-intel" "acpi_call" ];
-
-  boot.extraModulePackages = [
-    config.boot.kernelPackages.acpi_call
-    config.boot.kernelPackages.tp_smapi
-    config.boot.kernelPackages.wireguard
-  ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "sdhci_pci" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/b08058b8-9449-4ca7-9c75-d3951f9f6cbc";
-      fsType = "f2fs";
+    { device = "/dev/disk/by-uuid/fb5e7ad0-67cd-465c-b53a-ed9c6a60f037";
+      fsType = "xfs";
     };
 
-  boot.initrd.luks.reusePassphrases = true;
-  boot.initrd.luks.devices."cryptRoot" = {
-    allowDiscards = true;
-    device = "/dev/disk/by-uuid/1459400b-e15a-4fc0-87a1-d03ae5cbd337";
-  };
-  boot.initrd.luks.devices."cryptHome" = {
-    allowDiscards = true;
-    device = "/dev/disk/by-uuid/685221e0-dbeb-4d1a-bbef-990f0193c0b8";
-  };
+  boot.initrd.luks.devices."cryptRoot".device = "/dev/disk/by-uuid/685221e0-dbeb-4d1a-bbef-990f0193c0b8";
+  boot.initrd.luks.devices."cryptRoot".allowDiscards = true;
 
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/4de634ad-50c8-4747-b9f6-139335bb95e9";
+      fsType = "xfs";
+    };
 
+  boot.initrd.luks.devices."cryptNix".device = "/dev/disk/by-uuid/1459400b-e15a-4fc0-87a1-d03ae5cbd337";
+  boot.initrd.luks.devices."cryptNix".allowDiscards = true;
 
-  fileSystems."/boot"  = {
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/9f05583b-9bc4-4be3-8e1c-9bb1e7dc5240";
+      fsType = "ext2";
+    };
 
-    device = "/dev/disk/by-uuid/9f05583b-9bc4-4be3-8e1c-9bb1e7dc5240";
-    fsType = "ext2";
-  };
-
-  fileSystems."/home" = {
-    device = "/dev/mapper/cryptHome";
-    fsType = "f2fs";
-  };
-
-  # nfs foo
-  fileSystems."/export/home" = {
-    device = "/home";
-    options = [ "bind" ];
-  };
-
-  #fileSystems."/export/kloenk" = {
-  #  device = "/home/kloenk";
-  #  options = [ "bind" ];
-  #};
-  #services.nfs.server.enable = true;
-  #services.nfs.server.exports = ''
-  #  /export		192.168.178.42(rw,fsid=0,no_subtree_check) 192.168.178.245(rw,fsid=0,no_subtree_check) 192.168.178.171(rw,fsid=0,no_subtree_check)
-  #  /export/home 	192.168.178.42(rw,no_subtree_check,no_root_squash) 192.168.178.171(rw,no_subtree_check,no_root_squash)
-  #  /export/kloenk	192.168.178.42(rw,no_subtree_check,no_root_squash) 192.168.178.171(rw,no_subtree_check,no_root_squash)
-  #'';
-  #services.nfs.server.mountdPort = 4002;
-  #services.nfs.server.lockdPort = 4001;
-  #services.nfs.server.statdPort = 4000;
-  
-  #networking.firewall.allowedUDPPorts = [
-  #  4000 # statd
-  #  4001 # lockd
-  #  4002 # mountd
-  #  111
-  #  2049
-  #  24800
-  #];
-  #networking.firewall.allowedTCPPorts = [
-  #  4000 # statd
-  #  4001 # lockd
-  #  4002 # mountd
-  #  111
-  #  2049
-  #  24800
-  #];
-
-  swapDevices = [
-    { device = "/dev/disk/by-id/ata-SAMSUNG_SSD_PM871_mSATA_128GB_S20FNXAGC19931-part3"; randomEncryption= { enable = true; source = "/dev/random"; }; }
-  ];
+  swapDevices = [ ];
 
   nix.maxJobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  # set battery threshold (not supported by coreboot)
-  #powerManagement.powerUpCommands = "${pkgs.tlp}/bin/tlp setcharge 70 90 bat0";
-  systemd.services.coreboot-battery-threshold = {
-    serviceConfig.Type = "oneshot";
-    wantedBy = [ "multi-user.target" ];
-    path = with pkgs; [ ectool ];
-    script = ''
-      ectool -w 0xb0 -z 0x46
-      ectool -w 0xb1 -z 0x5a
-    '';
-  };
-  # enable autotune for linux with powertop (intel)
-  #powerManagement.powertop.enable = true; # auto tune software
-
-  boot.consoleLogLevel = 0;
-  boot.kernelParams = [ "quiet" ];
 }

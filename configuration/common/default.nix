@@ -14,7 +14,7 @@
 		(self: super: import ../../pkgs { pkgs = super; })
 	];
 
-	environment.variables.NIX_PATH = lib.mkOverride 25 "/var/src";
+  #environment.variables.NIX_PATH = lib.mkOverride 25 "/var/src";
 
 	boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 	nix.gc.automatic = lib.mkDefault true;
