@@ -86,6 +86,14 @@ in {
         ::/0
       ];
     } 
+    function net_mgmt() {
+      if net.type = NET_IP4 then return net ~ [
+        10.23.42.0/24+
+      ];
+      return net ~ [
+        fe80::/64
+      ];
+    }
     function net_bogon() {
       if net.type = NET_IP4 then return net ~ [
         0.0.0.0/8+,         # RFC 1122 'this' network
@@ -145,7 +153,12 @@ in {
       ipv4 {
         import all;
         export filter {
-          krt_prefsrc = ${primaryIP4};
+          if !net_bogon() then {
+            krt_prefsrc = ${primaryIP4};
+          }
+          if net_mgmt() then {
+            krt_prefsrc = ${primaryIP4};
+          }
           accept;
         };
       };
@@ -156,6 +169,8 @@ in {
     protocol direct {
       interface "wg-*";
       interface "lo";
+      interface "wlp2s0";
+      interface "eno0";
       ipv6 { import all; };
       ipv4 { import all; };
     }

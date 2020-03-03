@@ -18,9 +18,10 @@ let
       (toString ../configuration + "/hosts/" + name + "/configuration.nix")
       sourcesModule
       (home-manager + "/nixos")
+      ../modules
       nixos-mailserver
     ];
-    krops.secrets.source-path = toString secrets;
+    #krops.secrets.source-path = toString secrets;
   }) nixosHosts;
 in {
   configs = lib.mapAttrs (name: eval: eval.config.system.build.toplevel) evals;

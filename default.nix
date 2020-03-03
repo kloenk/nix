@@ -1,7 +1,7 @@
 { krops ? fetchTarball "https://github.com/nyantec/krops/archive/master.tar.gz"
 , home-manager ? fetchTarball "https://github.com/rycee/home-manager/archive/master.tar.gz"
 , nixpkgs ? fetchTarball "https://github.com/nixos/nixpkgs/archive/nixos-unstable-small.tar.gz"
-, nixos-mailserver ? fetchTarball "https://git.kloenk.de/kloenk/nixos-mailserver/archive/master.tar.gz"
+, nixos-mailserver ? fetchTarball "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/master/nixos-mailserver-master.tar.gz"
 , jblock ? fetchTarball "https://git.kloenk.de/kloenk/jblock/archive/master.tar.gz"
 , secrets ? /var/src/secrets
 , hydra ? false
@@ -12,7 +12,7 @@ let
 		inherit krops home-manager nixpkgs nixos-mailserver jblock secrets;
 	};
 in {
-  #inherit (import ./lib/nixos-config.nix sources) configs;
+  inherit (import ./lib/nixos-config.nix sources) configs;
   jobsets.iso = import ./lib/iso-image.nix sources;
   #pkgs = import ./pkgs sources;
 } // (if hydra then {} else {
