@@ -100,11 +100,62 @@ let
     };
   });
 
+  deviceProtocolBlock = types.submodule {
+    options = {
+      scanTime = mkOption {
+        type = types.nullOr types.int;
+        default = null;
+      };
+
+      template = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
+    };
+  };
+  formatDeviceProtocolBlock = device:
+    ''
+      ${optionalNullString device.scanTime "scan time ${toString device.scanTime};"}
+    '';
+
+  directProtocolBlock = types.submodule {
+    options = {
+      channels = mkOption {
+        type = types.loaOf channelBlock;
+        default = {};
+      };
+
+      interfaces = mkOption {
+        type = types.listOf types.str;
+        default = [];
+      };
+
+      template = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
+    };
+  };
+  formatDirectProtocol = direct:
+  ''
+      ${lib.concatStringsSep "\n" (map (interface: ''
+        interface "${interface}";
+      '') direct.interfaces )}
+      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: channel: ''
+        ${formatChannel channel}
+      '') direct.channels)}
+  '';
+
   BGPProtocolBlock = types.submodule ({ name, ... }: {
     options = {
       name = mkOption {
         type = types.str;
         default = name;
+      };
+
+      template = mkOption {
+        type = types.nullOr types.str;
+        default = null;
       };
 
       as = mkOption {
@@ -153,6 +204,17 @@ let
       };
     };
   });
+  formatBGPProtocolBlock = proto:
+    ''
+        local as ${toString proto.as};
+        ${optionalString proto.gracefulRestart "graceful restart on;"}
+        ${optionalNullString proto.multihop "multihop ${toString proto.multihop};"}
+        ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: channel: ''
+          ${formatChannel channel}
+        '') proto.channels)}
+        ${optionalNullString proto.source "source address ${proto.source};"}
+        ${optionalNullString proto.neighbor.address "neighbor ${proto.neighbor.address} as ${toString proto.neighbor.as};"}
+    '';
 
   cfg = config.services.bird2;
   configFile = pkgs.writeTextFile {
@@ -165,8 +227,26 @@ let
           ${body.body}
         }
       '') cfg.functions)}
+      # templates
+      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: template: ''
+        template bgp ${template.name} ${optionalNullString template.template "from ${template.template}"} {
+          ${formatBGPProtocolBlock template}
+        }
+      '') cfg.templates.bgp)}
       # protocol kernel
       # TODO
+      # protocol device
+      ${lib.concatStringsSep "\n" (map (device: ''
+        protocol device ${optionalNullString device.template "from ${device.template}"} {
+          ${formatDeviceProtocolBlock device}
+        }
+      '') cfg.protocols.device)}
+      # protocol direct
+      ${lib.concatStringsSep "\n" (map (direct: ''
+        protocol direct ${optionalNullString direct.template "from ${direct.template}"} {
+          ${formatDirectProtocol direct}
+        }
+      '') cfg.protocols.direct)}
       # protocol static
       ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: proto: ''
         protocol static ${proto.name} {
@@ -178,15 +258,8 @@ let
       '') cfg.protocols.static)}
         # protocol bpg
         ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: proto: ''
-            protocol bgp ${proto.name} {
-            local as ${toString proto.as};
-            ${optionalString proto.gracefulRestart "graceful restart on;"}
-            ${if proto.multihop == null then "" else "multihop ${toString proto.multihop};"}
-            ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: channel: ''
-              ${formatChannel channel}
-            '') proto.channels)}
-            ${if proto.source == null then "" else "source address ${proto.source};"}
-            ${if proto.neighbor.address == null then "" else "neighbor ${proto.neighbor.address} as ${toString proto.neighbor.as};"}
+          protocol bgp ${proto.name} ${optionalNullString proto.template "from ${proto.template}"} {
+          ${formatBGPProtocolBlock proto}
           }
         '') cfg.protocols.bgp)}
         ${cfg.extraConfig}
@@ -208,15 +281,30 @@ in {
         default = {};
       };
 
-     protocols.static = mkOption {
-       type = types.loaOf staticProtocolBlock;
-       default = {};
-     };
+      templates.bgp = mkOption {
+        type = types.loaOf BGPProtocolBlock;
+        default = {};
+      };
 
-     protocols.bgp = mkOption {
-       type = types.loaOf BGPProtocolBlock;
-       default = {};
-     };
+      protocols.static = mkOption {
+        type = types.loaOf staticProtocolBlock;
+        default = {};
+      };
+
+      protocols.device = mkOption {
+        type = types.listOf deviceProtocolBlock;
+        default = [];
+      };
+
+      protocols.direct = mkOption {
+        type = types.listOf directProtocolBlock;
+        default = [];
+      };
+
+      protocols.bgp = mkOption {
+        type = types.loaOf BGPProtocolBlock;
+        default = {};
+      };
 
       id = mkOption {
         type = types.str;
@@ -237,8 +325,6 @@ in {
           <link xlink:href='http://bird.network.cz/'/>
         '';
       };
-
-
     };
   };
 
