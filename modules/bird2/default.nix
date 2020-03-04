@@ -146,6 +146,38 @@ let
       '') direct.channels)}
   '';
 
+
+  kernelProtocolBlock = types.submodule ({ name, ...  }: {
+    options = {
+      name = mkOption {
+        type = types.str;
+        default = name;
+      };
+
+      template = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
+
+      channels = mkOption {
+        type = types.loaOf channelBlock;
+        default = {};
+      };
+
+      table = mkOption {
+        type = types.nullOr types.int;
+        default = null;
+      };
+    };
+  });
+  formatKernelProtocol = kernel: ''
+    ${optionalNullString kernel.table "kernel table ${toString kernel.table};"}
+    ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: channel: ''
+      ${formatChannel channel}
+    '') kernel.channels)}
+  '';
+
+  
   BGPProtocolBlock = types.submodule ({ name, ... }: {
     options = {
       name = mkOption {
@@ -234,6 +266,11 @@ let
         }
       '') cfg.templates.bgp)}
       # protocol kernel
+      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: kernel: ''
+        protocol kernel ${name} ${optionalNullString kernel.template "from ${kernel.template}"} {
+          ${formatKernelProtocol kernel}
+        }
+      '') cfg.protocols.kernel)}
       # TODO
       # protocol device
       ${lib.concatStringsSep "\n" (map (device: ''
@@ -305,6 +342,11 @@ in {
         type = types.loaOf BGPProtocolBlock;
         default = {};
       };
+
+      protocols.kernel = mkOption {
+        type = types.loaOf kernelProtocolBlock;
+        default = {};
+      };      
 
       id = mkOption {
         type = types.str;

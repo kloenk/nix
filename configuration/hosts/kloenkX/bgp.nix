@@ -155,6 +155,19 @@ in {
       interfaces = [ "wg-*" "lo" "wlp2s0" "eno0" ];
     }
   ];
+  services.bird2.protocols.kernel.kernel4 = {
+    table = 65249;
+    channels.ipv4.filter.import = "accept;";
+    channels.ipv4.filter.export = ''
+      if !net_bogon() then {
+        krt_prefsrc = ${primaryIP4};
+      }
+      if net_mgmt() then {
+        krt_prefsrc = ${primaryIP4};
+      }
+      accept;
+    '';
+  };
   services.bird2.extraConfig = ''
 
     protocol kernel {
