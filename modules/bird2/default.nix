@@ -6,6 +6,12 @@ let
   optionalNullString = cond:
     string: if cond == null then "" else string;
 
+  mkStrOption = description: mkOption {
+    type = types.nullOr types.str;
+    default = null;
+    description = description;
+  };
+
   functionModule = types.submodule ({ name, ...}: {
     options = {
       body = mkOption {
@@ -28,7 +34,7 @@ let
   channelBlock = types.submodule ({ name, ... }: {
     options = {
       name = mkOption {
-        type = types.enum [ "ipv4" "ipv6" ];
+        type = types.enum [ "ipv4" "ipv6" ]; # TODO: ??
         default = name;
       };
 
@@ -38,6 +44,11 @@ let
       };
 
       keepFilterd = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
+
+      sadr = mkOption {
         type = types.nullOr types.str;
         default = null;
       };
@@ -52,9 +63,8 @@ let
       };
     };
   });
-  formatChannel = channel: 
-    ''
-      ${channel.name} {
+  formatChannel = channel: ''
+      ${channel.name} ${optionalNullString channel.sadr channel.sadr} {
         ${optionalNullString channel.nextHop "next hop ${channel.nextHop};"}
         ${optionalNullString channel.keepFilterd "import keep filtered;"}
         ${optionalNullString channel.filter.import ''
@@ -68,7 +78,160 @@ let
           };
         ''}
       };
-    '';
+  '';
+
+  babelProtocolBlock = types.submodule ({ name, ... }: {
+    options = {
+      name = mkOption {
+        type = types.str;
+        default = name;
+      };
+
+      template = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
+
+      channels = mkOption {
+        type = types.loaOf channelBlock;
+        default = {};
+      };
+
+      radomeizedID = mkOption {
+        type = types.nullOr types.bool;
+        default = null;
+      };
+
+      interface.pattern = mkStrOption ''interface pattern'';
+
+      interface.type = mkOption {
+        type = types.nullOr types.enum [ "wired" "wireless" ];
+        default = null;
+        description = ''
+          This option specifies the interface type: Wired or wireless.
+          On wired interfaces a neighbor is considered unreachable after a small number of Hello packets are lost,
+          as described by limit option. On wireless interfaces the ETX link quality estimation technique is used
+          to compute the metrics of routes discovered over this interface. This technique will gradually degrade
+          the metric of routes when packets are lost rather than the more binary up/down mechanism of wired type links.
+          Default: wired.
+        '';
+      };
+
+      interface.rxcost = mkOption {
+        type = types.nullOr types.int;
+        default = null;
+        description = ''
+          This option specifies the nominal RX cost of the interface.
+          The effective neighbor costs for route metrics will be computed from this value with a mechanism determined
+          by the interface type. Note that in contrast to other routing protocols like RIP or OSPF, the rxcost
+          specifies the cost of RX instead of TX, so it affects primarily neighbors' route selection and not local
+          route selection.
+          Default: 96 for wired interfaces, 256 for wireless.
+        '';
+      };
+      
+      interface.limit = mkOption {
+        type = types.nullOr types.int;
+        default = null;
+        description = ''
+          BIRD keeps track of received Hello messages from each neighbor to establish neighbor reachability.
+          For wired type interfaces, this option specifies how many of last 16 hellos have to be correctly received in
+          order to neighbor is assumed to be up. The option is ignored on wireless type interfaces, where gradual cost
+          degradation is used instead of sharp limit.
+          Default: 12.
+        '';
+      };
+
+      helloInterval = mkStrOption ''
+        Interval at which periodic Hello messages are sent on this interface, with time units.
+        Default: 4 seconds.
+      '';
+
+      updateInterval = mkStrOption ''
+        Interval at which periodic (full) updates are sent, with time units.
+        Default: 4 times the hello interval.
+      '';
+
+      port = mkOption {
+        type = types.nullOr types.int;
+        default = null;
+        description = ''
+          This option selects an UDP port to operate on.
+          The default is to operate on port 6696 as specified in the Babel RFC.
+        '';
+      };
+
+      txClass = mkOption {
+        type = types.nullOr types.int;
+        default = null;
+        description = ''
+          This option specify the ToS/DiffServ/Traffic class/Priority of the outgoing Babel packets.
+          See tx class common option for detailed description.
+        '';
+      };
+      txDscp = mkOption {
+        type = types.nullOr types.int;
+        default = null;
+        description = ''
+          This option specify the ToS/DiffServ/Traffic class/Priority of the outgoing Babel packets.
+          See tx class common option for detailed description.
+        '';
+      };
+      txPriority = mkOption {
+        type = types.nullOr types.int;
+        default = null;
+        description = ''
+          This option specify the ToS/DiffServ/Traffic class/Priority of the outgoing Babel packets.
+          See tx class common option for detailed description.
+        '';
+      };
+
+      rxBuffer = mkOption {
+        type = types.nullOr types.int;
+        default = null;
+        description = ''
+          This option specifies the size of buffers used for packet processing.
+          The buffer size should be bigger than maximal size of received packets.
+          The default value is the interface MTU, and the value will be clamped to a minimum of
+          512 bytes + IP packet overhead.
+        '';
+      };
+
+      txLength = mkOption {
+        type = types.nullOr types.int;
+        default = null;
+        description = ''
+          This option specifies the maximum length of generated Babel packets.
+          To avoid IP fragmentation, it should not exceed the interface MTU value.
+          The default value is the interface MTU value, and the value will be clamped to a minimum of
+          512 bytes + IP packet overhead.
+        '';
+      };
+
+      checkLink = mkOption {
+        type = types.nullOr types.bool;
+        default = null;
+        description = ''
+          If set, the hardware link state (as reported by OS) is taken into consideration. When the link disappears
+          (e.g. an ethernet cable is unplugged), neighbors are immediately considered unreachable and all routes
+          received from them are withdrawn. It is possible that some hardware drivers or platforms do not implement
+          this feature.
+          Default: yes.
+        '';
+      };
+
+      nextHop.ipv4 = mkStrOption ''
+        Set the next hop address advertised for IPv4 routes advertised on this interface.
+        Default: the preferred IPv4 address of the interface.
+      '';
+
+      nextHop.ipv6 = mkStrOption ''
+        Set the next hop address advertised for IPv6 routes advertised on this interface.
+        If not set, the same link-local address that is used as the source for Babel packets will be used.
+        In normal operation, it should not be necessary to set this option.
+      '';
+    };
+  });
 
   staticProtocolBlock = types.submodule ({ name, ... }: {
     options = {
