@@ -12,6 +12,8 @@ let
     description = description;
   };
 
+  yn = cond: if cond then "yes" else "no";
+
   functionModule = types.submodule ({ name, ...}: {
     options = {
       body = mkOption {
@@ -80,31 +82,21 @@ let
       };
   '';
 
-  babelProtocolBlock = types.submodule ({ name, ... }: {
+  babelInterfaceBlock = types.submodule ({ name, ... }: {
     options = {
       name = mkOption {
         type = types.str;
         default = name;
+        description = "use pattern for multiple names";
       };
 
-      template = mkOption {
-        type = types.nullOr types.str;
+      pattern = mkOption {
+        type = types.nullOr types.listOf types.str;
         default = null;
+        description = "interface pattern";
       };
 
-      channels = mkOption {
-        type = types.loaOf channelBlock;
-        default = {};
-      };
-
-      radomeizedID = mkOption {
-        type = types.nullOr types.bool;
-        default = null;
-      };
-
-      interface.pattern = mkStrOption ''interface pattern'';
-
-      interface.type = mkOption {
+      type = mkOption {
         type = types.nullOr types.enum [ "wired" "wireless" ];
         default = null;
         description = ''
@@ -117,7 +109,7 @@ let
         '';
       };
 
-      interface.rxcost = mkOption {
+      rxcost = mkOption {
         type = types.nullOr types.int;
         default = null;
         description = ''
@@ -130,7 +122,7 @@ let
         '';
       };
       
-      interface.limit = mkOption {
+      limit = mkOption {
         type = types.nullOr types.int;
         default = null;
         description = ''
@@ -232,6 +224,60 @@ let
       '';
     };
   });
+  babelProtocolBlock = types.submodule ({ name, ... }: {
+    options = {
+      name = mkOption {
+        type = types.str;
+        default = name;
+      };
+
+      template = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
+
+      channels = mkOption {
+        type = types.loaOf channelBlock;
+        default = {};
+      };
+
+      radomeizedID = mkOption {
+        type = types.nullOr types.bool;
+        default = null;
+      };
+
+      interfaces = mkOption {
+        type = types.loaOf babelInterfaceBlock;
+        default = {};
+        description = "interfaces";
+      };
+    };
+  });
+  formateBabelBlock = babel: ''
+    ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: channel: ''
+      ${formatChannel channel}
+    '') babel.channels)}
+    ${optionalNullString babel.radomeizedID "randomize router id ${yn babel.radomeizedID};"}
+    ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: interface: ''
+      interface ${if interface.pattern == null then (lib.concatStringsSep ", " "\"${interface.pattern}\"") else "\"${interface.name}\""} {
+        ${optionalNullString interface.type "type ${interface.type};"}
+        ${optionalNullString interface.rxcost "rxcost ${toString interface.rxcost};"}
+        ${optionalNullString interface.limit "limit ${toString interface.limit};"}
+        ${optionalNullString interface.helloInterval "hello interval ${toString interface.helloInterval};"}
+        ${optionalNullString interface.udateInterval "update interval ${toString interface.updateInterval};"}
+        ${optionalNullString interface.port "port ${toString interface.port};"}
+        ${optionalNullString interface.txClass "tx class ${toString interface.txClass};"}
+        ${optionalNullString interface.txDscp "tx dscp ${toString interface.txDscp};"}
+        ${optionalNullString interface.txPriority "tx priority ${toString interface.txPriority};"}
+        ${optionalNullString interface.rxBuffer "rx buffer ${toString interface.rxBuffer};"}
+        ${optionalNullString interface.txLength "tx length ${toString interface.txLength};"}
+        ${optionalNullString interface.checkLink "check link ${yn interface.checkLink};"}
+        ${optionalNullString interface.nextHop.ipv4 "next hop ipv4 ${interface.nextHop.ipv4};"}
+        ${optionalNullString interface.nextHop.ipv6 "next hop ipv6 ${interface.nextHop.ipv6};"}
+      };
+      ''
+      )babel.interfaces )}
+  '';
 
   staticProtocolBlock = types.submodule ({ name, ... }: {
     options = {
