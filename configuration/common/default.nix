@@ -11,7 +11,7 @@
 	];
 
 	nixpkgs.overlays = [
-		(self: super: import ../../pkgs { pkgs = super.path; })
+		(self: super: import ../../pkgs { pkgs = super; })
 	];
 
   environment.etc."src/nixpkgs".source = config.sources.nixpkgs;

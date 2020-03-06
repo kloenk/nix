@@ -19,6 +19,7 @@
         #"git"
         "sudo"
         "ripgrep"
+        "cargo"
       ];
     };
     plugins = [
