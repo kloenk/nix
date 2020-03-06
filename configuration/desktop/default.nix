@@ -1,8 +1,6 @@
 { config, pkgs, lib, ... }:
 
-let
-  jblock = toString /var/src/sources/jblock;
-in {
+{
   home-manager.useUserPackages = true;
 
   security.rngd.enable = lib.mkDefault false;
@@ -119,8 +117,8 @@ in {
     ]
 
     import sys, os
-    sys.path.append(os.path.join(sys.path[0], '${jblock}'))
-    config.source("${jblock}/jblock/integrations/qutebrowser.py")
+    sys.path.append(os.path.join(sys.path[0], '${pkgs.jblock}'))
+    config.source("${pkgs.jblock}/jblock/integrations/qutebrowser.py")
   '';
 
   home-manager.users.kloenk.home.packages = [ pkgs.kitty ];
