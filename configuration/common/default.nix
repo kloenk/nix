@@ -11,10 +11,11 @@
 	];
 
 	nixpkgs.overlays = [
-		(self: super: import ../../pkgs { pkgs = super; })
+		(self: super: import ../../pkgs { pkgs = super.path; })
 	];
 
-  #environment.variables.NIX_PATH = lib.mkOverride 25 "/var/src";
+  environment.etc."src/nixpkgs".source = config.sources.nixpkgs;
+  environment.variables.NIX_PATH = lib.mkOverride 25 "/etc/src";
 
 	boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 	nix.gc.automatic = lib.mkDefault true;

@@ -20,6 +20,7 @@ in {
   environment.variables.NIX_PATH = lib.mkForce "/var/src";
 
   nixpkgs.config.allowUnfree = true;
+  nix.gc.automatic = false;
 
   networking.useDHCP = false;
   networking.interfaces.enp4s0.useDHCP = true;
