@@ -5,6 +5,7 @@ let
 in {
   home-manager.useUserPackages = true;
 
+  security.rngd.enable = lib.mkDefault false;
   users.users.kloenk.packages = with pkgs; [
     flameshot
     rustup
@@ -40,11 +41,14 @@ in {
     lxappearance-gtk3
     dino
     spotify-tui
+    xonotic
 
     onefetch
 
     # java
-    jre8_headless
+    jdk
+    gradle
+    (jetbrains.idea-community.override { jdk = jdk; })
 
     # Archives (e.g., tar.gz and zip)
     ark
