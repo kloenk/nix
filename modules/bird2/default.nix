@@ -46,7 +46,7 @@ let
       };
 
       keepFilterd = mkOption {
-        type = types.nullOr types.str;
+        type = types.nullOr types.bool;
         default = null;
       };
 
@@ -279,11 +279,101 @@ let
       )babel.interfaces )}
   '';
 
+  bfdInterfaceBlock = types.submodule({ name, ... }: {
+    options = {
+      interval = mkStrOption ''
+        BFD ensures availability of the forwarding path associated with the session by periodically sending
+        BFD control packets in both directions. The rate of such packets is controlled by two options, min rx
+        interval and min tx interval (see below). This option is just a shorthand to set both of these options together.
+      '';
+
+      rxInterval = mkStrOption ''
+        This option specifies the minimum RX interval, which is announced to the neighbor and used there to limit
+        the neighbor's rate of generated BFD control packets.
+        Default: 10 ms.
+      '';
+
+      txInterval = mkStrOption ''
+        This option specifies the desired TX interval, which controls the rate of generated BFD control
+        packets (together with min rx interval announced by the neighbor). Note that this value is used only if the
+        BFD session is up, otherwise the value of idle tx interval is used instead.
+        Default: 100 ms.
+      '';
+
+      idleTxInterval = mkStrOption ''
+        In order to limit unnecessary traffic in cases where a neighbor is not available or not running BFD, the
+        rate of generated BFD control packets is lower when the BFD session is not up. This option specifies the
+        desired TX interval in such cases instead of min tx interval.
+        Default: 1 s.
+      '';
+
+      multiplier = mkOption {
+        type = types.nullOr types.int;
+        default = null;
+        description = ''
+          Failure detection time for BFD sessions is based on established rate of BFD control packets
+          (min rx/tx interval) multiplied by this multiplier, which is essentially (ignoring jitter) a number of
+          missed packets after which the session is declared down. Note that rates and multipliers could be different
+          in each direction of a BFD session.
+          Default: 5.
+        '';
+      };
+
+      passive = mkOption {
+        type = types.nullOr types.bool;
+        default = null;
+        description = ''
+          Generally, both BFD session endpoints try to establish the session by sending control packets to the other
+          side. This option allows to enable passive mode, which means that the router does not send BFD packets until
+          it has received one from the other side.
+          Default: disabled.
+        '';
+      };
+
+      # TODO: password
+    };
+  });
+  BFDProtocolBlock = types.submodule ({ name, ... }: {
+    options = {
+      name = mkOption {
+        type = types.str;
+        default = name;
+      };
+
+      template = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
+
+      interfaces = mkOption {
+        type = types.loaOf bfdInterfaceBlock;
+        default = { };
+      };
+    };
+  });
+  formateBFDBlock = bfd: ''
+    ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: interface: ''
+      interface ${interface.name} {
+        ${optionalNullString interface.interval "interval ${interface.interval};"}
+        ${optionalNullString interface.rxInterval "min rx interval ${interface.rxInterval};"}
+        ${optionalNullString interface.txInterval "min tx interval ${interface.txInterval};"}
+        ${optionalNullString interface.idleTxInterval "idle tx interval ${interface.idleTxInterval};"}
+        ${optionalNullString interface.multiplier "multiplier ${toString interface.multiplier};"}
+        ${optionalNullString interface.passive "passive ${yn interface.passive};"}
+      };
+    '') bfd.interfaces)};
+  '';
+
   staticProtocolBlock = types.submodule ({ name, ... }: {
     options = {
       name = mkOption {
         type = types.str;
         default = name;
+      };
+
+      channels = mkOption {
+        type = types.loaOf channelBlock;
+        default = {};
       };
 
       route = mkOption {
@@ -296,15 +386,15 @@ let
         description = "route via interface";
       };
 
-      protocol = mkOption {
-        type = types.enum [ "ipv4" "ipv6" ];
-        description = "protocol for the static block";
-      };
-
       body = mkOption {
         type = types.str;
         description = "FIXME: remove";
         default = "";
+      };
+
+      checkLink = mkOption {
+        type = types.nullOr types.bool;
+        default = null;
       };
     };
   });
@@ -476,9 +566,9 @@ let
       '') cfg.templates.bgp)}
       # protocol kernel
       ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: kernel: ''
-        protocol kernel ${name} ${optionalNullString kernel.template "from ${kernel.template}"} {
+        protocol kernel ${kernel.name} ${optionalNullString kernel.template "from ${kernel.template}"} {
           ${formatKernelProtocol kernel}
-        }
+        };
       '') cfg.protocols.kernel)}
       # TODO
       # protocol device
@@ -496,9 +586,10 @@ let
       # protocol static
       ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: proto: ''
         protocol static ${proto.name} {
-          ${proto.protocol} {
-            ${proto.body}
-          };
+          ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: channel: ''
+            ${formatChannel channel}
+          '') proto.channels)}
+          ${optionalNullString proto.checkLink (if proto.checkLink then "check link;" else "")}
           route ${proto.route} via "${proto.via}";
         }
       '') cfg.protocols.static)}

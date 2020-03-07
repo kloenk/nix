@@ -4,7 +4,7 @@ let
   cfg = config.services.bgp;
   hosts = import ../.;
   thisHost = hosts.${config.networking.hostName};
-  as = "65249";
+  as = 65249;
   bgpHosts = lib.filterAttrs (name: host: host ? bgp && host ? wireguard && name != config.networking.hostName) hosts;
   primaryIP = "2a0f:4ac0:f199::6";
   primaryIP4 = "195.39.246.50";
@@ -12,35 +12,37 @@ let
 in {
   networking.firewall.allowedUDPPorts = lib.mapAttrsToList (name: host: 51820 + host.magicNumber + thisHost.magicNumber) bgpHosts;
   
-  systemd.network.netdevs = (lib.mapAttrs' (name: host:      let
-    port = 51820 + host.magicNumber + thisHost.magicNumber;      in lib.nameValuePair "30-wg-${name}" {
-    netdevConfig = {
-      Kind = "wireguard";
-      Name = "wg-${name}";
-    };
-    netdevConfig = {
-      MTUBytes = "1402";
-    };
-    wireguardConfig = {
-      FwMark = 51820;
-      ListenPort = port;
-      PrivateKeyFile = config.krops.secrets.files."wg-pbb.key".path;
-    };
-    wireguardPeers = [
-      {
-        wireguardPeerConfig = {
-          AllowedIPs = [ "::/0" "0.0.0.0/0" ];
-          PublicKey = host.wireguard.publicKey;
+  systemd.network.netdevs = (lib.mapAttrs' (name: host: 
+    let
+      port = 51820 + host.magicNumber + thisHost.magicNumber;
+    in lib.nameValuePair "30-wg-${name}" {
+      netdevConfig = {
+        Kind = "wireguard";
+        Name = "wg-${name}";
+      };
+      netdevConfig = {
+        MTUBytes = "1402";
+      };
+      wireguardConfig = {
+        FwMark = 51820;
+        ListenPort = port;
+        PrivateKeyFile = config.krops.secrets.files."wg-pbb.key".path;
+      };
+      wireguardPeers = [
+        {
+          wireguardPeerConfig = {
+            AllowedIPs = [ "::/0" "0.0.0.0/0" ];
+            PublicKey = host.wireguard.publicKey;
+          }
+            //
+          (
+            if host.wireguard ? endpoint then
+              { Endpoint = lib.optionalAttrs (host.wireguard ? endpoint) "${host.wireguard.endpoint}:${toString port}"; }
+            else
+              {}
+          );
         }
-          //
-        (
-          if host.wireguard ? endpoint then
-            { Endpoint = lib.optionalAttrs (host.wireguard ? endpoint) "${host.wireguard.endpoint}:${toString port}"; }
-          else
-            {}
-        );
-      }
-    ];
+      ];
   }) bgpHosts);
 
   systemd.network.networks = (lib.mapAttrs' (name: host: lib.nameValuePair "30-wg-${name}" {
@@ -54,7 +56,7 @@ in {
       [RoutingPolicyRule]
       FirewallMark = 51820
       InvertRule = true
-      Table = ${as}
+      Table = ${toString as}
       Family = both
       Priority = 30000
     '';
@@ -138,15 +140,16 @@ in {
     '';
   };
   services.bird2.id = primaryIP4;
-  services.bird2.templates.bgp.test = {
-    as = 65249;
-    #template = "test";
-    channels.ipv4.nextHop = "self";
-    channels.ipv4.filter.import = "accept;";
-    channels.ipv4.filter.export = "reject;";
-    neighbor.address = "10.0.0.2";
-    neighbor.as = 65200;
-  };
+  #services.bird2.templates.bgp.test = {
+  #  as = 65249;
+  #  #template = "test";
+  #  channels.ip.name = "ipv4";
+  #  channels.ip.nextHop = "self";
+  #  channels.ip.filter.import = "accept;";
+  #  channels.ip.filter.export = "reject;";
+  #  neighbor.address = "10.0.0.2";
+  #  neighbor.as = 65200;
+  #};
   services.bird2.protocols.device = [ { scanTime = 10; } ];
   services.bird2.protocols.direct = [
     {
@@ -156,7 +159,7 @@ in {
     }
   ];
   services.bird2.protocols.kernel.kernel4 = {
-    table = 65249;
+    table = as;
     channels.ipv4.filter.import = "accept;";
     channels.ipv4.filter.export = ''
       if !net_bogon() then {
@@ -168,124 +171,158 @@ in {
       accept;
     '';
   };
-  services.bird2.extraConfig = ''
+  services.bird2.protocols.kernel.kernel6 = {
+    table = as;
+    channels.ipv6.filter.import = "accept;";
+    channels.ipv6.filter.export = ''
+      krt_prefsrc = ${primaryIP};
+      accept;
+    '';
+  };
+  services.bird2.protocols = {
+    static = (lib.mapAttrs' (name: host: lib.nameValuePair "static_tunnel_${name}" {
+        channels.ipv6.filter.import = "accept;";
+        route = "fda0::${toString host.magicNumber}/128";
+        via = "wg-${name}";
+      }) bgpHosts) // (lib.mapAttrs' (name: host: lib.nameValuePair "static_tunnel_${name}4" {
+        channels.ipv4.filter.import = "accept;";
+        route = "10.23.42.${toString host.magicNumber}/32";
+        via = "wg-${name}";
+      }) bgpHosts);
 
-    protocol kernel {
-      kernel table ${as};
-      ipv6 {
-        import all;
-        export filter {
-          krt_prefsrc = ${primaryIP};
+    bgp = (lib.mapAttrs' (name: host: lib.nameValuePair "${name}" {
+      as = as;
+      gracefulRestart = true;
+      multihop = 64;
+      channels.ipv6.nextHop = "self";
+      channels.ipv6.keepFilterd = true;
+      channels.ipv6.filter.import = ''
+        if net_local() then reject;
+        if net_bogon() then reject;
+        if as_bogon() then reject;
+        if (65535, 0) ~ bgp_community then {
+          bgp_local_pref = 0;
+        }
+        if net_default() then { 
+          if proto != "netcup" && proto != "netcup4" then {
+            bgp_path.prepend(65249);
+            bgp_path.prepend(65249);
+            bgp_path.prepend(65249);
+          }
           accept;
-        };
-      };
-    }
-  #  protocol kernel {
-  #    kernel table ${as};
-  #    ipv4 {
-  #      import all;
-  #      export filter {
-  #        if !net_bogon() then {
-  #          krt_prefsrc = ${primaryIP4};
-  #        }
-  #        if net_mgmt() then {
-  #          krt_prefsrc = ${primaryIP4};
-  #        }
-  #        accept;
-  #      };
-  #    };
-  #  }
-   # protocol direct {
-   #   interface "wg-*";
-   #   interface "lo";
-   #   interface "wlp2s0";
-   #   interface "eno0";
-   #   ipv6 { import all; };
-   #   ipv4 { import all; };
-   # }
-  '' + lib.concatStringsSep "\n" (lib.mapAttrsToList (name: host: ''
-    protocol static static_tunnel_${name} {
-      ipv6 { import all; };
-      route fda0::${toString host.magicNumber}/128 via "wg-${name}";
-    }
-    protocol static static_tunnel_${name}4 {
-      ipv4 { import all; };
-      route 10.23.42.${toString host.magicNumber}/32 via "wg-${name}";
-    }
-    protocol bgp ${name} {
-      local as ${as};
-      graceful restart on;
-      multihop 64;
-      ipv6 {
-        next hop self;
-        import keep filtered;
-        import filter {
-          if net_local() then reject;
-          if net_bogon() then reject;
-          if as_bogon() then reject;
-          if (65535, 0) ~ bgp_community then {
-            bgp_local_pref = 0;
+        }
+        reject;
+      '';
+      channels.ipv6.filter.export = ''
+        if !net_local() then reject;
+        if net_bogon() then reject;
+        if as_bogon() then reject;
+        accept;
+      '';
+      source = "fda0::${toString thisHost.magicNumber}";
+      neighbor.address = "fda0::${toString host.magicNumber}";
+      neighbor.as = if host.bgp ? as then host.bgp.as else (65000 + host.magicNumber);
+    }) bgpHosts) // (lib.mapAttrs' (name: host: lib.nameValuePair "${name}4" {
+      as = as;
+      gracefulRestart = true;
+      multihop = 64;
+      channels.ipv4.nextHop = "self";
+      channels.ipv4.keepFilterd = true;
+      channels.ipv4.filter.import = ''
+        if net_local() then reject;
+        if net_bogon() then reject;
+        if as_bogon() then reject;
+        if (65535, 0) ~ bgp_community then {
+          bgp_local_pref = 0;
+        }
+        if net_default() then { 
+          if proto != "netcup" && proto != "netcup4" then {
+            bgp_path.prepend(65249);
+            bgp_path.prepend(65249);
+            bgp_path.prepend(65249);
           }
-          if net_default() then { 
-            if proto != "netcup" && proto != "netcup4" then {
-              bgp_path.prepend(65249);
-              bgp_path.prepend(65249);
-              bgp_path.prepend(65249);
-            }
-            accept;
-          }
-          reject;
-        };
-        export filter {
-          if !net_local() then reject;
-          if net_bogon() then reject;
-          if as_bogon() then reject;
           accept;
-        };
-      };
-      source address fda0::${toString thisHost.magicNumber};
-      neighbor fda0::${toString host.magicNumber} as ${if host.bgp ? as then host.bgp.as else toString (65000 + host.magicNumber)};
-    }
-    protocol bgp ${name}4 {
-      ${lib.optionalString (host.bgp ? internal) ''
-        local as ${toString (65000 + thisHost.magicNumber)};
-        confederation ${as};
-        confederation member yes;
-      ''}
-      ${lib.optionalString (!(host.bgp ? internal)) ''
-        local as ${as};
-      ''}
-      graceful restart on;
-      multihop 64;
-      ipv4 {
-        next hop self;
-        import keep filtered;
-        import filter {
-          if net_local() then reject;
-          if net_bogon() then reject;
-          if as_bogon() then reject;
-          if (65535, 0) ~ bgp_community then {
-            bgp_local_pref = 0;
-          }
-          if net_default() then { 
-            if proto != "netcup" && proto != "netcup4" then {
-              bgp_path.prepend(65249);
-              bgp_path.prepend(65249);
-              bgp_path.prepend(65249);
-            }
-            accept;
-          }
-          reject;
-        };
-        export filter {
-          if !net_local() then reject;
-          if net_bogon() then reject;
-          if as_bogon() then reject;
-          accept;
-        };
-      };
-      source address 10.23.42.${toString thisHost.magicNumber};
-      neighbor 10.23.42.${toString host.magicNumber} as ${if host.bgp ? as then host.bgp.as else toString (65000 + host.magicNumber)};
-    }
-  '') bgpHosts);
+        }
+        reject;
+      '';
+      channels.ipv4.filter.export = ''
+        if !net_local() then reject;
+        if net_bogon() then reject;
+        if as_bogon() then reject;
+        accept;
+      '';
+      source = "10.23.42.${toString thisHost.magicNumber}";
+      neighbor.address = "10.23.42.${toString host.magicNumber}";
+      neighbor.as = if host.bgp ? as then host.bgp.as else (65000 + host.magicNumber);
+    }) bgpHosts);
+
+
+
+#    bgp = (lib.mapAttrs' (name: host: lib.nameValuePair "${name}" {
+#      as = as;
+#      gracefulRestart = true;
+#      multihop = 64;
+#      channels.ipv6.nextHop = "self";
+#      channels.ipv6.keepFilterd = true;
+#      channels.ipv6.import.filter = ''
+#        if net_local() then reject;
+#        if net_bogon() then reject;
+#        if as_bogon() then reject;
+#        if (65535, 0) ~ bgp_community then {
+#          bgp_local_pref = 0;
+#        }
+#        if net_default() then { 
+#          if proto != "netcup" && proto != "netcup4" then {
+#            bgp_path.prepend(65249);
+#            bgp_path.prepend(65249);
+#            bgp_path.prepend(65249);
+#          }
+#          accept;
+#        }
+#        reject;
+#      '';
+#      channels.ipv6.export.filter = ''
+#        if !net_local() then reject;
+#        if net_bogon() then reject;
+#        if as_bogon() then reject;
+#        accept;
+#      '';
+#      source = "fda0::${toString thisHost.magicNumber}";
+#      neighbor.address = "fda0::${toString host.magicNumber}";
+#      neighbor.as = if host.bgp ? as then host.bgp.as else (65000 + host.magicNumber);
+#    }) bgpHosts);
+#    bgp = (lib.mapAttrs' (name: host: lib.nameValuePair "${name}4" {
+#      as = as;
+#      gracefulRestart = true;
+#      multihop = 64;
+#      channels.ipv4.nextHop = "self";
+#      channels.ipv4.keepFilterd = true;
+#      channels.ipv4.filter.import = ''
+#        if net_local() then reject;
+#        if net_bogon() then reject;
+#        if as_bogon() then reject;
+#        if (65535, 0) ~ bgp_community then {
+#          bgp_local_pref = 0;
+#        }
+#        if net_default() then { 
+#          if proto != "netcup" && proto != "netcup4" then {
+#            bgp_path.prepend(65249);
+#            bgp_path.prepend(65249);
+#            bgp_path.prepend(65249);
+#          }
+#          accept;
+#        }
+#        reject;
+#      '';
+#      channels.ipv4.filter.export = ''
+#        if !net_local() then reject;
+#        if net_bogon() then reject;
+#        if as_bogon() then reject;
+#        accept;
+#      '';
+#      source = "10.23.42.${toString thisHost.magicNumber}";
+#      neighbor.address = "10.23.42.${toString host.magicNumber}";
+#      neighbor.as = if host.bgp ? as then host.bgp.as else (65000 + host.magicNumber);
+#    }) bgpHosts);
+  };
 } 

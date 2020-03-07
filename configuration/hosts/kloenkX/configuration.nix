@@ -50,7 +50,7 @@ in {
   #networking.interfaces.bond0.useDHCP = true;
   networking.wireless.enable = true;
   networking.wireless.interfaces = [ "wlp2s0" ];
-  networking.wireless.networks = import /var/src/secrets/wifi.nix;
+  environment.etc."wpa_supplicant.conf".source = "/var/src/secrets/wpa_supplicant.conf";
   networking.wireless.userControlled.enable = true;
   networking.extraHosts = ''
     172.16.0.1 airlink.local unit.local
