@@ -68,6 +68,8 @@ in {
   # docker fo
   virtualisation.docker.enable = true;
 
+  boot.kernelParams = [ "intel_iommu=on" ];
+
   virtualisation.libvirtd = {
     enable = true;
     onShutdown = "shutdown";

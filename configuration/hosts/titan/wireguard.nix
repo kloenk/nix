@@ -22,6 +22,7 @@
     };
   };
 
+  users.users.systemd-network.extraGroups = [ "keys" ];
   krops.secrets.files."wg0.key".owner = "root";
   krops.secrets.files."wg0.psk".owner = "root";
 }

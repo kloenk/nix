@@ -47,13 +47,15 @@
 
 	environment.systemPackages = with pkgs; [
 		termite.terminfo
-		kitty.terminfo
+    kitty.terminfo
+    alacritty.terminfo
 		rxvt_unicode.terminfo
 		restic
 		tmux
 		exa
 		iptables
-		bash-completion
+    bash-completion
+    whois
 	];
 
   environment.variables.EDITOR = "vim";
