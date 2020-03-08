@@ -250,7 +250,9 @@ in {
 	};
 
 	programs.fish.enable = true;
-	programs.mtr.enable = true;
+  programs.mtr.enable = true;
+
+  nix.trustedUsers = [ "kloenk" "@wheel" ];
 
 	users.users.root.shell = pkgs.fish;
 
