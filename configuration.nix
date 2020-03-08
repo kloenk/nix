@@ -1,32 +1,33 @@
 {
   config
 , pkgs
-, lib
 , ...}:
 
-in
+let
 	grubDev = "/dev/sda";
 	interface = "eno0";
 	hostname = "nixos";
-	supportedFilesystems = [ ];
-let {
+  supportedFilesystems = [ ];
+  nixpkgs = (fetchTarball "https://github.com/nixos/nixpkgs/archive/nixos-unstable-small.tar.gz");
+  pkgs = import nixpkgs;
+  lib = pkgs.lib;
+in {
 	imports = [
-  	./hardware-configuration.nix
-		(builtins.fetchGit {
-  		url = "https://github.com/rycee/home-manager/";
-			rev = "d677556e62ab524cb6fcbc20b8b1fb32964db021";
-			#sha256 = "17kdp4vflyvqiq1phy7x5mfrcgy5c02c0a0p0n5yjf8yilvcldr4";
-		} + "/nixos")
-	];
+    ./hardware-configuration.nix
+    ((fetchTarball "https://github.com/rycee/home-manager/archive/master.tar.gz") + "/nixos")
+  ];
 
 	boot.loader.grub = {
 			enable = true;
 			version = 2;
 			device = grubDev;
 			useOSProber = true;
-	};
+  };
 
-	boot.supportedFilesystems = [ "xfs" ] ++ supportedFilesystems;
+  environment.etc."src/nixpkgs".source = nixpkgs;
+  envirenment.variables.NIX_PATH = lib.mkForce 25 "/etc/src";
+
+  boot.supportedFilesystems = [ "xfs" "ext2" ] ++ supportedFilesystems;
 	boot.kernelPackages = pkgs.linuxPackages_latest;
 
 	networking.hostName = hostname;
@@ -42,11 +43,9 @@ let {
 
 	security.sudo.wheelNeedsPassword = false;
 
-	i18n = {
-		Font = "Lat2-Terminus16";
-		KeyMap = "neo";
-		defaultLocale = "en_US.UTF-8";
-	};
+	i18n.defaultLocale = "en_US.UTF-8";
+  console.keyMap = "neo";
+  console.font = "Lat2-Terminus16";
 
 	time.timeZone = "Europe/Berlin";
 
@@ -88,14 +87,11 @@ let {
 		];
 	};
 
-	# TODO home-manager-dir
-	# TODO krops dir/file
 	system.activationScripts = {
 		base-dirs = {
 			text = ''
 				mkdir -p /nix/var/nix/profiles/per-user/kloenk
-				mkdir -p /var/src
-				touch /var/src/.populate
+				mkdir -p /var/src/secrets
 			'';
 			deps = [];
 		};
