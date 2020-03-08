@@ -38,6 +38,10 @@ in {
 		hostname = "polyus.kloenk.de:62954";
 		prometheusExporters = [ "node-exporter" "nginx-exporter" ];
   };
+  planets = {
+    hostname = "[2001:678:bbc:3e7:f199::1]:62954";
+    prometheusExporters = [ "node-exporter" "nginx-exporter" ];
+  };
 
 	# for wireguard only
 	combahton = {
