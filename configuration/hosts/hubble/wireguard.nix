@@ -5,11 +5,53 @@
 
   networking.firewall = {
     allowedUDPPorts = [
+      51819 # y0sh0
       51820 # wg0
       51821 # wgFam
       51822 # llg0
     ];
   };
+
+  systemd.network.netdevs."30-y0sh0" = {
+    netdevConfig = {
+      Kind = "wireguard";
+      Name = "y0sh0";
+    };
+    wireguardConfig = {
+      FwMark = 51820;
+      ListenPort = 51819;
+      PrivateKeyFile = config.krops.secrets.files."y0sh0.key".path;
+    };
+    wireguardPeers = [
+      { wireguardPeerConfig = {
+          AllowedIPs = [ "0.0.0.0/0" ];
+          PublicKey = "DCI9lK4yKAwmu1qMYkv+kBq2GlsVq/2GDLwa616Dsxc=";
+          PersistentKeepalive = 21;
+        };
+      }
+    ];
+  };
+  systemd.network.networks."30-y0sh0" = {
+    name = "y0sh0";
+    addresses = [
+      {
+        addressConfig.Address = "195.39.246.49/28";
+      }
+    ];
+    routes = [
+      {
+        routeConfig.Destination = "195.39.246.62/32";
+        routeConfig.Table = "51820";
+      }
+    ];
+    extraConfig = ''
+      [RoutingPolicyRule]
+      Table = 51820
+      Family = both
+      Priority = 25000
+    '';
+  };
+
 
   systemd.network.netdevs."30-wg0" = {
     netdevConfig = {
@@ -41,6 +83,12 @@
           AllowedIPs = [ "192.168.42.7/32" "2001:41d0:1004:1629:1337:187:1:7/128" "2a0f:4ac0:f199:42::7/128" ];
           PublicKey = "009Wk3RP7zOmu61Zc7ZCeS6lJyhUcXZwZsBJoadHOA0=";
           PresharedKeyFile = config.krops.secrets.files."wg0.atom.psk".path;
+          PersistentKeepalive = 21;
+        };
+      } {
+        wireguardPeerConfig = {
+          AllowedIPs = [ "192.168.42.137/32" ];
+          PublicKey = "9J/8LP2ATrZR/7qbwug05EsIqGJuN8a/+OBh3wAw+ig=";
           PersistentKeepalive = 21;
         };
       }
@@ -198,6 +246,7 @@
     '';
   };
 
+  krops.secrets.files."y0sh0.key".owner = "systemd-network";
   krops.secrets.files."wg0.key".owner = "systemd-network";
   krops.secrets.files."wg0.titan.psk".owner = "systemd-network";
   krops.secrets.files."wg0.kloenkX.psk".owner = "systemd-network";

@@ -90,13 +90,13 @@ in {
 		networking.interfaces.lo.ipv4.addresses = [ { address = cfg.primaryIP4; prefixLength = 32; }	];
 		networking.interfaces.lo.ipv6.addresses = [ { address = cfg.primaryIP; prefixLength = 128; }	];
 
-		services.bird2.enable = true;
-		services.bird2.config = ''
-			router id ${cfg.primaryIP4};
-
+    services.bird2.enable = true;
+    services.bird2.id = cfg.primaryIP4;
+		services.bird2.extraConfig = ''
 			function net_local() {
 				if net.type = NET_IP4 then return net ~ [
-					195.39.246.49/32
+          195.39.246.49/32,
+          192.39.246.62/32
 				];
 				return net ~ [
 					2a0f:4ac0:f199::1/128
@@ -176,7 +176,11 @@ in {
 				interface "lo";
 				ipv6 { import all; };
 				ipv4 { import all; };
-			}
+      }
+      protocol static y0sh {
+        ipv4 { import all; };
+        route 195.39.246.62/32 via "y0sh0";
+      }
 		'' + lib.concatStringsSep "\n" (lib.mapAttrsToList (name: host: ''
 			protocol static static_tunnel_${name} {
 				ipv6 { import all; };
@@ -210,7 +214,7 @@ in {
 					};
 				};
 				source address fda0::${toString thisHost.magicNumber};
-				neighbor fda0::${toString host.magicNumber} as ${if host.bgp ? as then host.bgp.as else toString (65000 + host.magicNumber)};
+				neighbor fda0::${toString host.magicNumber} as ${if host.bgp ? as then (toString host.bgp.as) else toString (65000 + host.magicNumber)};
 			}
 			protocol bgp ${name}4 {
 				${lib.optionalString (host.bgp ? internal) ''
@@ -243,7 +247,7 @@ in {
 					};
 				};
 				source address 10.23.42.${toString thisHost.magicNumber};
-				neighbor 10.23.42.${toString host.magicNumber} as ${if host.bgp ? as then host.bgp.as else toString (65000 + host.magicNumber)};
+				neighbor 10.23.42.${toString host.magicNumber} as ${if host.bgp ? as then (toString host.bgp.as) else toString (65000 + host.magicNumber)};
 			}
 		'') bgpHosts);
 
