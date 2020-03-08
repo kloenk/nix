@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, nixos-mailserver, jblock, secrets, krops, ... }:
+{ nixpkgs, home-manager, nixos-mailserver, secrets, krops, ... }:
 
 let
   hosts = import ../configuration/hosts;
@@ -14,7 +14,6 @@ let
     "sources/nixpkgs".file = nixpkgs;
     "sources/home-manager".file = home-manager;
     "sources/nixos-mailserver".file = nixos-mailserver;
-    "sources/jblock".file = jblock;
     secrets.pass = {
       dir = secrets;
       inherit name;

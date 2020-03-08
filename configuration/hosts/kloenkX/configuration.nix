@@ -170,6 +170,21 @@ in {
   ";
   hardware.pulseaudio.zeroconf.discovery.enable = true;
 
+  home-manager.users.root = {
+    programs.ssh = {
+      enable = true;
+      matchBlocks = {
+        gurke = {
+          hostname = "gurke.pbb.lc";
+          port = 62954;
+          user = "kloenk";
+          identityFile = config.krops.secrets.files."id_rsa".path;
+        };
+      };
+    };
+  };
+  krops.secrets.files."id_rsa".owner = "root";
+
   # build server
   nix.buildMachines = [
     {
@@ -181,7 +196,20 @@ in {
       maxJobs = 8;
       speedFactor = 2;
     }
+    {
+      hostName = "gurke";
+      sshUser = "kloenk";
+      #sshKey = krops.secrets.files."id_rsa".path;
+      system = "x86_64-linux";
+      supportedFeatures = [ "kvm" "big-parallel" ];
+      maxJobs = 8;
+      speedFactor = 2;
+    }
   ];
+  nix.extraOptions = ''
+    builders-use-substitutes = true
+  '';
+  nix.gc.automatic = false;
 
   services.prometheus.exporters.node.enabledCollectors = [ "tcpstat" "wifi" ];
   
