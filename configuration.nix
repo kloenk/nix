@@ -7,27 +7,27 @@ let
 	grubDev = "/dev/sda";
 	interface = "eno0";
 	hostname = "nixos";
-  supportedFilesystems = [ ];
-  nixpkgs = (fetchTarball "https://github.com/nixos/nixpkgs/archive/nixos-unstable-small.tar.gz");
-  pkgs = import nixpkgs;
-  lib = pkgs.lib;
+	supportedFilesystems = [ ];
+	nixpkgs = (fetchTarball "https://github.com/nixos/nixpkgs/archive/nixos-unstable-small.tar.gz");
+	pkgs = import nixpkgs;
+	lib = pkgs.lib;
 in {
 	imports = [
-    ./hardware-configuration.nix
-    ((fetchTarball "https://github.com/rycee/home-manager/archive/master.tar.gz") + "/nixos")
-  ];
+		./hardware-configuration.nix
+		((fetchTarball "https://github.com/rycee/home-manager/archive/master.tar.gz") + "/nixos")
+	];
 
 	boot.loader.grub = {
 			enable = true;
 			version = 2;
 			device = grubDev;
 			useOSProber = true;
-  };
+	};
 
-  environment.etc."src/nixpkgs".source = nixpkgs;
-  envirenment.variables.NIX_PATH = lib.mkForce 25 "/etc/src";
+	environment.etc."src/nixpkgs".source = nixpkgs;
+	envirenment.variables.NIX_PATH = lib.mkForce 25 "/etc/src";
 
-  boot.supportedFilesystems = [ "xfs" "ext2" ] ++ supportedFilesystems;
+	boot.supportedFilesystems = [ "xfs" "ext2" ] ++ supportedFilesystems;
 	boot.kernelPackages = pkgs.linuxPackages_latest;
 
 	networking.hostName = hostname;
@@ -44,8 +44,8 @@ in {
 	security.sudo.wheelNeedsPassword = false;
 
 	i18n.defaultLocale = "en_US.UTF-8";
-  console.keyMap = "neo";
-  console.font = "Lat2-Terminus16";
+	console.keyMap = "neo";
+	console.font = "Lat2-Terminus16";
 
 	time.timeZone = "Europe/Berlin";
 
