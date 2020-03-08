@@ -114,11 +114,12 @@
 			git = {
 				enable = true;
 				userName = "Finn Behrens";
-				userEmail = "me@kloenk.de";
+        userEmail = "me@kloenk.de";
+        aliases.master = "checkout master";
 				extraConfig = {
           #core.editor = "${pkgs.vim}/bin/vim";
 					color.ui = true;
-				};
+        };
 			};
 
 			#fish = {
