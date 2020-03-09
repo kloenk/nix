@@ -87,7 +87,7 @@
 			parallel
 			skim
 			file
-			git
+                        #git
 			elinks
 			bc
 			zstd
@@ -266,6 +266,7 @@
 		extraConfig = ''
       set viminfo='20,<1000
       set shiftwidth=2
+      set cc=80
       set nu
     '';
     plugins = with pkgs; [ vimPlugins.rust-vim vimPlugins.tabular	vimPlugins.vim-nix vimPlugins.vim-table-mode ];
