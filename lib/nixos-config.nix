@@ -25,4 +25,5 @@ let
   }) nixosHosts;
 in {
   configs = lib.mapAttrs (name: eval: eval.config.system.build.toplevel) evals;
+  options = lib.mapAttrs (name: eval: eval.config) evals;
 }
