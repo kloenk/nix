@@ -9,22 +9,33 @@ let
   inherit (import ./nixos-config.nix sources) options;
   templateHost = "kloenkX";
   userName = "kloenk";
-  hm = options.${templateHost}.home-manager.users.kloenk;
+  hmk = options.${templateHost}.home-manager.users.kloenk;
   user = options.${templateHost}.users.users.kloenk;
-in {
+in rec {
 
-  home-manager = {
-    home.packages = user.packages ++ hm.home.packages ++ [ pkgs.kitty.terminfo ];
-    home.file = hm.home.file;
-    xdg = hm.xdg;
-    programs.zsh = hm.programs.zsh;
-    programs.ssh = hm.programs.ssh;
-    #programs.git = hm.programs.git;
-    #programs.gnupg = hm.programs.gnupg;
-    #services.gpg-agent = hm.services.gpg-agent;
+  hm = ({
+    home.packages = user.packages ++ hmk.home.packages ++ [ pkgs.kitty.terminfo ];
+    home.file = hmk.home.file;
+    xdg = hmk.xdg;
+    programs.zsh = lib.recursiveUpdate hmk.programs.zsh {
+      initExtra = "export SSH_AUTH_SOCK=/run/user/$(id -u)/gnupg/S.gpg-agent.ssh";
+    };
+    programs.ssh = hmk.programs.ssh;
+    #programs.git = hmk.programs.git;
+    #programs.gnupg = hmk.programs.gnupg;
+    #services.gpg-agent = hmk.services.gpg-agent;
     #wayland.windowManager.sway.extraSessionCommands = options."${templateHost}".programs.sway.extraSessionCommands;
     #wayland.windowManager.sway.enable = true;
-  };
+  });
+
+
+  #home = (import (home-manager + "/home-manager/home-manager.nix") { })
+  home = (import (home-manager + "/modules") {
+    configuration = hm; #import ../home.nix { pkgs = pkgs; };
+    lib = lib;
+    pkgs = pkgs;
+    check = true;
+  });
 
   install-home-manager = (import nixpkgs {}).pkgs.writeScript "install.sh" ''
     if [ -f /home/${userName}/.config/nixpkgs/home.nix ]; then
