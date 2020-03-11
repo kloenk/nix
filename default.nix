@@ -12,7 +12,7 @@ let
 	};
 in {
   inherit (import ./lib/nixos-config.nix sources) configs options;
-  inherit (import ./lib/manager.nix sources) hm home;
+  inherit (import ./lib/manager.nix sources) home;
   #sources = inherit (sources);
   jobsets.iso = import ./lib/iso-image.nix sources;
   #pkgs = import ./pkgs sources;
