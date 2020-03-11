@@ -72,5 +72,10 @@ in {
 		wireguard.endpoint = "2a01:4f8:162:1900::20";
 		magicNumber = 4;
 		bgp = pbbAS;
-	};
+  };
+
+  # dotfiles only
+  adminpc = {
+    dotfiles = true;
+  };
 }

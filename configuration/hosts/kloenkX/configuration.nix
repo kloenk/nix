@@ -108,7 +108,6 @@ in {
     tpacpi-bat
     acpi                   # fixme: not in the kernel
     wine                   # can we ditch it?
-    firefox                # used because of netflix :-(
     spotifywm              # spotify fixed for wms
     python                 # includes python2 as dependency for vscode
     platformio             # pio command
