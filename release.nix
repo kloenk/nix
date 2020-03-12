@@ -14,5 +14,5 @@ let
   };
   home = (import ./lib/manager.nix sources).home;
 in {
-  jobsets = home.adminpc;
+  inherit home;
 }
