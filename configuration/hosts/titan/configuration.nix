@@ -2,6 +2,7 @@
 
 let
   secrets = import /etc/nixos/secrets.nix;
+  interface = "enp3s0";
 in {
   imports = [
     ./hardware-configuration.nix
@@ -23,7 +24,7 @@ in {
   nix.gc.automatic = false;
 
   networking.useDHCP = false;
-  networking.interfaces.enp4s0.useDHCP = true;
+  networking.interfaces."${interface}".useDHCP = true;
   networking.hostName = "titan";
   networking.extraHosts = ''
     172.16.0.1 airlink.local unit.local

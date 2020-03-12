@@ -24,6 +24,7 @@
     waybar
     swaylock
     brightnessctl
+    alacritty
   ];
 
   fonts.fonts = with pkgs; [ dejavu_fonts liberation_ttf noto-fonts noto-fonts-emoji font-awesome_4 ];
@@ -33,6 +34,9 @@
     xdg.configFile."waybar/config".source = ./config.waybar;
     xdg.configFile."waybar/style.css".source = ./style.waybar;
     xdg.configFile."quassel-irc.org/Dracula.qss".source = ./Dracula.qss;
+    xdg.configFile."alacritty/alacritty.yml".source = ./alacritty.yml;
     home.file.".wallpaper-image".source = ./wallpaper-image;
   };
+
+  environment.variables.TERMINAL = "alacritty";
 }

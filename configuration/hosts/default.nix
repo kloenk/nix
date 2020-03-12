@@ -50,23 +50,27 @@ in {
 		magicNumber = 5;
 		bgp = pbbAS;
 	};
+	# for wireguard only
 	vultr = {
 		wireguard.publicKey = "SD8bQrbrr3TlyaUrqZMvlXsrP9GUTYH3wRjAGWVDoTA=";
 		wireguard.endpoint = "notvultr.pbb.lc";
 		magicNumber = 1;
 		bgp = pbbAS;
 	};
+	# for wireguard only
 	netcup = {
 		wireguard.publicKey = "licaX8d5sOjz7OPZM2YDbEB/PKhwlqoJ3Ut10xfL9Co=";
 		wireguard.endpoint = "notnetcup.pbb.lc";
 		magicNumber = 8;
 		bgp = pbbAS;
 	};
+	# for wireguard only
 	tomate = {
 		wireguard.publicKey = "bBkntnpzbkN8W0cbJ+yd5MMnPZu7gctQNPGMGMUU23g=";
 		magicNumber = 201;
 		bgp = pbbAS;
 	};
+	# for wireguard only
 	schinken = {
 		wireguard.publicKey = "VT4wAsdBJuFzDhsTgcpdWLMkZJYbfeXa2yAvuGh1/iA=";
 		wireguard.endpoint = "2a01:4f8:162:1900::20";
@@ -74,7 +78,7 @@ in {
 		bgp = pbbAS;
   };
 
-  # dotfiles only
+  # for dotfiles only
   adminpc = {
     dotfiles = true;
   };

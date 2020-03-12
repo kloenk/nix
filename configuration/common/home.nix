@@ -6,7 +6,8 @@
 			enable = true;
 			userName = "Finn Behrens";
 			userEmail = "me@kloenk.de";
-			aliases.master = "checkout master";
+      aliases.master = "checkout master";
+      aliases.ls = "status";
 			extraConfig = {
 					color.ui = true;
 				};
