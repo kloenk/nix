@@ -25,6 +25,7 @@ in {
 
   networking.useDHCP = false;
   networking.interfaces."${interface}".useDHCP = true;
+  networking.interfaces.enp4s0.useDHCP = true;
   networking.hostName = "titan";
   networking.extraHosts = ''
     172.16.0.1 airlink.local unit.local

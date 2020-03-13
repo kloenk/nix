@@ -20,7 +20,7 @@ in {
     ./postgres.nix
     ./quassel.nix
     ./deluge.nix
-    #./engelsystem.nix
+    ./engelsystem.nix
     #./netbox.nix
     #./redis.nix
 
@@ -31,6 +31,9 @@ in {
     # fallback for detection
     <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
   ];
+
+  # vm connection
+  services.qemuGuest.enable = true;
 
   # patches for systemd
   systemd.package = pkgs.systemd.overrideAttrs (old: {
@@ -119,13 +122,6 @@ in {
     locations."/".extraConfig = "autoindex on;";
   };
 
-  services.nginx.virtualHosts."ftb.kloenk.de" = {
-    enableACME = true;
-    forceSSL = true;
-    root = "/data/http/ftb";
-    locations."/".extraConfig = "autoindex on;";
-  };
-
   services.nginx.virtualHosts."politics.kloenk.de" = {
     enableACME = true;
     forceSSL = true;
@@ -160,7 +156,6 @@ in {
   services.nginx.virtualHosts."punkte.kloenk.de" = {
     enableACME = true;
     forceSSL = true;
-    locations."/".proxyPass = "http://127.0.0.1:3006/";
   };
   
   services.nginx.virtualHosts."punkte.landratlucas.de" = {

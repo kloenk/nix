@@ -7,5 +7,6 @@
 		./ferm2
     ./secrets
     ./bird2
+    ./engelsystem
 	];
 }

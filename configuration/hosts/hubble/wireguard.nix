@@ -205,7 +205,7 @@
     wireguardPeers = [
       { # io
         wireguardPeerConfig = {
-           AllowedIPs = [ "192.168.43.2/32" "2a0f:4ac0:f199:119::2/128" ];
+           AllowedIPs = [ "192.168.43.2/32" "2a0f:4ac0:f199:119::2/128" "10.0.0.0/8" ];
            PublicKey = "rzyPnz6iliO5hyggfUJcmDrNeFPtMDeWRsq3liEfdQ4=";
            PresharedKeyFile = config.krops.secrets.files."llg0.io.psk".path;
            PersistentKeepalive = 21;
@@ -238,6 +238,7 @@
     routes = [
       { routeConfig.Destination = "192.168.43.0/24"; routeConfig.Table = "51820"; }
       { routeConfig.Destination = "2a0f:4ac0:f199:199::/64"; }
+      { routeConfig.Destination = "10.0.0.0/8"; routeConfig.Table = "51820"; }
     ];
     extraConfig = ''
       [RoutingPolicyRule]
