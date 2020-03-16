@@ -35,7 +35,7 @@
     name = "y0sh0";
     addresses = [
       {
-        addressConfig.Address = "195.39.246.49/28";
+        addressConfig.Address = "195.39.246.49/32";
       }
     ];
     routes = [

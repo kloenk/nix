@@ -43,6 +43,15 @@ in {
     prometheusExporters = [ "node-exporter" "nginx-exporter" ];
   };
 
+  # for monitoring only
+  gdv01 = {
+    prometheusExporters = [ "node-exporter" "collectd" ];
+  };
+  # for monitoring only
+  gdv02 = {
+    prometheusExporters = [ "node-exporter" "collectd" ];
+  };
+
 	# for wireguard only
 	combahton = {
 		wireguard.publicKey = "9azKCE2ZgWYo0kWD8ezsWDWD3YMlFrxXia23q5ENLm8=";

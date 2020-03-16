@@ -1,6 +1,6 @@
 $TTL 1M
 @		SOA	ns1.kloenk.de. hostmaster.kloenk.de. (
-    2020031201  	; serial (yyyymmdd##)
+    2020031603  	; serial (yyyymmdd##)
     3600            ; refresh
     1000            ; retry
     604800          ; expiry
@@ -76,6 +76,11 @@ firefox          AAAA    2001:41d0:1004:1629:1337:0187::
 
 quassel          A       51.254.249.187
 quassel          AAAA    2001:41d0:1004:1629:1337:0187::
+
+gdv01		CNAME	gdv01.eventphone.de.
+gdv02		CNAME	gdv02.eventphone.de.
+gdvstats CNAME gdvstats.eventphone.de.
+gdvalerts CNAME gdvalerts.eventphone.de.
 
 ;hubble			A		192.168.42.1
 hubble			A 	51.254.249.187
