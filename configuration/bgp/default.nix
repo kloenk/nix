@@ -117,7 +117,8 @@ in {
 					198.51.100.0/24+,	 # RFC 5737 TEST-NET-2
 					203.0.113.0/24+,		# RFC 5737 TEST-NET-3
 					224.0.0.0/4+,			 # multicast
-					240.0.0.0/4+				# reserved
+          240.0.0.0/4+,			# reserved
+          0.0.0.0/0         # default network
 				];
 				return net ~ [
 					::/8+,												 # RFC 4291 IPv4-compatible, loopback, et al 
@@ -130,7 +131,8 @@ in {
 					fc00::/7+,										 # RFC 4193 unique local unicast
 					fe80::/10+,										# RFC 4291 link local unicast
 					fec0::/10+,										# RFC 3879 old site local unicast
-					ff00::/8+											# RFC 4291 multicast
+          ff00::/8+,										# RFC 4291 multicast
+          ::/0                          # default network
 				];
 			}
 

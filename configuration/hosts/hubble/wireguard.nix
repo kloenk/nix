@@ -48,7 +48,7 @@
       [RoutingPolicyRule]
       Table = 51820
       Family = both
-      Priority = 25000
+      Priority = 31000
     '';
   };
 
@@ -132,7 +132,7 @@
       [RoutingPolicyRule]
       Table = 51820
       Family = both
-      Priority = 25000
+      Priority = 31000
     '';
   };
 
@@ -187,7 +187,7 @@
       [RoutingPolicyRule]
       Table = 51820
       Family = both
-      Priority = 25000
+      Priority = 31000
     '';
   };
 
@@ -244,7 +244,7 @@
       [RoutingPolicyRule]
       Table = 51820
       Family = both
-      Priority = 25000
+      Priority = 31000
     '';
   };
 
