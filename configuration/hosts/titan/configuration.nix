@@ -18,7 +18,29 @@ in {
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
   ];
 
-  environment.variables.NIX_PATH = lib.mkForce "/var/src";
+  hardware.cpu.intel.updateMicrocode = true;
+  boot.loader.grub.enable = true;
+  boot.loader.grub.version = 2;
+  boot.loader.grub.device = "/dev/disk/by-id/wwn-0x5002538e40df324b";
+  boot.supportedFilesystems = [ "xfs" "nfs" "ext2" "ext4" ];
+  boot.kernelModules = [ "amdgpu" ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    wireguard
+    acpi_call
+  ];
+
+  boot.initrd.luks.devices."cryptLVM".device = "/dev/disk/by-id/wwn-0x5002538e40df324b-part2";
+  boot.initrd.luks.devices."cryptLVM".allowDiscards = true;
+
+  boot.consoleLogLevel = 0;
+  boot.kernelParams = [
+    "quiet"
+    "radeon.cik_support=0"
+    "amdgpu.cik_support=1"
+    "radeon.si_support=0"
+    "amdgpu.si_support=1"
+    "intel_iommu=on"
+  ];
 
   nixpkgs.config.allowUnfree = true;
   nix.gc.automatic = false;
@@ -70,8 +92,6 @@ in {
   # docker fo
   virtualisation.docker.enable = true;
 
-  boot.kernelParams = [ "intel_iommu=on" ];
-
   virtualisation.libvirtd = {
     enable = true;
     onShutdown = "shutdown";
@@ -101,5 +121,5 @@ in {
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-  system.stateVersion = "20.03";
+  system.stateVersion = "20.09";
 }

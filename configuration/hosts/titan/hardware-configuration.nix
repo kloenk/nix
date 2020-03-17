@@ -4,53 +4,29 @@
 { config, lib, pkgs, ... }:
 
 {
-  hardware.cpu.intel.updateMicrocode = true;
+  imports =
+    [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
+    ];
 
-  #boot.loader.systemd-boot.enable = true;
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.device = "/dev/disk/by-id/ata-Samsung_SSD_860_EVO_1TB_S3Z9NB0M344364P";
-  boot.loader.grub.useOSProber = true;
-
-  # f2fs support
-  boot.supportedFilesystems = [ "xfs" "nfs" "ntfs" ];
-
-  # taken from hardware-configuration.nix
-  boot.initrd.availableKernelModules = [
-    "ahci"
-    "ohci_pci"
-    "ehci_pci"
-    "pata_jmicron"
-    "xhci_pci"
-    "firewire_ohci"
-    "usb_storage"
-    "usbhid"
-    "sd_mod"
-  ];
-  boot.kernelModules = [ "kvm-intel" "amdgpu" ];
-  boot.extraModulePackages = [
-    config.boot.kernelPackages.acpi_call
-    config.boot.kernelPackages.wireguard
-  ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.kernelModules = [ "dm-snapshot" ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-id/ata-Samsung_SSD_860_EVO_1TB_S3Z9NB0M344364P-part3";
+    { device = "/dev/disk/by-uuid/07f2cf7d-b234-4a03-9df2-30c1df894e90";
       fsType = "xfs";
     };
 
-  fileSystems."/boot"  = {
-    device = "/dev/disk/by-id/ata-Samsung_SSD_860_EVO_1TB_S3Z9NB0M344364P-part1";
-    fsType = "ntfs";
-  };
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/bc3f0651-c74a-4756-9233-567c201edfdd";
+      fsType = "ext2";
+    };
 
-  swapDevices = [
-    { device = "/dev/disk/by-label/nixos-swap"; }
-  ];
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/375f0101-104b-4643-a6c1-1d66d5c1a067"; }
+    ];
 
   nix.maxJobs = lib.mkDefault 8;
-
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
-
-  boot.consoleLogLevel = 0;
-  boot.kernelParams = [ "quiet" "radeon.cik_support=0" "amdgpu.cik_support=1" "radeon.si_support=0" "amdgpu.si_support=1" ];
 }
