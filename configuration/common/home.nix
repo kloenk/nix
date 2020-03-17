@@ -111,7 +111,17 @@
 						hostname = "polyus.kloenk.de";
 						port = 62954;
 						user = "kloenk";
-					};
+          };
+          gdv01 = {
+            hostname = "gdv01.eventphone.de";
+            port = 22;
+            user = "root";
+          };
+          gdv02 = {
+            hostname = "gdv02.eventphone.de";
+            port = 22;
+            user = "root";
+          };
 				};
 			};
 
