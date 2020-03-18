@@ -9,7 +9,7 @@ let
 	hostname = "nixos";
 	supportedFilesystems = [ ];
 	nixpkgs = (fetchTarball "https://github.com/nixos/nixpkgs/archive/nixos-unstable-small.tar.gz");
-	pkgs = import nixpkgs;
+	pkgs = import nixpkgs { };
 	lib = pkgs.lib;
 in {
 	imports = [
@@ -25,7 +25,7 @@ in {
 	};
 
 	environment.etc."src/nixpkgs".source = nixpkgs;
-	environment.variables.NIX_PATH = lib.mkForce 25 "/etc/src";
+	environment.variables.NIX_PATH = lib.mkOverride 25 "/etc/src";
 
 	boot.supportedFilesystems = [ "xfs" "ext2" ] ++ supportedFilesystems;
 	boot.kernelPackages = pkgs.linuxPackages_latest;
