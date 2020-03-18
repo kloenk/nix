@@ -111,7 +111,13 @@
 						hostname = "polyus.kloenk.de";
 						port = 62954;
 						user = "kloenk";
-					};
+          };
+          "berlin.nyantec.com" = {
+            hostname = "berlin.nyantec.com";
+            port = 24;
+            user = "fin";
+            forwardAgent = true;
+          };
 				};
 			};
 

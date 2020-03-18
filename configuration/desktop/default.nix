@@ -98,7 +98,7 @@
   hardware.opengl.driSupport32Bit = true;
 
   home-manager.users.kloenk.programs.git.signing = {
-        key = "0xC9546F9D";
+        key = "0x8609A7B519E5E342";
         signByDefault = true;
   };
 

@@ -8,7 +8,7 @@ let
   newpkgs = {
     collectd-wireguard = callPackage ./collectd-wireguard { };
     jblock = callPackage ./jblock { };
-    engelsystem = callPackage ./engelsystem { };
+    #engelsystem = callPackage ./engelsystem { };
     #engelsystem = callPackage ./engelsystem { };
     #rifo = callPackage ./rifo { };
     #rwm = callPackage ./rwm { };

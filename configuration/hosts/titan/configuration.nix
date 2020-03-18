@@ -29,6 +29,8 @@ in {
     acpi_call
   ];
 
+  services.openssh.passwordAuthentication = true;
+
   boot.initrd.luks.devices."cryptLVM".device = "/dev/disk/by-id/wwn-0x5002538e40df324b-part2";
   boot.initrd.luks.devices."cryptLVM".allowDiscards = true;
 
@@ -52,6 +54,7 @@ in {
   networking.extraHosts = ''
     172.16.0.1 airlink.local unit.local
     192.168.178.248	atom.fritz.box
+    127.0.0.1 punkte.kloenk.de
   '';
   networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
   networking.search = [ "fritz.box" "kloenk.de" ];
