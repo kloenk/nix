@@ -26,10 +26,10 @@ in {
 		hostname = "kloenk@192.168.178.248:62954";
 		prometheusExporters = [ "node-exporter" "nginx-exporter" "wireguard" ];
 	};
-	nixos-builder-1 = {
-		hostname = "kloenk@192.168.178.48:62954";
-		prometheusExporters = [ "node-exporter" "nginx-exporter" ];
-	};
+  #nixos-builder-1 = {
+	#	hostname = "kloenk@192.168.178.48:62954";
+	#	prometheusExporters = [ "node-exporter" "nginx-exporter" ];
+	#};
 	gurke = {
 		hostname = "gurke.pbb.lc:62954";
 		prometheusExporters = [ "node-exporter" "nginx-exporter" ];

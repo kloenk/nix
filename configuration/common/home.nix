@@ -112,6 +112,16 @@
 						port = 62954;
 						user = "kloenk";
           };
+
+          # nyantec
+          "berlin.n0yantec.com" = {
+            hostname = "berlin.nyantec.com";
+            port = 24;
+            user = "fin";
+            forwardAgent = true;
+          };
+
+          # gdv
           gdv01 = {
             hostname = "gdv01.eventphone.de";
             port = 22;
