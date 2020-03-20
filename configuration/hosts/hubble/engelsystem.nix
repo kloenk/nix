@@ -20,6 +20,7 @@
   services.engelsystem = {
     enable = true;
     domain = "punkte.kloenk.de";
+    database.host = ":/run/mysqld/mysqld.sock";
     #database.passwordFile??
     maintenance = false;
     mail = {

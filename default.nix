@@ -18,7 +18,7 @@ in {
   pkgs = import ./pkgs sources;
 } // (if hydra then {} else {
   inherit (import ./lib/nixos-config.nix sources) configs;
-  #inherit (import ./lib/krops.nix sources) deploy;
+  inherit (import ./lib/krops3.nix sources) deploy;
 	tools.kexec_tarball = import ./lib/kexec-tarball.nix sources;
   tools.isoImage = import ./lib/iso-image.nix sources;
   inherit sources;

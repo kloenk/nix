@@ -5,8 +5,8 @@ let
   lib = pkgs.lib;
   evalConfig = import (nixpkgs + "/nixos/lib/eval-config.nix");
 
-  hosts = import ../hosts;
-  nixosHosts = lib.filterAttrs (name: host: host ? hostname) host;
+  hosts = import ../configuration/hosts;
+  nixosHosts = lib.filterAttrs (name: host: host ? hostname) hosts;
 in {
   evals = lib.mapAttrs (name: host: (evalConfig {
     modules = [
