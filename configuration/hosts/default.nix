@@ -67,13 +67,6 @@ in {
 		bgp = pbbAS;
 	};
 	# for wireguard only
-	netcup = {
-		wireguard.publicKey = "licaX8d5sOjz7OPZM2YDbEB/PKhwlqoJ3Ut10xfL9Co=";
-		wireguard.endpoint = "notnetcup.pbb.lc";
-		magicNumber = 8;
-		bgp = pbbAS;
-	};
-	# for wireguard only
 	tomate = {
 		wireguard.publicKey = "bBkntnpzbkN8W0cbJ+yd5MMnPZu7gctQNPGMGMUU23g=";
 		magicNumber = 201;
