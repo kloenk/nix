@@ -3,27 +3,27 @@
 let
   pkgs = import nixpkgs {};
   lib = pkgs.lib;
-  evalConfig = import (nixpkgs + "/nixos/lib/eval-config.nix");
 
   hosts = import ../configuration/hosts;
   nixosHosts = lib.filterAttrs (name: host: host ? hostname) hosts;
 
   sourcesModule = { lib, ... }: {
-    options.sources = lib.mkOption { };
+    options.sources = lib.mkOption {
+    };
+
     config.sources = sources;
   };
-
-  evals = lib.mapAttrs (name: host: evalConfig {
-    modules = [
-      (toString ../configuration + "/hosts/" + name + "/configuration.nix")
-      sourcesModule
-      (home-manager + "/nixos")
-      ../modules
-      nixos-mailserver
-    ];
-    #krops.secrets.source-path = toString secrets;
-  }) nixosHosts;
 in {
-  configs = lib.mapAttrs (name: eval: eval.config.system.build.toplevel) evals;
-  options = lib.mapAttrs (name: eval: eval.config) evals;
+  configs = lib.mapAttrs (name: host:
+  { ... }:
+
+    {
+      imports = [
+        (toString ../configuration + "/hosts/" + name + "/configuration.nix")
+        sourcesModule
+        (home-manager + "/nixos")
+        (toString nixos-mailserver)
+      ];
+    }
+  ) nixosHosts;
 }
