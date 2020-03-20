@@ -13,6 +13,7 @@ in {
     ../../common
     ../../desktop
     ../../desktop/sway.nix
+    #../../desktop/plasma.nix
 
     # fallback for detection
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
@@ -23,7 +24,7 @@ in {
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/disk/by-id/wwn-0x5002538e40df324b";
   boot.supportedFilesystems = [ "xfs" "nfs" "ext2" "ext4" ];
-  boot.kernelModules = [ "amdgpu" ];
+  boot.kernelModules = [ "vfio-pci" "amdgpu" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [
     wireguard
     acpi_call
@@ -36,12 +37,14 @@ in {
 
   boot.consoleLogLevel = 0;
   boot.kernelParams = [
-    "quiet"
+    #"quiet"
+    #"iommu=pt"
+    "intel_iommu=on"
+    "vfio-pci.ids=1002:699f,1002:aae0"
     "radeon.cik_support=0"
     "amdgpu.cik_support=1"
     "radeon.si_support=0"
     "amdgpu.si_support=1"
-    "intel_iommu=on"
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -98,13 +101,24 @@ in {
   virtualisation.libvirtd = {
     enable = true;
     onShutdown = "shutdown";
+    qemuVerbatimConfig = ''
+      cgroup_device_acl = [
+        "/dev/kvm",
+        "/dev/input/by-id/usb-STMicroelectronics_obins_anne_keyboard_STM32-if01-event-kbd",
+        "/dev/input/by-id/usb-G-Tech_Wireless_Dongle-event-mouse",
+        "/dev/null", "/dev/full", "/dev/zero",
+        "/dev/random", "/dev/urandom",
+        "/dev/ptmx", "/dev/kvm", "/dev/kqemu",
+        "/dev/rtc","/dev/hpet", "/dev/sev"
+      ]
+    '';
   };
 
   users.users.kloenk.extraGroups = [
     "dialout"  # allowes serial connections
     "plugdev"  # allowes stlink connection
     "docker"   # docker controll group
-    "libvirt"
+    "libvirtd"
   ];
 
   services.udev.packages = [ pkgs.openocd ];

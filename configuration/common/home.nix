@@ -114,7 +114,7 @@
           };
 
           # nyantec
-          "berlin.n0yantec.com" = {
+          "berlin.nyantec.com" = {
             hostname = "berlin.nyantec.com";
             port = 24;
             user = "fin";
