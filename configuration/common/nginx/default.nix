@@ -34,8 +34,10 @@
     '';
   };
   services.nginx.virtualHosts."${config.networking.hostName}.kloenk.de" = {
+    serverAliases = [ "default" ];
     #enableACME = true;
     #forceSSL = true;
-    locations."/public/".alias = "/mnt/data/pbb/public/";
+    locations."/public/".alias = "/home/public/";
+    locations."/public/".extraConfig = "autoindex on;";
   };
 }

@@ -20,7 +20,8 @@
   services.engelsystem = {
     enable = true;
     domain = "punkte.kloenk.de";
-    database.host = ":/run/mysqld/mysqld.sock";
+    #database.host = ":/run/mysqld/mysqld.sock";
+    database.host = "";
     #database.passwordFile??
     maintenance = false;
     mail = {
@@ -41,5 +42,5 @@
   };
 
   krops.secrets.files."es_mail_password".owner = "engelsystem";
-  users.users.engelsystem.extraGroups = [ "keys" ];
+  users.users.engelsystem.extraGroups = [ "keys" "mysql" ];
 }
