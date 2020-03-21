@@ -1,33 +1,33 @@
 { nixpkgs, home-manager, ...}:
 
 let 
-	nixos = import (nixpkgs + "/nixos") {
-		configuration = { lib, ... }: {
-			imports = [
+  nixos = import (nixpkgs + "/nixos") {
+    configuration = { lib, ... }: {
+      imports = [
         #../sources/nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix
         #../sources/nixpkgs/nixos/modules/installer/cd-dvd/channel.nix
         (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
         (nixpkgs + "/nixos/modules/installer/cd-dvd/channel.nix")
         (home-manager + "/nixos")
-				../configuration/common
-			];
-			networking.useDHCP = false;
-			boot.loader.grub.enable = false;
-			boot.kernelParams = [
-					"panic=30" "boot.panic_on_fail"
-			];
-			systemd.services.sshd.wantedBy = lib.mkForce [ "multi-user.target" ];
-			networking.hostName = "kexec";
+        ../configuration/common
+      ];
+      networking.useDHCP = false;
+      boot.loader.grub.enable = false;
+      boot.kernelParams = [
+          "panic=30" "boot.panic_on_fail"
+      ];
+      systemd.services.sshd.wantedBy = lib.mkForce [ "multi-user.target" ];
+      networking.hostName = "kexec";
 
-			system.activationScripts = {
-				base-dirs = {
-					text = ''
-						mkdir -p /nix/var/nix/profiles/per-user/kloenk
-					'';
-					deps = [];
-				};
-		  };
-		};
-	};
+      system.activationScripts = {
+        base-dirs = {
+          text = ''
+            mkdir -p /nix/var/nix/profiles/per-user/kloenk
+          '';
+          deps = [];
+        };
+      };
+    };
+  };
 in
-	nixos.config.system.build.isoImage
+  nixos.config.system.build.isoImage

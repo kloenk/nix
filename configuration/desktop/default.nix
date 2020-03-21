@@ -73,7 +73,7 @@
     vscodium
 
     # web browser
-    firefox-wayland
+    #firefox-wayland
     qutebrowser
   ];
 

@@ -7,9 +7,9 @@
 }:
 
 let
-	sources = {
-		inherit krops home-manager nixpkgs nixos-mailserver secrets;
-	};
+  sources = {
+    inherit krops home-manager nixpkgs nixos-mailserver secrets;
+  };
 in {
   inherit (import ./lib/eval-config.nix sources) evals;
   inherit (import ./lib/manager.nix sources) home;
@@ -19,7 +19,7 @@ in {
 } // (if hydra then {} else {
   inherit (import ./lib/nixos-config.nix sources) configs;
   inherit (import ./lib/krops3.nix sources) deploy;
-	tools.kexec_tarball = import ./lib/kexec-tarball.nix sources;
+  tools.kexec_tarball = import ./lib/kexec-tarball.nix sources;
   tools.isoImage = import ./lib/iso-image.nix sources;
   inherit sources;
 })

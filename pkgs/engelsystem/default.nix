@@ -1,5 +1,5 @@
 {
-	stdenv
+  stdenv
 , fetchzip
 }:
 
@@ -29,10 +29,10 @@ in
   '';
 
   meta = with stdenv.lib; {
-  	description = "Coordinate your helpers in teams, assign them to work shifts or let them decide for themselves when and where they want to help with what";
+    description = "Coordinate your helpers in teams, assign them to work shifts or let them decide for themselves when and where they want to help with what";
     #license = license.gpl2;
-  	homepage = "https://engelsystem.de";
-  	maintainers = with maintainers; [ ];
-  	platforms = platforms.all;
+    homepage = "https://engelsystem.de";
+    maintainers = with maintainers; [ ];
+    platforms = platforms.all;
   };
 }

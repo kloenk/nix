@@ -2,10 +2,10 @@
 
 {
   disabledModules = [ "services/networking/bird.nix" ];
-	imports = [
-		./deluge.nix
-		./ferm2
+  imports = [
+    ./deluge.nix
+    ./ferm2
     ./secrets
     ./bird2
-	];
+  ];
 }
