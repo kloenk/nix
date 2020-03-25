@@ -77,7 +77,10 @@ in {
           };
 
           "schule@kloenk.de" = {
-              hashedPassword = secrets.schule;
+            hashedPassword = secrets.schule;
+            aliases = [
+              "moodle+llg@kloenk.de"
+            ];
           };
 
           "yougen@kloenk.de" = {

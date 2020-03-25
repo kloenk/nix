@@ -23,6 +23,7 @@ in {
         sourcesModule
         (home-manager + "/nixos")
         (toString nixos-mailserver)
+        ../modules
       ];
     }
   ) nixosHosts;

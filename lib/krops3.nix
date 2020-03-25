@@ -28,11 +28,11 @@ in {
       set -ex
 
       ${if kropsLib.getHostName == name then ''
-        nixos-rebuild $mode -I nixos-config=${nixos-config name} --use-remote-sudo $args
+        nixos-rebuild $mode -I nixos-config=${nixos-config name} --use-remote-sudo -I nixpkgs=${nixpkgs} $args
       '' else ''
         NIX_SSHOPTS="-p${(targetHost host.hostname).port} $NIX_SSHOPTS"
         export NIX_SSHOPTS
-        nixos-rebuild $mode -I nixos-config=${nixos-config name} --use-remote-sudo --target-host ${(targetHost host.hostname).host}  $args
+        nixos-rebuild $mode -I nixos-config=${nixos-config name} --use-remote-sudo --target-host ${(targetHost host.hostname).host} -I nixpkgs=${nixpkgs}  $args
       ''}
 
       cat ${nixos-config name}
