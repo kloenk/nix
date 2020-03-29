@@ -2,7 +2,7 @@
 
 let
   cfg = config.services.bgp;
-  hosts = import ../.;
+  hosts = import ../. { };
   thisHost = hosts.${config.networking.hostName};
   as = 65249;
   bgpHosts = lib.filterAttrs (name: host: host ? bgp && host ? wireguard && name != config.networking.hostName) hosts;

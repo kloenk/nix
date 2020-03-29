@@ -1,7 +1,7 @@
 { ... }:
 
 let
-  secrets = import /var/src/secrets/mail.nix;
+  secrets = import <secrets/mail.nix>;
 
 in {
   fileSystems."/var/vmail" = {

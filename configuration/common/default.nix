@@ -5,17 +5,18 @@
     ./nginx
     ./node-exporter
     ./zsh
+    ./make-nixpkgs.nix
   ];
 
   nixpkgs.overlays = [
     (self: super: import ../../pkgs { pkgs = super; })
   ];
 
-  environment.etc."src/nixpkgs".source = config.sources.nixpkgs;
-  environment.etc."src/nixos-config".text = ''
-      ((import (fetchTarball "https://github.com/kloenk/nix/archive/master.tar.gz") { }).configs.${config.networking.hostName})
-  '';
-  environment.variables.NIX_PATH = lib.mkOverride 25 "/etc/src";
+# environment.etc."src/nixpkgs".source = config.sources.nixpkgs;
+#  environment.etc."src/nixos-config".text = ''
+#      ((import (fetchTarball "https://github.com/kloenk/nix/archive/master.tar.gz") { }).configs.${config.networking.hostName})
+#  '';
+#  environment.variables.NIX_PATH = lib.mkOverride 25 "/etc/src";
 
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
   nix.gc.automatic = lib.mkDefault true;

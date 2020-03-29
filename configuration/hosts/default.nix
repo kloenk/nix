@@ -1,5 +1,7 @@
-let
+{ nixos-mailserver ? null
+}:
 
+let
   pbbAS = {
     as = 207921;
   };
@@ -14,6 +16,7 @@ in {
   };
   hubble = {
     hostname = "kloenk@hubble.kloenk.de:62954";
+    extraSources = [ nixos-mailserver ];
     #prometheusExporters = [ 9100 3001 9090 9154 9187 7980 9586 9119 9166 9113 ];
     prometheusExporters = [ "node-exporter" "nginx-exporter" "wireguard" ];
     wireguard.publicKey = "2z1soTjkt74lFfEi010JcfOCERhwIgvlqSacOvPYbyI=";

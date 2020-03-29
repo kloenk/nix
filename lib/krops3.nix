@@ -1,4 +1,4 @@
-{ nixpkgs, krops3, home-manager, ... }@sources:
+{ nixpkgs, krops3, home-manager, nixos-mailserver, ... }@sources:
 
 let
   pkgs = import nixpkgs {};
@@ -18,7 +18,7 @@ let
     }
   '';
 
-  hosts = import ../configuration/hosts;
+  hosts = import ../configuration/hosts { nixos-mailserver = nixos-mailserver; };
   nixosHosts = lib.filterAttrs (name: host: host ? hostname) hosts;
 
 in {

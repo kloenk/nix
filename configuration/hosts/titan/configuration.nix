@@ -9,6 +9,10 @@ in {
     ./wireguard.nix
     ./bgp.nix
     ./links.nix
+    ./xonotic.nix
+
+    # dm crypt fast
+    #./cloudflare.nix
 
     ../../default.nix
     
@@ -61,6 +65,7 @@ in {
   networking.extraHosts = ''
     172.16.0.1 airlink.local unit.local
     192.168.178.248  atom.fritz.box
+    192.168.178.1 fritz.box
   '';
   networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
   networking.search = [ "fritz.box" "kloenk.de" ];

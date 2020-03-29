@@ -4,7 +4,7 @@ let
   pkgs = import nixpkgs {};
   lib = pkgs.lib;
 
-  hosts = import ../configuration/hosts;
+  hosts = import ../configuration/hosts {};
   nixosHosts = lib.filterAttrs (name: host: host ? hostname) hosts;
 
   sourcesModule = { lib, ... }: {

@@ -109,6 +109,13 @@ in {
     locations."/pl".extraConfig = "return 301 https://www.dropbox.com/sh/gn1thweryxofoh3/AAC3ZW_vstHieX-9JIYIBP_ra;";
   };
 
+  services.nginx.virtualHosts."key.wass-er.com" = {
+    enableACME = true;
+    forceSSL = true;
+    root = "/etc/key.wass-er.com/";
+  };
+  environment.etc."key.wass-er.com/key".text = lib.fileContents ./key.wass-er;
+
   services.nginx.virtualHosts."llgcompanion.kloenk.de" = {
     enableACME = true;
     forceSSL = true;
@@ -140,18 +147,6 @@ in {
       "/status/hubble".extraConfig = "return 301 https://grafana.kloenk.de;";
       "/video".extraConfig = "return 301 https://media.ccc.de/v/jh-berlin-2018-27-config_foo;";
     };
-  };
-
-  services.nginx.virtualHosts."buenentechnik.kloenk.de" = {
-    enableACME = true;
-    forceSSL = true;
-    locations."/".proxyPass = "http://127.0.0.1:3005/";
-  };
-
-  services.nginx.virtualHosts."buehnentechnik.kloenk.de" = {
-    enableACME = true;
-    forceSSL = true;
-    locations."/".proxyPass = "http://127.0.0.1:3305/";
   };
 
   services.nginx.virtualHosts."punkte.kloenk.de" = {
