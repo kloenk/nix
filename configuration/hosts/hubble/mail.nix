@@ -5,13 +5,9 @@ let
 
 in {
   fileSystems."/var/vmail" = {
-    device = "/ssd/vmail";
+    device = "/persist/data/vmail";
     options = [ "bind" ];
   };
-
-  imports = [
-   # <sources/nixos-mailserver>
-  ];
 
   networking.firewall.allowedTCPPorts = [ 143 587 25 465 993 ];
 

@@ -42,7 +42,9 @@ in {
   boot.initrd.luks.devices."cryptLVM".allowDiscards = true;
 
   boot.consoleLogLevel = 0;
+
   boot.kernelParams = [
+    "boot.trace"
     #"quiet"
     #"iommu=pt"
     "intel_iommu=on"

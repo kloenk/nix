@@ -4,6 +4,13 @@ let
   hosts = import ../.. {};
 
 in {
+
+  fileSystems."/var/lib/prometheus" = 
+    { device = "persist/data/prometheus";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+
   services.nginx.virtualHosts."grafana.kloenk.de" = {
     locations."/".proxyPass = "http://127.0.0.1:3001/";
     enableACME = true;

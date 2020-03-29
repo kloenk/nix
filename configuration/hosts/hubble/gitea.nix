@@ -1,16 +1,20 @@
 { lib, ... }:
 
-let
-  #secrets = import <secrets>;
-in {
+{
 
-  # make sure dirs exists
-  system.activationScripts = {
-    gitea-repositories = {
-      text = ''mkdir -p /data/gitea/repositories;
-      chown -R gitea:gitea /data/gitea/repositories'';
-      deps = [];
+  fileSystems."/var/lib/gitea" =
+    { device = "/persist/data/gitea";
+      fsType = "none";
+      options = [ "bind" ];
     };
+
+  services.postgresql = {
+    ensureDatabases = [ "gitea" ];
+    ensureUsers = [
+      { name = "gitea";
+        ensurePermissions."DATABASE gitea" = "ALL PRIVILEGES";
+      }
+    ];
   };
 
   networking.firewall.allowedTCPPorts = [
@@ -24,7 +28,7 @@ in {
 
   services.gitea = {
     enable = true;
-    stateDir = "/data/gitea";
+    stateDir = "/var/lib/gitea";
     log.level = "Warn";
     appName = "Kloenk's Gitea";
     domain = "git.kloenk.de";
@@ -32,13 +36,11 @@ in {
     httpAddress = "127.0.0.1";
     httpPort = 3000;
     cookieSecure = true;
-    repositoryRoot = "/data/gitea/repositories";
 
     database = {
       type = "postgres";
       name = "gitea";
       user = "gitea";
-      password = "foobar";
       createDatabase = false;
     };
 
