@@ -107,6 +107,11 @@ in {
     enable = true;
     globalConfig.scrape_interval = "10s";
     webExternalUrl = "https://prometheus.kloenk.de/";
+    extraFlags = [
+      "--storage.tsdb.retention.size=250GB"
+      "--storage.tsdb.retention=1024d"
+      "--storage.tsdb.retention.time=1024d"
+    ];
 
     scrapeConfigs = let
       filteredHosts = lib.filterAttrs (name: host: host ? prometheusExporters) hosts;
