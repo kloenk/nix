@@ -2,7 +2,7 @@
 
 let
   cfg = config.services.bgp;
-  hosts = import ../hosts;
+  hosts = import ../hosts { nixos-mailserver = null; };
   thisHost = hosts.${config.networking.hostName};
   # for now all bgp hosts are external from AS207921
   bgpHosts = lib.filterAttrs (name: host: host ? bgp && host ? wireguard && name != config.networking.hostName) hosts;

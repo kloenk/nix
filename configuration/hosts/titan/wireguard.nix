@@ -1,10 +1,7 @@
 { config, ... }:
 
 {
-  networking.firewall.interfaces."wg0" = {
-    allowedTCPPortRanges = [ { from = 1; to = 65534; } ];
-    allowedUDPPortRanges = [ { from = 1; to = 65534; } ];
-  };
+  networking.firewall.trustedInterfaces = [ "wg0" ];
 
   networking.wireguard.interfaces = { 
     wg0 = {

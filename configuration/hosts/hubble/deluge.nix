@@ -1,6 +1,19 @@
 { config, ... }:
 
 {
+  # stat dir
+  fileSystems."/persist/deluge" =
+    { device = "/dev/disk/by-uuid/0d7083c3-21d7-4d04-aefb-73119dd55e6e";
+      fsType = "xfs";
+    };
+
+  fileSystems."/var/lib/deluge" = 
+    { device = "/persist/deluge";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+
+
   services.deluge2 = {
     enable = true;
     configureNginx = true;
@@ -15,20 +28,6 @@
   services.nginx.virtualHosts."kloenk.de" = {
     enableACME = true;
     forceSSL = true;
-  };
-
-  systemd.services.deluge-init = {
-    script = ''
-      mkdir -p /data/deluge
-      chown deluge:deluge /data/deluge
-      [ -e /var/lib/deluge ] || ln -s /data/deluge /var/lib/deluge
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-    };
-    after = [ "network.target" ];
-    before = [ "deluged.service" ];
-    wantedBy = [ "multi-user.target" ];
   };
 
   networking.firewall.allowedTCPPorts = [ 58846 60000 ];

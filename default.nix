@@ -1,4 +1,5 @@
 { krops ? fetchTarball "https://github.com/nyantec/krops/archive/master.tar.gz"
+, krops3 ? fetchTarball "https://github.com/kloenk/krops3/archive/master.tar.gz"
 , home-manager ? fetchTarball "https://github.com/rycee/home-manager/archive/master.tar.gz"
 , nixpkgs ? fetchTarball "https://github.com/nixos/nixpkgs/archive/nixos-unstable-small.tar.gz"
 , nixos-mailserver ? fetchTarball "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/master/nixos-mailserver-master.tar.gz"
@@ -8,7 +9,7 @@
 
 let
   sources = {
-    inherit krops home-manager nixpkgs nixos-mailserver secrets;
+    inherit krops krops3 home-manager nixpkgs nixos-mailserver secrets;
   };
 in {
   inherit (import ./lib/eval-config.nix sources) evals;

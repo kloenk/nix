@@ -171,6 +171,13 @@
            PersistentKeepalive = 21;
         };
       }
+      {
+        wireguardPeerConfig = {
+          AllowedIPs = [ "192.168.30.100/24" ];
+          PublicKey = "i69dz00TsEVfSzV6dUZy7/n8ILy88sfCOswY1FWPqEI=";
+          PersistentKeepalive = 21;
+        };
+      }
     ];
   };
   systemd.network.networks."30-wgFam" = {

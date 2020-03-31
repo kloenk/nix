@@ -1,17 +1,13 @@
 { ... }:
 
 let
-  secrets = import /var/src/secrets/mail.nix;
+  secrets = import <secrets/mail.nix>;
 
 in {
   fileSystems."/var/vmail" = {
-    device = "/ssd/vmail";
+    device = "/persist/data/vmail";
     options = [ "bind" ];
   };
-
-  imports = [
-   # <sources/nixos-mailserver>
-  ];
 
   networking.firewall.allowedTCPPorts = [ 143 587 25 465 993 ];
 
@@ -77,7 +73,10 @@ in {
           };
 
           "schule@kloenk.de" = {
-              hashedPassword = secrets.schule;
+            hashedPassword = secrets.schule;
+            aliases = [
+              "moodle+llg@kloenk.de"
+            ];
           };
 
           "yougen@kloenk.de" = {

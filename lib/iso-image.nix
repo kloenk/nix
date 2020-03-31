@@ -6,6 +6,7 @@ let
       imports = [
         #../sources/nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix
         #../sources/nixpkgs/nixos/modules/installer/cd-dvd/channel.nix
+        ../modules
         (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
         (nixpkgs + "/nixos/modules/installer/cd-dvd/channel.nix")
         (home-manager + "/nixos")

@@ -12,15 +12,17 @@ in {
     ./hardware-configuration.nix
     ./wireguard.nix # TODO
 
+    ./postgres.nix
+    ./mysql.nix
+
     #./sshguard.nix
     ./dns.nix
     ./gitea.nix
     ./mail.nix
     ./monitoring
-    ./postgres.nix
     ./quassel.nix
     ./deluge.nix
-    ./engelsystem.nix
+    #./engelsystem.nix
     #./netbox.nix
     #./redis.nix
 
@@ -50,11 +52,21 @@ in {
     DropForeignRoutes=yes
   '';
 
+  boot.supportedFilesystems = [ "xfs" "ext2" ];
+  boot.loader.grub.enable = true;
+  boot.loader.grub.version = 2;
+  boot.loader.grub.device = "/dev/disk/by-path/pci-0000:00:0b.0";
+
+  boot.initrd.luks.reusePassphrases = true;
+  boot.initrd.luks.devices."cryptHDD".device = "/dev/disk/by-partuuid/468bbd11-01";
+  boot.initrd.luks.devices."cryptSSD".device = "/dev/disk/by-partuuid/39aacc3e-02";
+
   boot.initrd.network.enable = true;
+  boot.initrd.availableKernelModules = [ "virtio-pci" ];
   boot.initrd.network.ssh = {
     enable = true;
     authorizedKeys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBps9Mp/xZax8/y9fW1Gt73SkskcBux1jDAB8rv0EYUt cardno:000611120054"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBps9Mp/xZax8/y9fW1Gt73SkskcBux1jDAB8rv0EYUt cardno:000612029874"
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC9fXR2sAD3q5hHURKg2of2OoZiKz9Nr2Z7qx6nfLLMwK1nie1rFhbwSRK8/6QUC+jnpTvUmItUo+etRB1XwEOc3rabDUYQ4dQ+PMtQNIc4IuKfQLHvD7ug9ebJkKYaunq6+LFn8C2Tz4vbiLcPFSVpVlLb1+yaREUrN9Yk+J48M3qvySJt9+fa6PZbTxOAgKsuurRb8tYCaQ9TzefKJvZXIVd+W2tzYV381sSBKRyAJLu/8tA+niSJ8VwHntAHzaKzv6ozP5yBW2SB7R7owGd1cnP7znEPxB9jeDBBWLonsocwFalP1RGt1WsOiIGEPhytp5RDXWgZM5sIS42iL61hMB9Yz3PaQYLuR+1XNzdGRLIKPUDh58lGdk2P5HUqPnvE/FqfzU3jkv6ebJmcGfZiEN1TPc5ar8sQkpn56hB2DnJYWICuryTm0XpzSizf9fGyLGBw3GVBlnZjzTaBf7iokGFIu+ade5AqEjX6FxlNja1ESFNKhDAdLAHFnaKJ3u0= kloenk@kloenkX"
     ];
     port = 62954;
@@ -66,6 +78,29 @@ in {
     ip route add 164.132.202.254/32 dev ens18
     ip route add default via 164.132.202.254 dev ens18 && hasNetwork=1 
   '');
+
+  # delet files in /
+  boot.initrd.postMountCommands = ''
+    cd /mnt-root
+    chattr -i var/lib/empty
+    rm -rf $(ls -A /mnt-root | grep -v 'nix' | grep -v 'boot' | grep -v 'persist' | grep -v 'var')
+
+    cd /mnt-root/persist
+    rm -rf $(ls -A /mnt-root/persist | grep -v 'secrets' | grep -v 'log')
+
+    cd /mnt-root/var
+    rm -rf $(ls -A /mnt-root/var | grep -v 'src' | grep -v 'log')
+
+    cd /
+  '';
+
+  services.openssh.hostKeys = [
+    { bits = 4096; path = config.krops.secrets.files."ssh_host_rsa_key".path; type = "rsa"; }
+    { path = config.krops.secrets.files."ssh_host_ed25519_key".path; type = "ed25519"; }
+  ];
+
+  krops.secrets.files."ssh_host_rsa_key".owner = "root";
+  krops.secrets.files."ssh_host_ed25519_key".owner = "root";
 
   networking.firewall.allowedTCPPorts = [ 9092 ];
 
@@ -92,15 +127,6 @@ in {
     }
   ];
 
-  # make sure dirs exists
-  system.activationScripts = {
-    data-http = {
-      text = ''mkdir -p /data/http/kloenk /data/http/schule;
-      chown -R nginx:nginx /data/http/'';
-      deps = [];
-    };
-  };
-
   services.nginx.virtualHosts."kloenk.de" = {
     enableACME = true;
     forceSSL = true;
@@ -108,6 +134,13 @@ in {
     locations."/PL".extraConfig = "return 301 https://www.dropbox.com/sh/gn1thweryxofoh3/AAC3ZW_vstHieX-9JIYIBP_ra;";
     locations."/pl".extraConfig = "return 301 https://www.dropbox.com/sh/gn1thweryxofoh3/AAC3ZW_vstHieX-9JIYIBP_ra;";
   };
+
+  services.nginx.virtualHosts."key.wass-er.com" = {
+    enableACME = true;
+    forceSSL = true;
+    root = "/etc/key.wass-er.com/";
+  };
+  environment.etc."key.wass-er.com/key".text = lib.fileContents ./key.wass-er;
 
   services.nginx.virtualHosts."llgcompanion.kloenk.de" = {
     enableACME = true;
@@ -142,18 +175,6 @@ in {
     };
   };
 
-  services.nginx.virtualHosts."buenentechnik.kloenk.de" = {
-    enableACME = true;
-    forceSSL = true;
-    locations."/".proxyPass = "http://127.0.0.1:3005/";
-  };
-
-  services.nginx.virtualHosts."buehnentechnik.kloenk.de" = {
-    enableACME = true;
-    forceSSL = true;
-    locations."/".proxyPass = "http://127.0.0.1:3305/";
-  };
-
   services.nginx.virtualHosts."punkte.kloenk.de" = {
     enableACME = true;
     forceSSL = true;
@@ -172,15 +193,6 @@ in {
 
   services.vnstat.enable = true;
 
-  # enable docker
-  #networking.firewall.interfaces."docker0" = {
-  #  allowedTCPPortRanges = [ { from = 1; to = 65534; } ];
-  #  allowedUDPPortRanges = [ { from = 1; to = 65534; } ];
-  #};
-
-  #virtualisation.docker.enable = true;
-  #users.users.kloenk.extraGroups = [ "docker" ];
-  #users.users.kloenk.packages = [ pkgs.docker ];
 
   # auto update/garbage collector
   #system.autoUpgrade.enable = true;
@@ -203,5 +215,5 @@ in {
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-  system.stateVersion = "20.03";
+  system.stateVersion = "20.09";
 }

@@ -7,13 +7,19 @@ in {
   imports = [
     ./hardware-configuration.nix
     ./wireguard.nix
+    ./bgp.nix
+    ./links.nix
+    ./xonotic.nix
+
+    # dm crypt fast
+    #./cloudflare.nix
 
     ../../default.nix
     
     ../../common
     ../../desktop
     ../../desktop/sway.nix
-    #../../desktop/plasma.nix
+    ../../desktop/plasma.nix
 
     # fallback for detection
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
@@ -36,7 +42,9 @@ in {
   boot.initrd.luks.devices."cryptLVM".allowDiscards = true;
 
   boot.consoleLogLevel = 0;
+
   boot.kernelParams = [
+    "boot.trace"
     #"quiet"
     #"iommu=pt"
     "intel_iommu=on"
@@ -50,19 +58,19 @@ in {
   nixpkgs.config.allowUnfree = true;
   nix.gc.automatic = false;
 
+  services.printing.browsing = true;
+  services.printing.enable = true;
+  services.avahi.enable = true;
+
   networking.useDHCP = false;
-  networking.interfaces."${interface}".useDHCP = true;
-  networking.interfaces.enp4s0.useDHCP = true;
   networking.hostName = "titan";
   networking.extraHosts = ''
     172.16.0.1 airlink.local unit.local
     192.168.178.248  atom.fritz.box
+    192.168.178.1 fritz.box
   '';
   networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
   networking.search = [ "fritz.box" "kloenk.de" ];
-
-  # disable firewall
-  networking.firewall.enable = false;
 
 
   # make autoupdates

@@ -1,43 +1,39 @@
-{ nixpkgs, krops, ... }:
+{ nixpkgs, krops3, home-manager, nixos-mailserver, ... }@sources:
 
 let
   pkgs = import nixpkgs {};
   lib = pkgs.lib;
 
-  kropsLib = import "${krops}/lib";
+  kropsPkgs = import "${krops3}/pkgs" {};
 
-  hosts = import ../configuration/hosts;
-  nixosHosts = lib.filterAttrs (name: host: host ? hostname) hosts;
+  sourcesModule = pkgs.writeText "soures-module" ''
+    { lib, ... }:
+    {
+      options.sources = lib.mkOption {
+      };
 
-  nixos-config = name: pkgs.writeText "nixos-config.${name}" ''
-    (import ${kropsLib.getEnv "PWD"}/wrapper.nix {}).configs.${name}
+      config.sources = {
+        ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: source: "${name} = ${source};") sources)}
+      };
+    }
   '';
 
-  targetHost = host: kropsLib.mkTarget host;
+  hosts = import ../configuration/hosts { nixos-mailserver = nixos-mailserver; };
+  nixosHosts = lib.filterAttrs (name: host: host ? hostname) hosts;
+
 in {
   deploy = lib.mapAttrs (name: host:
-    pkgs.writeScript "krops3-${name}.sh" ''
-      #!${pkgs.bash}/bin/bash
-
-      mode=$1
-      shift
-      args=$@
-
-      [ "$mode" == "" ] && mode="switch"
-
-      set -ex
-
-      ${if kropsLib.getHostName == name then ''
-        nixos-rebuild $mode -I nixos-config=${nixos-config name} --use-remote-sudo $args
-      '' else ''
-        NIX_SSHOPTS="-p${(targetHost host.hostname).port} $NIX_SSHOPTS"
-        export NIX_SSHOPTS
-        nixos-rebuild $mode -I nixos-config=${nixos-config name} --use-remote-sudo --target-host ${(targetHost host.hostname).host}  $args
-      ''}
-
-      cat ${nixos-config name}
-
-      echo ${if kropsLib.getHostName == name then "local" else "remote"}
-    ''
+    kropsPkgs.krops3.writeDeploy name {
+      buildTarget = "localhost:62954";
+      # useHostNixpkgs = true;
+      extraSources = [
+        (home-manager + "/nixos")
+        ../modules
+        sourcesModule
+      ] ++ (if host ? extraSources then host.extraSources else []);
+      sudo = true;
+      configuration = (toString ../configuration) + "/hosts/${name}/configuration.nix";
+      target = host.hostname;
+    }
   ) nixosHosts;
 }

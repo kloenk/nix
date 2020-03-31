@@ -34,7 +34,7 @@
     '';
   };
   services.nginx.virtualHosts."${config.networking.hostName}.kloenk.de" = {
-    serverAliases = [ "default" ];
+    #serverAliases = [ "default" ];
     #enableACME = true;
     #forceSSL = true;
     locations."/public/".alias = "/home/public/";

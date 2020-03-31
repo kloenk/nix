@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ pkgs, config, lib, ... }:
 
 let
   cfg = config.services.bgp;
@@ -6,8 +6,8 @@ let
   thisHost = hosts.${config.networking.hostName};
   as = 65249;
   bgpHosts = lib.filterAttrs (name: host: host ? bgp && host ? wireguard && name != config.networking.hostName) hosts;
-  primaryIP = "2a0f:4ac0:f199::6";
-  primaryIP4 = "195.39.246.50";
+  primaryIP = "2a0f:4ac0:f199::3";
+  primaryIP4 = "195.39.246.53";
 
 in {
   networking.firewall.allowedUDPPorts = lib.mapAttrsToList (name: host: 51820 + host.magicNumber + thisHost.magicNumber) bgpHosts;
@@ -155,7 +155,7 @@ in {
     {
       channels.ipv4.filter.import = "accept;";
       channels.ipv6.filter.import = "accept;";
-      interfaces = [ "wg-*" "lo" "wlp2s0" "eno0" ];
+      interfaces = [ "wg-*" "lo" "enp?s0" ];
     }
   ];
   services.bird2.protocols.kernel.kernel4 = {
@@ -204,11 +204,6 @@ in {
           bgp_local_pref = 0;
         }
         if net_default() then { 
-          if proto != "netcup" && proto != "netcup4" then {
-            bgp_path.prepend(65249);
-            bgp_path.prepend(65249);
-            bgp_path.prepend(65249);
-          }
           accept;
         }
         reject;
@@ -236,11 +231,6 @@ in {
           bgp_local_pref = 0;
         }
         if net_default() then { 
-          if proto != "netcup" && proto != "netcup4" then {
-            bgp_path.prepend(65249);
-            bgp_path.prepend(65249);
-            bgp_path.prepend(65249);
-          }
           accept;
         }
         reject;
