@@ -70,7 +70,7 @@
     openscad
 
     # vs code (mit license)
-    vscodium
+    #vscodium
 
     # web browser
     #firefox-wayland
@@ -127,11 +127,11 @@
   sound.enable = true;
   hardware.pulseaudio = {
     enable = true;
-    support32Bit = true;
+    support32Bit = lib.mkDefault true;
 
     # NixOS allows either a lightweight build (default) or full build of PulseAudio to be installed.
     # Only the full build has Bluetooth support, so it must be selected here.
-    package = pkgs.pulseaudioFull;
+    package = lib.mkDefault pkgs.pulseaudioFull;
 
     # extra codes for pulseaudio bluetooth
     extraModules = [ pkgs.pulseaudio-modules-bt ];

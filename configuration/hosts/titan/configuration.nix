@@ -9,7 +9,7 @@ in {
     ./wireguard.nix
     ./bgp.nix
     ./links.nix
-    ./xonotic.nix
+    #./xonotic.nix
 
     # dm crypt fast
     #./cloudflare.nix
@@ -36,6 +36,19 @@ in {
     acpi_call
   ];
 
+  # ssh decryption
+  boot.initrd.network.enable = true;
+  boot.initrd.availableKernelModules = [ "r8169" ];
+  boot.initrd.network.ssh.enable = true;
+  boot.initrd.network.ssh.hostKeys = [ <secrets/initrd/ecdsa_host_hey> ];
+
+  boot.initrd.preLVMCommands = lib.mkBefore( let
+    iface = "enp4s0";
+  in ''
+    ip li set ${iface} up
+    ip a add 192.168.178.66/24 dev ${iface} && hasNetwork=1
+  '');
+
   services.openssh.passwordAuthentication = true;
 
   boot.initrd.luks.devices."cryptLVM".device = "/dev/disk/by-id/wwn-0x5002538e40df324b-part2";
@@ -44,7 +57,6 @@ in {
   boot.consoleLogLevel = 0;
 
   boot.kernelParams = [
-    "boot.trace"
     #"quiet"
     #"iommu=pt"
     "intel_iommu=on"
@@ -71,7 +83,6 @@ in {
   '';
   networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
   networking.search = [ "fritz.box" "kloenk.de" ];
-
 
   # make autoupdates
   #system.autoUpgrade.enable = true;
@@ -133,6 +144,8 @@ in {
   services.pcscd.enable = true;
 
   hardware.bluetooth.enable = true;
+  hardware.enableAllFirmware = true;
+  hardware.enableRedistributableFirmware = true;
 
   # add bluetooth sink
   hardware.bluetooth.extraConfig = "
@@ -140,6 +153,9 @@ in {
     Enable=Source,Sink,Media,Socket
   ";
   hardware.pulseaudio.zeroconf.discovery.enable = true;
+  hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
+  hardware.pulseaudio.package = pkgs.pulseaudioFull;
+  hardware.pulseaudio.support32Bit = true;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

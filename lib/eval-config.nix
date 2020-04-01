@@ -12,5 +12,5 @@ in {
     modules = [
       (import ./nixos-config.nix sources).configs.${name}
     ];
-  }).config.system.build.toplevel) nixosHosts;
+  })) nixosHosts;
 }

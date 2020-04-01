@@ -2,7 +2,7 @@
 
 let 
   nixos = import (nixpkgs + "/nixos") {
-    configuration = { lib, ... }: {
+    configuration = { pkgs, lib, ... }: {
       imports = [
         #../sources/nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix
         #../sources/nixpkgs/nixos/modules/installer/cd-dvd/channel.nix
@@ -19,6 +19,11 @@ let
       ];
       systemd.services.sshd.wantedBy = lib.mkForce [ "multi-user.target" ];
       networking.hostName = "kexec";
+
+      environment.systemPackages = with pkgs; [
+        chntpw
+        ntfs3g
+      ];
 
       system.activationScripts = {
         base-dirs = {

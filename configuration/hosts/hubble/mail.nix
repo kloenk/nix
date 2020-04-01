@@ -8,6 +8,11 @@ in {
     device = "/persist/data/vmail";
     options = [ "bind" ];
   };
+  
+  fileSystems."/var/dkim" = {
+    device = "/persist/secrets/dkim";
+    options = [ "bind" ];
+  };
 
   networking.firewall.allowedTCPPorts = [ 143 587 25 465 993 ];
 

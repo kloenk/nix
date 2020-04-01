@@ -8,15 +8,6 @@
       options = [ "bind" ];
     };
 
-  services.postgresql = {
-    ensureDatabases = [ "gitea" ];
-    ensureUsers = [
-      { name = "gitea";
-        ensurePermissions."DATABASE gitea" = "ALL PRIVILEGES";
-      }
-    ];
-  };
-
   networking.firewall.allowedTCPPorts = [
     2222 # ssh
   ];
@@ -41,7 +32,7 @@
       type = "postgres";
       name = "gitea";
       user = "gitea";
-      createDatabase = false;
+      createDatabase = true;
     };
 
     extraConfig = ''
