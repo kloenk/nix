@@ -48,6 +48,11 @@ in {
   };
 
   # for monitoring only
+  bbb-wass = {
+    prometheusExporters = [ "node-exporter" "bbb-exporter" ];
+  };
+
+  # for monitoring only
   gdv01 = {
     prometheusExporters = [ "node-exporter" "collectd" ];
   };
