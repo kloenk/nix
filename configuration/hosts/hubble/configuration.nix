@@ -17,13 +17,12 @@ in {
 
     #./sshguard.nix
     ./dns.nix
-    ./gitea.nix
     ./mail.nix
     ./monitoring
     ./quassel.nix
     ./deluge.nix
     ./xonotic.nix
-    #./engelsystem.nix
+    ./engelsystem.nix
     #./netbox.nix
     #./redis.nix
 
@@ -71,6 +70,7 @@ in {
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC9fXR2sAD3q5hHURKg2of2OoZiKz9Nr2Z7qx6nfLLMwK1nie1rFhbwSRK8/6QUC+jnpTvUmItUo+etRB1XwEOc3rabDUYQ4dQ+PMtQNIc4IuKfQLHvD7ug9ebJkKYaunq6+LFn8C2Tz4vbiLcPFSVpVlLb1+yaREUrN9Yk+J48M3qvySJt9+fa6PZbTxOAgKsuurRb8tYCaQ9TzefKJvZXIVd+W2tzYV381sSBKRyAJLu/8tA+niSJ8VwHntAHzaKzv6ozP5yBW2SB7R7owGd1cnP7znEPxB9jeDBBWLonsocwFalP1RGt1WsOiIGEPhytp5RDXWgZM5sIS42iL61hMB9Yz3PaQYLuR+1XNzdGRLIKPUDh58lGdk2P5HUqPnvE/FqfzU3jkv6ebJmcGfZiEN1TPc5ar8sQkpn56hB2DnJYWICuryTm0XpzSizf9fGyLGBw3GVBlnZjzTaBf7iokGFIu+ade5AqEjX6FxlNja1ESFNKhDAdLAHFnaKJ3u0= kloenk@kloenkX"
     ];
     port = 62954;
+    hostKeys = [ <secrets/initrd/ecdsa_host_hey> ];
   };
   # setup network
   boot.initrd.preLVMCommands = lib.mkBefore (''
@@ -95,13 +95,16 @@ in {
     cd /
   '';
 
-  services.openssh.hostKeys = [
-    { bits = 4096; path = config.krops.secrets.files."ssh_host_rsa_key".path; type = "rsa"; }
-    { path = config.krops.secrets.files."ssh_host_ed25519_key".path; type = "ed25519"; }
-  ];
+ # services.openssh.hostKeys = [
+ #   { bits = 4096; path = config.krops.secrets.files."ssh_host_rsa_key".path; type = "rsa"; }
+ #   { path = config.krops.secrets.files."ssh_host_ed25519_key".path; type = "ed25519"; }
+ # ];
+ # services.openssh.extraConfig = let
+ #   hostCerfiticate = pkgs.writeText "host_cert_ed25519" (builtins.readFile (toString ../../ca/ssh_host_ed25519_key_hubble-cert.pub));
+ # in "HostCertificate ${hostCerfiticate}";
 
-  krops.secrets.files."ssh_host_rsa_key".owner = "root";
-  krops.secrets.files."ssh_host_ed25519_key".owner = "root";
+ # krops.secrets.files."ssh_host_rsa_key".owner = "root";
+ # krops.secrets.files."ssh_host_ed25519_key".owner = "root";
 
   networking.firewall.allowedTCPPorts = [ 9092 ];
 

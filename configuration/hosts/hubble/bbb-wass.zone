@@ -1,0 +1,19 @@
+$TTL 1M
+@		SOA	ns1.bbb.wass-er.com. hostmaster.bbb.wass-er.com. (
+    2020040503  	; serial (yyyymmdd##)
+    3600            ; refresh
+    1000            ; retry
+    604800          ; expiry
+    600             ; minimum ttl
+)
+	
+	NS  ns1.he.net.
+	NS	ns2.he.net.
+	NS	ns4.he.net.
+	NS	ns3.he.net.
+
+	AAAA  2a01:4f8:221:2b46::30
+	A 188.40.109.152
+
+ns1	CNAME ns1.kloenk.de.
+hostmaster CNAME hostmaster.kloenk.de.

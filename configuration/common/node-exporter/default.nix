@@ -14,6 +14,7 @@
     locations."/node-exporter/".extraConfig = ''
       allow ::1/128;
       allow 51.254.249.187/32;
+      allow 2001:41d0:1004:1629:1337:187::/64;
       allow 195.39.246.48/28;
       allow 2a0f:4ac0:f199::/48;
       allow 192.168.42.0/24;

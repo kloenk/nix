@@ -24,12 +24,28 @@
   nix.trustedUsers = [ "root" "@wheel" "kloenk" ];
 
   networking.useNetworkd = lib.mkDefault true;
+  networking.search = [ "kloenk.de" ];
+  networking.extraHosts = ''
+    127.0.0.1 ${config.networking.hostName}.kloenk.de
+  '';
 
-  services.openssh.enable = true;
-  services.openssh.ports = [ 62954 ];
-  services.openssh.passwordAuthentication = lib.mkDefault false;
-  services.openssh.challengeResponseAuthentication = false;
-  services.openssh.permitRootLogin = lib.mkDefault "no";
+  # ssh
+  services.openssh = {
+    enable = true;
+    ports = [ 62954 ];
+    passwordAuthentication = lib.mkDefault false;
+    challengeResponseAuthentication = false;
+    permitRootLogin = lib.mkDefault "no";
+    hostKeys = [
+      { path = config.krops.secrets.files."ssh_host_ed25519_key".path; type = "ed25519"; }
+    ];
+    extraConfig = let
+      hostCertificate = pkgs.writeText "host_cert_ed25519" (builtins.readFile (toString ../ca + "/ssh_host_ed25519_key_${config.networking.hostName}-cert.pub"));
+    in "HostCertificate ${hostCertificate}";
+  };
+  krops.secrets.files."ssh_host_ed25519_key".owner = "root";
+
+  # monitoring
   services.vnstat.enable = lib.mkDefault true;
   security.sudo.wheelNeedsPassword = false;
 
@@ -117,6 +133,14 @@
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
+  };
+
+  programs.ssh.knownHosts = {
+    "kloenk.de" = {
+      hostNames = [ "*.kloenk.de" ];
+      certAuthority = true;
+      publicKeyFile = toString ./server_ca.pub;
+    };
   };
 
   #programs.fish.enable = true;

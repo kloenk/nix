@@ -20,7 +20,7 @@
         controlPersist = "15m";
         matchBlocks = {
           hubble = {
-            hostname = "kloenk.de";
+            hostname = "hubble.kloenk.de";
             port = 62954;
             user = "kloenk";
             forwardAgent = true;

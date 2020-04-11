@@ -13,6 +13,7 @@
         minplayers 2
         g_instagib 1
         g_instagib_blaster_keepforce 1
+        rcon_password "barfoo"
       '';
     };
   };

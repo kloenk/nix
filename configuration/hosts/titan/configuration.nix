@@ -7,19 +7,21 @@ in {
   imports = [
     ./hardware-configuration.nix
     ./wireguard.nix
-    ./bgp.nix
+#    ./bgp.nix
     ./links.nix
     #./xonotic.nix
 
     # dm crypt fast
     #./cloudflare.nix
+    #./engelsystem.nix
+    #./nextcloud.nix
 
     ../../default.nix
     
     ../../common
     ../../desktop
     ../../desktop/sway.nix
-    ../../desktop/plasma.nix
+    #../../desktop/plasma.nix
 
     # fallback for detection
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
@@ -31,10 +33,9 @@ in {
   boot.loader.grub.device = "/dev/disk/by-id/wwn-0x5002538e40df324b";
   boot.supportedFilesystems = [ "xfs" "nfs" "ext2" "ext4" ];
   boot.kernelModules = [ "vfio-pci" "amdgpu" ];
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    wireguard
-    acpi_call
-  ];
+  #boot.extraModulePackages = with config.boot.kernelPackages; [
+  #  acpi_call
+  #];
 
   # ssh decryption
   boot.initrd.network.enable = true;
@@ -77,9 +78,9 @@ in {
   networking.useDHCP = false;
   networking.hostName = "titan";
   networking.extraHosts = ''
-    172.16.0.1 airlink.local unit.local
-    192.168.178.248  atom.fritz.box
     192.168.178.1 fritz.box
+
+    #127.0.0.1 klaut.kloenk.de
   '';
   networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
   networking.search = [ "fritz.box" "kloenk.de" ];

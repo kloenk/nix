@@ -1,13 +1,53 @@
-{ ... }:
+{ pkgs, config, ... }:
 
 {
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
+    ensureUsers = [
+      {
+        name = "engelsystem";
+        ensurePermissions = {
+          "engelsystem.*" = "ALL PRIVILEGES";
+        };
+      }
+    ];
+    ensureDatabases = [
+      "engelsystem"
+    ];
+  };
+
   services.engelsystem = {
     enable = true;
-    appName = "test";
-    mail.from.address = "noreply@engelsystem.de";
-    mail.from.name = "Engelsystem";
-    mail.username = "test@example.com";
-    apiKeyFile = "/tmp/test.apikey";
-    domain = "default";
+    domain = "punkte.kloenk.de";
+    config = {
+/*      database.unix_socket = "/var/run/mysqld/mysqld.sock";
+      database.host = "localhost";
+      database.database = "engelsystem";
+      database.username = "engelsystem";*/
+      app_name = "test";
+    };
+    /*#database.host = ":/run/mysqld/mysqld.sock";
+    database.host = "";
+    #database.passwordFile??
+    maintenance = false;
+    mail = {
+      driver = "smtp";
+      from.address = "noreply-punkte@kloenk.de";
+      from.name = "Abi 2021 Punktesystem";
+      encryption = "tls";
+      username = "noreply-punkte@kloenk.de";
+      passwordFile = config.krops.secrets.files."es_mail_password".path;
+    };
+    autoarrive = true;
+    minPasswordLength = 6;
+    dect = false;
+    userNames = true;
+    plannedArrival = false;
+    nightShifts.enable = false;
+    defaultLocale = "de_DE";*/
   };
+
+  krops.secrets.files."es_mail_password".owner = "engelsystem";
+  users.users.engelsystem.extraGroups = [ "keys" "mysql" ];
 }

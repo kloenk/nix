@@ -2,9 +2,6 @@
 
 {
   environment.systemPackages = [ pkgs.wireguard pkgs.wireguard-tools ];
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    wireguard
-  ];
 
   networking.firewall = {
     allowedUDPPorts = [
