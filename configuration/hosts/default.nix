@@ -15,6 +15,12 @@ in {
     magicNumber = 252;
   };
 
+  barahir = {
+    hostname = "kloenk@192.168.178.66:62954";
+    prometheusExporters = [ "node-exporter" "nginx-exporter" ];
+    # FIXME: bgp
+  };
+
   kloenkX = {
     #hostname = "kloenk@127.0.0.1:62954";
     hostname = "kloenk@kloenkX.kloenk.de:62954";
@@ -31,13 +37,13 @@ in {
     wireguard.endpoint = "2001:41d0:1004:1629:1337:187::";
     magicNumber = 249;
   };
-  titan = {
+  /*titan = {
     #hostname = "kloenk@titan.kloenk.de:62954";
     hostname = "kloenk@192.168.178.59:62954";
     prometheusExporters = [ "node-exporter" "nginx-exporter" "wireguard" ];
     wireguard.publicKey = "crMsdERA3xeV8tLpT817R78d4/hGMKS/6LWNyMlsFRQ=";
     magicNumber = 251;
-  };
+  };*/
   atom = {
     hostname = "kloenk@192.168.178.248:62954";
     prometheusExporters = [ "node-exporter" "nginx-exporter" "wireguard" ];
