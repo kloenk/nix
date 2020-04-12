@@ -1,7 +1,7 @@
 {
   name = "kloenks";
 
-  edition = 202009;
+  edition = 201909;
 
   description = "Kloenk's Nixos configuration";
 
