@@ -6,7 +6,7 @@ in {
   imports = [
     ./hardware-configuration.nix
     ./wireguard.nix
-    ./bgp.nix
+ #   ./bgp.nix
     ./links.nix
 
     ../../default.nix
@@ -72,6 +72,11 @@ in {
   services.avahi.enable = true;
 
   nixpkgs.config.allowUnfree = true;
+  nix.package = pkgs.nixFlakes;
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+    builders-use-substitutes = true
+  '';
 
   environment.etc.qemu-ifup.source = pkgs.writeText "qemu-ifup" ''
     #!${pkgs.stdenv.shell}
@@ -205,9 +210,6 @@ in {
       speedFactor = 2;
     }
   ];
-  nix.extraOptions = ''
-    builders-use-substitutes = true
-  '';
   nix.gc.automatic = false;
 
   services.prometheus.exporters.node.enabledCollectors = [ "tcpstat" "wifi" ];
