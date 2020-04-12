@@ -1,8 +1,10 @@
-{ system ? builtins.currentSystem,
-  pkgs ? import <nixpkgs> { inherit system; }, ... }:
+{ system ? builtins.currentSystem
+, pkgs ? import <nixpkgs> { inherit system; }
+, lib ? pkgs.lib
+, ... }:
 
 let
-  lib = pkgs.lib;
+  #lib = pkgs.lib;
   callPackage = lib.callPackageWith (pkgs // newpkgs);
 
   newpkgs = {

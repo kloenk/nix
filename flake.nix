@@ -1,13 +1,20 @@
 {
-  name = "kloenks";
-
   edition = 201909;
 
   description = "Kloenk's Nixos configuration";
 
-  requires = [ flake:nixpkgs/20.09 ];
+  outputs = { self, nixpkgs }: let 
+    systems = [ "x86_64-linux" ];
 
-  provides = deps: {
-    packages.jblock = import ./pkgs { pkgs = deps.nixpkgs.packages; };
+    forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f system);
+
+     # Memoize nixpkgs for different platforms for efficiency.
+     nixpkgsFor = forAllSystems (system:
+     import nixpkgs {
+       inherit system;
+       #overlays = [ self.overlay ];
+     });
+  in{
+    packages = forAllSystems (system: import ./pkgs { pkgs = nixpkgsFor.${system}; lib = nixpkgs.lib; });
   };
 }
