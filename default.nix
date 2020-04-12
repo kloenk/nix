@@ -16,7 +16,9 @@ in {
   inherit (import ./lib/manager.nix sources) home;
   #sources = inherit (sources);
   jobsets.iso = import ./lib/iso-image.nix sources;
-  pkgs = import ./pkgs sources;
+  pkgs = import nixpkgs {
+    overlays = [ (import ./pkgs/overlay.nix) ];
+  };
 } // (if hydra then {} else {
   inherit (import ./lib/nixos-config.nix sources) configs;
   inherit (import ./lib/krops3.nix sources) deploy;

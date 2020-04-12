@@ -4,6 +4,7 @@
   description = "Kloenk's Nixos configuration";
 
   outputs = { self, nixpkgs }: let 
+
     systems = [ "x86_64-linux" ];
 
     forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f system);
@@ -12,9 +13,11 @@
      nixpkgsFor = forAllSystems (system:
      import nixpkgs {
        inherit system;
-       #overlays = [ self.overlay ];
+       overlays = [ self.overlay ];
      });
   in{
-    packages = forAllSystems (system: import ./pkgs { pkgs = nixpkgsFor.${system}; lib = nixpkgs.lib; });
+    overlay = import ./pkgs/overlay.nix;
+
+    packages = forAllSystems (system: nixpkgsFor.${system});
   };
 }
