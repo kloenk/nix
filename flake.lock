@@ -1,14 +1,34 @@
 {
   "nodes": {
+    "home-manager": {
+      "info": {
+        "lastModified": 1586024680,
+        "narHash": "sha256-wv+wjM6ygCf3hZyKrwv39gZJo+z7fPCOy82dsTpqqqg="
+      },
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "owner": "eadwu",
+        "repo": "home-manager",
+        "rev": "8455e18267ccea7afa1814f70f5204b57c853240",
+        "type": "github"
+      },
+      "original": {
+        "owner": "eadwu",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "info": {
-        "lastModified": 1586698813,
-        "narHash": "sha256-J2UuMiAHFZex2zUGbM9/Ue9lWCitGK3D1c5zduSAZ0w="
+        "lastModified": 1586763797,
+        "narHash": "sha256-SR0hUvXbiNN2yy6MYecfskFM4HO4S8xcPbSA/7vy0O4="
       },
       "locked": {
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "681db603640dac395b0f76eb666f39019457131b",
+        "rev": "87d598e310ce6d159bf7a91806eda75538475e16",
         "type": "github"
       },
       "original": {
@@ -18,6 +38,7 @@
     },
     "root": {
       "inputs": {
+        "home-manager": "home-manager",
         "nixpkgs": "nixpkgs"
       }
     }

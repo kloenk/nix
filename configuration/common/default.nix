@@ -9,7 +9,7 @@
   ];
 
   nixpkgs.overlays = [
-    (self: super: import ../../pkgs { pkgs = super; })
+    (import ../../pkgs/overlay.nix)
   ];
 
 # environment.etc."src/nixpkgs".source = config.sources.nixpkgs;
@@ -33,15 +33,15 @@
   services.openssh = {
     enable = true;
     ports = [ 62954 ];
-    passwordAuthentication = lib.mkDefault false;
+    passwordAuthentication = lib.mkDefault (if (config.networking.hostName != "kexec") then false else true);
     challengeResponseAuthentication = false;
     permitRootLogin = lib.mkDefault "no";
-    hostKeys = [
+    hostKeys = if (config.networking.hostName != "kexec") then [
       { path = config.krops.secrets.files."ssh_host_ed25519_key".path; type = "ed25519"; }
-    ];
-    extraConfig = let
+    ] else [];
+    extraConfig = if (config.networking.hostName != "kexec") then let
       hostCertificate = pkgs.writeText "host_cert_ed25519" (builtins.readFile (toString ../ca + "/ssh_host_ed25519_key_${config.networking.hostName}-cert.pub"));
-    in "HostCertificate ${hostCertificate}";
+    in "HostCertificate ${hostCertificate}" else "";
   };
   krops.secrets.files."ssh_host_ed25519_key".owner = "root";
 

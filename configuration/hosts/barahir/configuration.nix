@@ -11,6 +11,7 @@
     ../../common
     ../../desktop
     ../../desktop/sway.nix
+    ../../desktop/plasma.nix
 
     # fallback for detection
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
