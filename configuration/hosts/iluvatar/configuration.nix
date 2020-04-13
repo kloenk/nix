@@ -10,9 +10,6 @@
 
     ../../default.nix
     ../../common
-
-    # qemu foo
-    <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
   ];
 
   # vm connection
@@ -37,7 +34,7 @@
     ];
     port = 62954;
     hostKeys =
-      [ <secrets/initrd/ecdsa_host_key> <secrets/initrd/ed25519_host_key> ];
+      [ "/var/src/secrets/initrd/ecdsa_host_key" "/var/src/secrets/initrd/ed25519_host_key" ];
   };
   boot.initrd.preLVMCommands = lib.mkBefore (''
     ip li set enp1s0 up

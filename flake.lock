@@ -2,20 +2,21 @@
   "nodes": {
     "home-manager": {
       "info": {
-        "lastModified": 1586024680,
-        "narHash": "sha256-wv+wjM6ygCf3hZyKrwv39gZJo+z7fPCOy82dsTpqqqg="
+        "lastModified": 1586783434,
+        "narHash": "sha256-zxPfpc1CXgTYjT8UMsVFMZgJzl/axHILKHXa+BZwqoo="
       },
       "inputs": {
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "owner": "eadwu",
+        "owner": "kloenk",
         "repo": "home-manager",
-        "rev": "8455e18267ccea7afa1814f70f5204b57c853240",
+        "rev": "74f0c1ede180b323423b3f762c8390f60f9c7a48",
         "type": "github"
       },
       "original": {
-        "owner": "eadwu",
+        "owner": "kloenk",
+        "ref": "feature/flake-overlay",
         "repo": "home-manager",
         "type": "github"
       }

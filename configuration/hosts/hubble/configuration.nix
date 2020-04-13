@@ -29,9 +29,6 @@ in {
     ../../default.nix
     ../../common
     ../../bgp
-
-    # fallback for detection
-    <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
   ];
 
   # vm connection
