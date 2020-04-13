@@ -4,71 +4,69 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [ <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
-    ];
+  imports = [ <nixpkgs/nixos/modules/profiles/qemu-guest.nix> ];
 
-  boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "sr_mod" "virtio_blk" ];
+  boot.initrd.availableKernelModules =
+    [ "ata_piix" "uhci_hcd" "virtio_pci" "sr_mod" "virtio_blk" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/7031d110-eebb-43fc-8268-3e261c783a7b";
-      fsType = "xfs";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/7031d110-eebb-43fc-8268-3e261c783a7b";
+    fsType = "xfs";
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/6b76dd29-fb51-4358-8756-554716470e56";
-      fsType = "ext2";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/6b76dd29-fb51-4358-8756-554716470e56";
+    fsType = "ext2";
+  };
 
-  fileSystems."/persist/log" =
-    { device = "/dev/disk/by-uuid/e77c95aa-1600-4dc6-9f46-07d3193e0742";
-      fsType = "xfs";
-      neededForBoot = true;
-    };
+  fileSystems."/persist/log" = {
+    device = "/dev/disk/by-uuid/e77c95aa-1600-4dc6-9f46-07d3193e0742";
+    fsType = "xfs";
+    neededForBoot = true;
+  };
 
-  fileSystems."/persist/data" =
-    { device = "/dev/disk/by-uuid/b709d257-a08c-4e57-9a84-a56bd8d5421c";
-      fsType = "xfs";
-    };
+  fileSystems."/persist/data" = {
+    device = "/dev/disk/by-uuid/b709d257-a08c-4e57-9a84-a56bd8d5421c";
+    fsType = "xfs";
+  };
 
-  fileSystems."/var/log" =
-    { device = "/persist/log";
-      fsType = "none";
-      options = [ "bind" ];
-      neededForBoot = true;
-    };
+  fileSystems."/var/log" = {
+    device = "/persist/log";
+    fsType = "none";
+    options = [ "bind" ];
+    neededForBoot = true;
+  };
 
-  fileSystems."/persist/secrets" =
-    { device = "/dev/disk/by-uuid/5d10389c-16a7-49ca-ab82-cec8045b5507";
-      fsType = "xfs";
-      neededForBoot = true;
-    };
+  fileSystems."/persist/secrets" = {
+    device = "/dev/disk/by-uuid/5d10389c-16a7-49ca-ab82-cec8045b5507";
+    fsType = "xfs";
+    neededForBoot = true;
+  };
 
-  fileSystems."/var/src/secrets" =
-    { device = "/persist/secrets";
-      fsType = "none";
-      options = [ "bind" ];
-      neededForBoot = true;
-    };
+  fileSystems."/var/src/secrets" = {
+    device = "/persist/secrets";
+    fsType = "none";
+    options = [ "bind" ];
+    neededForBoot = true;
+  };
 
-  fileSystems."/var/lib/acme" = 
-    { device = "/persist/secrets/acme";
-      fsType = "none";
-      options = [ "bind" ];
-    };
+  fileSystems."/var/lib/acme" = {
+    device = "/persist/secrets/acme";
+    fsType = "none";
+    options = [ "bind" ];
+  };
 
-  fileSystems."/var/lib/vnstat" = 
-    { device = "/persist/data/vnstat";
-      fsType = "none";
-      options = [ "bind" ];
-    };
+  fileSystems."/var/lib/vnstat" = {
+    device = "/persist/data/vnstat";
+    fsType = "none";
+    options = [ "bind" ];
+  };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/da62f59b-f07d-4b03-816d-a3f1983bfcb0"; }
-    ];
+    [{ device = "/dev/disk/by-uuid/da62f59b-f07d-4b03-816d-a3f1983bfcb0"; }];
 
   nix.maxJobs = lib.mkDefault 8;
 }

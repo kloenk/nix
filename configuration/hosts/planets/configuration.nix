@@ -17,20 +17,28 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/disk/by-path/virtio-pci-0000:04:00.0";
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    wireguard
-  ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ wireguard ];
 
   networking.hostName = "planets";
   networking.dhcpcd.enable = false;
   networking.useDHCP = false;
-  networking.nameservers = [ "8.8.8.8" "2001:4860:4860::8888" "8.8.4.4" "2001:4860:4860::8844" ];
+  networking.nameservers =
+    [ "8.8.8.8" "2001:4860:4860::8888" "8.8.4.4" "2001:4860:4860::8844" ];
   networking.interfaces.enp1s0.macAddress = "52:54:00:f0:aa:b4";
   networking.interfaces.enp1s0.ipv6.addresses = [
-    { address = "2001:678:bbc:3e7:f199::1"; prefixLength = 64; }
-    { address = "fe80::5054:ff:fef0:aab4"; prefixLength = 64; }
+    {
+      address = "2001:678:bbc:3e7:f199::1";
+      prefixLength = 64;
+    }
+    {
+      address = "fe80::5054:ff:fef0:aab4";
+      prefixLength = 64;
+    }
   ];
-  networking.interfaces.enp1s0.ipv6.routes = [ { address = "fe80::5054:ff:fefb:9c31"; prefixLength = 128; } ]; # TODO
+  networking.interfaces.enp1s0.ipv6.routes = [{
+    address = "fe80::5054:ff:fefb:9c31";
+    prefixLength = 128;
+  }]; # TODO
   networking.extraHosts = ''
     planets.kloenk.de 127.0.0.1
   '';

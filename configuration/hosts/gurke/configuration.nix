@@ -15,13 +15,11 @@
   ];
 
   environment.variables.NIX_PATH = lib.mkForce "/var/src";
-  nix.nixPath = lib.mkForce [
-    "/var/src"
-  ];
+  nix.nixPath = lib.mkForce [ "/var/src" ];
 
   security.acme.email = "ca@kloenk.de";
   security.acme.acceptTerms = true;
-  
+
   networking.hostName = "gurke";
   networking.dhcpcd.enable = false;
   networking.useDHCP = false;
@@ -45,7 +43,8 @@
         {
           routeConfig.Gateway = "195.39.246.1";
           routeConfig.GatewayOnLink = true;
-        } {
+        }
+        {
           routeConfig.Gateway = "2a0f:4ac0:42::1";
           routeConfig.GatewayOnLink = true;
         }
@@ -65,7 +64,6 @@
       linkConfig.Unmanaged = "yes";
     };
   };
-
 
   services.vnstat.enable = true;
 

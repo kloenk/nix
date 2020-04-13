@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
- 
-let
-  secrets = import /etc/nixos/secrets.nix;
+
+let secrets = import /etc/nixos/secrets.nix;
 in {
   home-manager.users.kloenk.services.spotifyd = {
     enable = true;

@@ -1,10 +1,6 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, cython
-}:
+{ lib, buildPythonPackage, fetchPypi, cython }:
 
-buildPythonPackage rec{
+buildPythonPackage rec {
   pname = "aiocoap";
   version = "0.3";
 
@@ -15,9 +11,7 @@ buildPythonPackage rec{
 
   checkInputs = [ cython ];
 
-
   doCheck = false;
-
 
   meta = with lib; {
     #homepage = https://github.com/pytoolz/toolz;

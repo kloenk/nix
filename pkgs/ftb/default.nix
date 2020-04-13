@@ -1,6 +1,5 @@
-{ stdenv, fetchurl, makeDesktopItem, makeWrapper
-, jdk, jre, libpulseaudio, libXxf86vm
-}:
+{ stdenv, fetchurl, makeDesktopItem, makeWrapper, jdk, jre, libpulseaudio
+, libXxf86vm }:
 
 let
   desktopItem = makeDesktopItem {
@@ -43,8 +42,8 @@ in stdenv.mkDerivation {
 
   meta = with stdenv.lib; {
     description = "ftb";
-    homepage = https://minecraft.net;
+    homepage = "https://minecraft.net";
     maintainers = with maintainers; [ cpages ryantm infinisil ];
- #   license = licenses.unfreeRedistributable;
+    #   license = licenses.unfreeRedistributable;
   };
 }

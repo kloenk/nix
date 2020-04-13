@@ -26,9 +26,10 @@
     }
   '';
   services.nginx.virtualHosts."klaut.kloenk.de" = {
-    locations."~ ^\\/(?:index|remote|public|cron|core/ajax\\/update|status|ocs\\/v[12]|updater\\/.+|ocs-provider\\/.+|ocm-provider\\/.+)\\.php(?:$|\\/)".extraConfig = ''
-      fastcgi_param REMOTE_USER $ssl_client_s_dn_cn;
-    '';
+    locations."~ ^\\/(?:index|remote|public|cron|core/ajax\\/update|status|ocs\\/v[12]|updater\\/.+|ocs-provider\\/.+|ocm-provider\\/.+)\\.php(?:$|\\/)".extraConfig =
+      ''
+        fastcgi_param REMOTE_USER $ssl_client_s_dn_cn;
+      '';
     extraConfig = ''
       ssl_client_certificate ${<configuration/files/nyantec_Root_CA.pem>};
       ssl_verify_client on;

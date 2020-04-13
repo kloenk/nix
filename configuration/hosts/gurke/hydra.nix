@@ -2,16 +2,15 @@
 
 {
 
-   nixpkgs.config.allowBroken = true;
+  nixpkgs.config.allowBroken = true;
 
   services.postgresql = {
     enable = true;
     ensureDatabases = [ "hydra" ];
-    ensureUsers = [
-      { name = "hydra";
-        ensurePermissions."DATABASE hydra" = "ALL PRIVILEGES";
-      }
-    ];
+    ensureUsers = [{
+      name = "hydra";
+      ensurePermissions."DATABASE hydra" = "ALL PRIVILEGES";
+    }];
   };
 
   services.hydra = {
@@ -60,13 +59,11 @@
     '';
   };
   # use localhost for builds
-  
-  nix.buildMachines = [
-    {
-      hostName = "localhost";
-      system = "x86_64-linux";
-      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
-      maxJobs = 8; # 20;
-    }
-  ];
+
+  nix.buildMachines = [{
+    hostName = "localhost";
+    system = "x86_64-linux";
+    supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+    maxJobs = 8; # 20;
+  }];
 }

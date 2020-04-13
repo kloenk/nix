@@ -4,28 +4,26 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [ <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
-    ];
+  imports = [ <nixpkgs/nixos/modules/profiles/qemu-guest.nix> ];
 
   boot.supportedFilesystems = [ "xfs" ];
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/vda";
 
-  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
+  boot.initrd.availableKernelModules =
+    [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/d22bf5b5-ea34-4276-971d-66c6e1c1e2d0";
-      fsType = "xfs";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/d22bf5b5-ea34-4276-971d-66c6e1c1e2d0";
+    fsType = "xfs";
+  };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/3b8aa56c-8bc9-4ed7-9a58-cc479b1ce628"; }
-    ];
+    [{ device = "/dev/disk/by-uuid/3b8aa56c-8bc9-4ed7-9a58-cc479b1ce628"; }];
 
   nix.maxJobs = lib.mkDefault 8;
 }

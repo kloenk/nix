@@ -87,10 +87,16 @@ in {
             mod state state INVALID DROP;
             mod state state (ESTABLISHED RELATED) ACCEPT;
 
-            interface (lo ${lib.concatStringsSep " " fwcfg.trustedInterfaces}) ACCEPT;
+            interface (lo ${
+              lib.concatStringsSep " " fwcfg.trustedInterfaces
+            }) ACCEPT;
 
-            proto tcp dport (${lib.concatStringsSep " " (map toString fwcfg.allowedTCPPorts)}) ACCEPT;
-            proto udp dport (${lib.concatStringsSep " " (map toString fwcfg.allowedUDPPorts)}) ACCEPT;
+            proto tcp dport (${
+              lib.concatStringsSep " " (map toString fwcfg.allowedTCPPorts)
+            }) ACCEPT;
+            proto udp dport (${
+              lib.concatStringsSep " " (map toString fwcfg.allowedUDPPorts)
+            }) ACCEPT;
 
             proto udp dport 546 daddr fe80::/64 ACCEPT;
 
@@ -125,10 +131,16 @@ in {
             mod state state INVALID DROP;
             mod state state (ESTABLISHED RELATED) ACCEPT;
 
-            interface (lo ${lib.concatStringsSep " " fwcfg.trustedInterfaces}) ACCEPT;
+            interface (lo ${
+              lib.concatStringsSep " " fwcfg.trustedInterfaces
+            }) ACCEPT;
 
-            proto tcp dport (${lib.concatStringsSep " " (map toString fwcfg.allowedTCPPorts)}) ACCEPT;
-            proto udp dport (${lib.concatStringsSep " " (map toString fwcfg.allowedUDPPorts)}) ACCEPT;
+            proto tcp dport (${
+              lib.concatStringsSep " " (map toString fwcfg.allowedTCPPorts)
+            }) ACCEPT;
+            proto udp dport (${
+              lib.concatStringsSep " " (map toString fwcfg.allowedUDPPorts)
+            }) ACCEPT;
 
             ${cfg.extraInput}
             ${cfg.extraInput4}

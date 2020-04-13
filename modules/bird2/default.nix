@@ -3,18 +3,18 @@
 let
   inherit (lib) mkEnableOption mkIf mkOption types optionalString;
 
-  optionalNullString = cond:
-    string: if cond == null then "" else string;
+  optionalNullString = cond: string: if cond == null then "" else string;
 
-  mkStrOption = description: mkOption {
-    type = types.nullOr types.str;
-    default = null;
-    description = description;
-  };
+  mkStrOption = description:
+    mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      description = description;
+    };
 
   yn = cond: if cond then "yes" else "no";
 
-  functionModule = types.submodule ({ name, ...}: {
+  functionModule = types.submodule ({ name, ... }: {
     options = {
       body = mkOption {
         type = types.str;
@@ -66,20 +66,24 @@ let
     };
   });
   formatChannel = channel: ''
-      ${channel.name} ${optionalNullString channel.sadr channel.sadr} {
-        ${optionalNullString channel.nextHop "next hop ${channel.nextHop};"}
-        ${optionalNullString channel.keepFilterd "import keep filtered;"}
-        ${optionalNullString channel.filter.import ''
+    ${channel.name} ${optionalNullString channel.sadr channel.sadr} {
+      ${optionalNullString channel.nextHop "next hop ${channel.nextHop};"}
+      ${optionalNullString channel.keepFilterd "import keep filtered;"}
+      ${
+        optionalNullString channel.filter.import ''
           import filter {
             ${channel.filter.import}
           };
-        ''}
-        ${optionalNullString channel.filter.export ''
+        ''
+      }
+      ${
+        optionalNullString channel.filter.export ''
           export filter {
             ${channel.filter.export}
           };
-        ''}
-      };
+        ''
+      }
+    };
   '';
 
   babelInterfaceBlock = types.submodule ({ name, ... }: {
@@ -121,7 +125,7 @@ let
           Default: 96 for wired interfaces, 256 for wireless.
         '';
       };
-      
+
       limit = mkOption {
         type = types.nullOr types.int;
         default = null;
@@ -238,7 +242,7 @@ let
 
       channels = mkOption {
         type = types.loaOf channelBlock;
-        default = {};
+        default = { };
       };
 
       radomeizedID = mkOption {
@@ -248,7 +252,7 @@ let
 
       interfaces = mkOption {
         type = types.loaOf babelInterfaceBlock;
-        default = {};
+        default = { };
         description = "interfaces";
       };
     };
@@ -257,29 +261,70 @@ let
     ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: channel: ''
       ${formatChannel channel}
     '') babel.channels)}
-    ${optionalNullString babel.radomeizedID "randomize router id ${yn babel.radomeizedID};"}
+    ${optionalNullString babel.radomeizedID
+    "randomize router id ${yn babel.radomeizedID};"}
     ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: interface: ''
-      interface ${if interface.pattern == null then (lib.concatStringsSep ", " "\"${interface.pattern}\"") else "\"${interface.name}\""} {
+      interface ${
+        if interface.pattern == null then
+          (lib.concatStringsSep ", " ''"${interface.pattern}"'')
+        else
+          ''"${interface.name}"''
+      } {
         ${optionalNullString interface.type "type ${interface.type};"}
-        ${optionalNullString interface.rxcost "rxcost ${toString interface.rxcost};"}
-        ${optionalNullString interface.limit "limit ${toString interface.limit};"}
-        ${optionalNullString interface.helloInterval "hello interval ${toString interface.helloInterval};"}
-        ${optionalNullString interface.udateInterval "update interval ${toString interface.updateInterval};"}
+        ${
+          optionalNullString interface.rxcost
+          "rxcost ${toString interface.rxcost};"
+        }
+        ${
+          optionalNullString interface.limit
+          "limit ${toString interface.limit};"
+        }
+        ${
+          optionalNullString interface.helloInterval
+          "hello interval ${toString interface.helloInterval};"
+        }
+        ${
+          optionalNullString interface.udateInterval
+          "update interval ${toString interface.updateInterval};"
+        }
         ${optionalNullString interface.port "port ${toString interface.port};"}
-        ${optionalNullString interface.txClass "tx class ${toString interface.txClass};"}
-        ${optionalNullString interface.txDscp "tx dscp ${toString interface.txDscp};"}
-        ${optionalNullString interface.txPriority "tx priority ${toString interface.txPriority};"}
-        ${optionalNullString interface.rxBuffer "rx buffer ${toString interface.rxBuffer};"}
-        ${optionalNullString interface.txLength "tx length ${toString interface.txLength};"}
-        ${optionalNullString interface.checkLink "check link ${yn interface.checkLink};"}
-        ${optionalNullString interface.nextHop.ipv4 "next hop ipv4 ${interface.nextHop.ipv4};"}
-        ${optionalNullString interface.nextHop.ipv6 "next hop ipv6 ${interface.nextHop.ipv6};"}
+        ${
+          optionalNullString interface.txClass
+          "tx class ${toString interface.txClass};"
+        }
+        ${
+          optionalNullString interface.txDscp
+          "tx dscp ${toString interface.txDscp};"
+        }
+        ${
+          optionalNullString interface.txPriority
+          "tx priority ${toString interface.txPriority};"
+        }
+        ${
+          optionalNullString interface.rxBuffer
+          "rx buffer ${toString interface.rxBuffer};"
+        }
+        ${
+          optionalNullString interface.txLength
+          "tx length ${toString interface.txLength};"
+        }
+        ${
+          optionalNullString interface.checkLink
+          "check link ${yn interface.checkLink};"
+        }
+        ${
+          optionalNullString interface.nextHop.ipv4
+          "next hop ipv4 ${interface.nextHop.ipv4};"
+        }
+        ${
+          optionalNullString interface.nextHop.ipv6
+          "next hop ipv6 ${interface.nextHop.ipv6};"
+        }
       };
-      ''
-      )babel.interfaces )}
+    '') babel.interfaces)}
   '';
 
-  bfdInterfaceBlock = types.submodule({ name, ... }: {
+  bfdInterfaceBlock = types.submodule ({ name, ... }: {
     options = {
       interval = mkStrOption ''
         BFD ensures availability of the forwarding path associated with the session by periodically sending
@@ -352,16 +397,36 @@ let
     };
   });
   formateBFDBlock = bfd: ''
-    ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: interface: ''
-      interface ${interface.name} {
-        ${optionalNullString interface.interval "interval ${interface.interval};"}
-        ${optionalNullString interface.rxInterval "min rx interval ${interface.rxInterval};"}
-        ${optionalNullString interface.txInterval "min tx interval ${interface.txInterval};"}
-        ${optionalNullString interface.idleTxInterval "idle tx interval ${interface.idleTxInterval};"}
-        ${optionalNullString interface.multiplier "multiplier ${toString interface.multiplier};"}
-        ${optionalNullString interface.passive "passive ${yn interface.passive};"}
-      };
-    '') bfd.interfaces)};
+    ${
+      lib.concatStringsSep "\n" (lib.mapAttrsToList (name: interface: ''
+        interface ${interface.name} {
+          ${
+            optionalNullString interface.interval
+            "interval ${interface.interval};"
+          }
+          ${
+            optionalNullString interface.rxInterval
+            "min rx interval ${interface.rxInterval};"
+          }
+          ${
+            optionalNullString interface.txInterval
+            "min tx interval ${interface.txInterval};"
+          }
+          ${
+            optionalNullString interface.idleTxInterval
+            "idle tx interval ${interface.idleTxInterval};"
+          }
+          ${
+            optionalNullString interface.multiplier
+            "multiplier ${toString interface.multiplier};"
+          }
+          ${
+            optionalNullString interface.passive
+            "passive ${yn interface.passive};"
+          }
+        };
+      '') bfd.interfaces)
+    };
   '';
 
   staticProtocolBlock = types.submodule ({ name, ... }: {
@@ -373,7 +438,7 @@ let
 
       channels = mkOption {
         type = types.loaOf channelBlock;
-        default = {};
+        default = { };
       };
 
       route = mkOption {
@@ -412,21 +477,21 @@ let
       };
     };
   };
-  formatDeviceProtocolBlock = device:
-    ''
-      ${optionalNullString device.scanTime "scan time ${toString device.scanTime};"}
-    '';
+  formatDeviceProtocolBlock = device: ''
+    ${optionalNullString device.scanTime
+    "scan time ${toString device.scanTime};"}
+  '';
 
   directProtocolBlock = types.submodule {
     options = {
       channels = mkOption {
         type = types.loaOf channelBlock;
-        default = {};
+        default = { };
       };
 
       interfaces = mkOption {
         type = types.listOf types.str;
-        default = [];
+        default = [ ];
       };
 
       template = mkOption {
@@ -435,18 +500,16 @@ let
       };
     };
   };
-  formatDirectProtocol = direct:
-  ''
-      ${lib.concatStringsSep "\n" (map (interface: ''
-        interface "${interface}";
-      '') direct.interfaces )}
-      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: channel: ''
-        ${formatChannel channel}
-      '') direct.channels)}
+  formatDirectProtocol = direct: ''
+    ${lib.concatStringsSep "\n" (map (interface: ''
+      interface "${interface}";
+    '') direct.interfaces)}
+    ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: channel: ''
+      ${formatChannel channel}
+    '') direct.channels)}
   '';
 
-
-  kernelProtocolBlock = types.submodule ({ name, ...  }: {
+  kernelProtocolBlock = types.submodule ({ name, ... }: {
     options = {
       name = mkOption {
         type = types.str;
@@ -460,7 +523,7 @@ let
 
       channels = mkOption {
         type = types.loaOf channelBlock;
-        default = {};
+        default = { };
       };
 
       table = mkOption {
@@ -476,7 +539,6 @@ let
     '') kernel.channels)}
   '';
 
-  
   BGPProtocolBlock = types.submodule ({ name, ... }: {
     options = {
       name = mkOption {
@@ -509,7 +571,7 @@ let
 
       channels = mkOption {
         type = types.loaOf channelBlock;
-        default = {};
+        default = { };
       };
 
       body = mkOption {
@@ -517,7 +579,7 @@ let
         description = "FIXME: remove";
         default = "";
       };
-      
+
       neighbor.address = mkOption {
         type = types.nullOr types.str;
         description = "ip of the neighbor";
@@ -535,17 +597,17 @@ let
       };
     };
   });
-  formatBGPProtocolBlock = proto:
-    ''
-        local as ${toString proto.as};
-        ${optionalString proto.gracefulRestart "graceful restart on;"}
-        ${optionalNullString proto.multihop "multihop ${toString proto.multihop};"}
-        ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: channel: ''
-          ${formatChannel channel}
-        '') proto.channels)}
-        ${optionalNullString proto.source "source address ${proto.source};"}
-        ${optionalNullString proto.neighbor.address "neighbor ${proto.neighbor.address} as ${toString proto.neighbor.as};"}
-    '';
+  formatBGPProtocolBlock = proto: ''
+    local as ${toString proto.as};
+    ${optionalString proto.gracefulRestart "graceful restart on;"}
+    ${optionalNullString proto.multihop "multihop ${toString proto.multihop};"}
+    ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: channel: ''
+      ${formatChannel channel}
+    '') proto.channels)}
+    ${optionalNullString proto.source "source address ${proto.source};"}
+    ${optionalNullString proto.neighbor.address
+    "neighbor ${proto.neighbor.address} as ${toString proto.neighbor.as};"}
+  '';
 
   cfg = config.services.bird2;
   configFile = pkgs.writeTextFile {
@@ -560,47 +622,64 @@ let
       '') cfg.functions)}
       # templates
       ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: template: ''
-        template bgp ${template.name} ${optionalNullString template.template "from ${template.template}"} {
+        template bgp ${template.name} ${
+          optionalNullString template.template "from ${template.template}"
+        } {
           ${formatBGPProtocolBlock template}
         }
       '') cfg.templates.bgp)}
       # protocol kernel
       ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: kernel: ''
-        protocol kernel ${kernel.name} ${optionalNullString kernel.template "from ${kernel.template}"} {
+        protocol kernel ${kernel.name} ${
+          optionalNullString kernel.template "from ${kernel.template}"
+        } {
           ${formatKernelProtocol kernel}
         };
       '') cfg.protocols.kernel)}
       # TODO
       # protocol device
       ${lib.concatStringsSep "\n" (map (device: ''
-        protocol device ${optionalNullString device.template "from ${device.template}"} {
+        protocol device ${
+          optionalNullString device.template "from ${device.template}"
+        } {
           ${formatDeviceProtocolBlock device}
         }
       '') cfg.protocols.device)}
       # protocol direct
       ${lib.concatStringsSep "\n" (map (direct: ''
-        protocol direct ${optionalNullString direct.template "from ${direct.template}"} {
+        protocol direct ${
+          optionalNullString direct.template "from ${direct.template}"
+        } {
           ${formatDirectProtocol direct}
         }
       '') cfg.protocols.direct)}
       # protocol static
       ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: proto: ''
         protocol static ${proto.name} {
-          ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: channel: ''
-            ${formatChannel channel}
-          '') proto.channels)}
-          ${optionalNullString proto.checkLink (if proto.checkLink then "check link;" else "")}
+          ${
+            lib.concatStringsSep "\n" (lib.mapAttrsToList (name: channel: ''
+              ${formatChannel channel}
+            '') proto.channels)
+          }
+          ${
+            optionalNullString proto.checkLink
+            (if proto.checkLink then "check link;" else "")
+          }
           route ${proto.route} via "${proto.via}";
         }
       '') cfg.protocols.static)}
         # protocol bpg
-        ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: proto: ''
-          protocol bgp ${proto.name} ${optionalNullString proto.template "from ${proto.template}"} {
-          ${formatBGPProtocolBlock proto}
-          }
-        '') cfg.protocols.bgp)}
+        ${
+          lib.concatStringsSep "\n" (lib.mapAttrsToList (name: proto: ''
+            protocol bgp ${proto.name} ${
+              optionalNullString proto.template "from ${proto.template}"
+            } {
+            ${formatBGPProtocolBlock proto}
+            }
+          '') cfg.protocols.bgp)
+        }
         ${cfg.extraConfig}
-      '';
+    '';
     checkPhase = ''
       ${pkgs.bird2}/bin/bird -d -p -c $out
     '';
@@ -615,38 +694,38 @@ in {
 
       functions = mkOption {
         type = types.loaOf functionModule;
-        default = {};
+        default = { };
       };
 
       templates.bgp = mkOption {
         type = types.loaOf BGPProtocolBlock;
-        default = {};
+        default = { };
       };
 
       protocols.static = mkOption {
         type = types.loaOf staticProtocolBlock;
-        default = {};
+        default = { };
       };
 
       protocols.device = mkOption {
         type = types.listOf deviceProtocolBlock;
-        default = [];
+        default = [ ];
       };
 
       protocols.direct = mkOption {
         type = types.listOf directProtocolBlock;
-        default = [];
+        default = [ ];
       };
 
       protocols.bgp = mkOption {
         type = types.loaOf BGPProtocolBlock;
-        default = {};
+        default = { };
       };
 
       protocols.kernel = mkOption {
         type = types.loaOf kernelProtocolBlock;
-        default = {};
-      };      
+        default = { };
+      };
 
       id = mkOption {
         type = types.str;
@@ -670,7 +749,6 @@ in {
     };
   };
 
-
   ##### implementation
   config = mkIf cfg.enable {
     environment.systemPackages = [ pkgs.bird2 ];
@@ -685,15 +763,26 @@ in {
       serviceConfig = {
         Type = "forking";
         Restart = "on-failure";
-        ExecStart = "${pkgs.bird2}/bin/bird -c /etc/bird/bird2.conf -u bird -g bird";
+        ExecStart =
+          "${pkgs.bird2}/bin/bird -c /etc/bird/bird2.conf -u bird -g bird";
         ExecReload = "${pkgs.bird2}/bin/birdc configure";
         ExecStop = "${pkgs.bird2}/bin/birdc down";
-        CapabilityBoundingSet = [ "CAP_CHOWN" "CAP_FOWNER" "CAP_DAC_OVERRIDE" "CAP_SETUID" "CAP_SETGID"
-                                  # see bird/sysdep/linux/syspriv.h
-                                  "CAP_NET_BIND_SERVICE" "CAP_NET_BROADCAST" "CAP_NET_ADMIN" "CAP_NET_RAW" ];
+        CapabilityBoundingSet = [
+          "CAP_CHOWN"
+          "CAP_FOWNER"
+          "CAP_DAC_OVERRIDE"
+          "CAP_SETUID"
+          "CAP_SETGID"
+          # see bird/sysdep/linux/syspriv.h
+          "CAP_NET_BIND_SERVICE"
+          "CAP_NET_BROADCAST"
+          "CAP_NET_ADMIN"
+          "CAP_NET_RAW"
+        ];
         ProtectSystem = "full";
         ProtectHome = "yes";
-        SystemCallFilter="~@cpu-emulation @debug @keyring @module @mount @obsolete @raw-io";
+        SystemCallFilter =
+          "~@cpu-emulation @debug @keyring @module @mount @obsolete @raw-io";
         MemoryDenyWriteExecute = "yes";
       };
     };
@@ -703,7 +792,7 @@ in {
         description = "BIRD Intrernet Routing Daemon user";
         group = "bird";
       };
-      groups.bird = {};
+      groups.bird = { };
     };
   };
 }

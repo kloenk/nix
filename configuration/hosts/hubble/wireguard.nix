@@ -22,28 +22,21 @@
       ListenPort = 51819;
       PrivateKeyFile = config.krops.secrets.files."y0sh0.key".path;
     };
-    wireguardPeers = [
-      { wireguardPeerConfig = {
-          AllowedIPs = [ "0.0.0.0/0" ];
-          PublicKey = "DCI9lK4yKAwmu1qMYkv+kBq2GlsVq/2GDLwa616Dsxc=";
-          PersistentKeepalive = 21;
-        };
-      }
-    ];
+    wireguardPeers = [{
+      wireguardPeerConfig = {
+        AllowedIPs = [ "0.0.0.0/0" ];
+        PublicKey = "DCI9lK4yKAwmu1qMYkv+kBq2GlsVq/2GDLwa616Dsxc=";
+        PersistentKeepalive = 21;
+      };
+    }];
   };
   systemd.network.networks."30-y0sh0" = {
     name = "y0sh0";
-    addresses = [
-      {
-        addressConfig.Address = "195.39.246.49/32";
-      }
-    ];
-    routes = [
-      {
-        routeConfig.Destination = "195.39.246.62/32";
-        routeConfig.Table = "51820";
-      }
-    ];
+    addresses = [{ addressConfig.Address = "195.39.246.49/32"; }];
+    routes = [{
+      routeConfig.Destination = "195.39.246.62/32";
+      routeConfig.Table = "51820";
+    }];
     extraConfig = ''
       [RoutingPolicyRule]
       Table = 51820
@@ -51,7 +44,6 @@
       Priority = 31000
     '';
   };
-
 
   systemd.network.netdevs."30-wg0" = {
     netdevConfig = {
@@ -66,21 +58,35 @@
     wireguardPeers = [
       { # kloenkX
         wireguardPeerConfig = {
-          AllowedIPs = [ "192.168.42.6/32" "2001:41d0:1004:1629:1337:187:1:6/128" "2a0f:4ac0:f199:42::6/128" ];
+          AllowedIPs = [
+            "192.168.42.6/32"
+            "2001:41d0:1004:1629:1337:187:1:6/128"
+            "2a0f:4ac0:f199:42::6/128"
+          ];
           PublicKey = "cTpyxiMfKTdytWMV+lMAUazQPPLAax7rZ98kvPT96no=";
           PresharedKeyFile = config.krops.secrets.files."wg0.kloenkX.psk".path;
           PersistentKeepalive = 21;
         };
-      } { # titan
+      }
+      { # titan
         wireguardPeerConfig = {
-          AllowedIPs = [ "192.168.42.3/32" "2001:41d0:1004:1629:1337:187:1:3/128" "2a0f:4ac0:f199:42::3/128" ];
+          AllowedIPs = [
+            "192.168.42.3/32"
+            "2001:41d0:1004:1629:1337:187:1:3/128"
+            "2a0f:4ac0:f199:42::3/128"
+          ];
           PublicKey = "4SUbImacuAjRwiK/G3CTmczirJQCI20EdJvPwJfCQxQ=";
           PresharedKeyFile = config.krops.secrets.files."wg0.titan.psk".path;
           PersistentKeepalive = 21;
         };
-      } { # atom
-        wireguardPeerConfig = { 
-          AllowedIPs = [ "192.168.42.7/32" "2001:41d0:1004:1629:1337:187:1:7/128" "2a0f:4ac0:f199:42::7/128" ];
+      }
+      { # atom
+        wireguardPeerConfig = {
+          AllowedIPs = [
+            "192.168.42.7/32"
+            "2001:41d0:1004:1629:1337:187:1:7/128"
+            "2a0f:4ac0:f199:42::7/128"
+          ];
           PublicKey = "009Wk3RP7zOmu61Zc7ZCeS6lJyhUcXZwZsBJoadHOA0=";
           PresharedKeyFile = config.krops.secrets.files."wg0.atom.psk".path;
           PersistentKeepalive = 21;
@@ -98,21 +104,11 @@
   systemd.network.networks."30-wg0" = {
     name = "wg0";
     addresses = [
-      {
-        addressConfig.Address = "192.168.42.1/24";
-      }
-      {
-        addressConfig.Address = "2001:41d0:1004:1629:1337:187:1:0/120";
-      }
-      {
-        addressConfig.Address = "2001:41d0:1004:1629:1337:187:1:1/120";
-      }
-      {
-        addressConfig.Address = "2001:41d0:1004:1629:1337:187:0:1/128";
-      }
-      {
-        addressConfig.Address = "2a0f:4ac0:f199:42::1/64";
-      }
+      { addressConfig.Address = "192.168.42.1/24"; }
+      { addressConfig.Address = "2001:41d0:1004:1629:1337:187:1:0/120"; }
+      { addressConfig.Address = "2001:41d0:1004:1629:1337:187:1:1/120"; }
+      { addressConfig.Address = "2001:41d0:1004:1629:1337:187:0:1/128"; }
+      { addressConfig.Address = "2a0f:4ac0:f199:42::1/64"; }
     ];
     routes = [
       {
@@ -149,26 +145,26 @@
     wireguardPeers = [
       { # Namu Raspi
         wireguardPeerConfig = {
-           AllowedIPs = [ "192.168.30.222/32" "2a0f:4ac0:f199:fa14::222/128" ];
-           PublicKey = "VUb1id67AUBzA8W4zulMGQMAS8sd1Lk7UbIfZAJWoV4=";
-           PresharedKeyFile = config.krops.secrets.files."wgFam.namu.psk".path;
-           PersistentKeepalive = 21;
+          AllowedIPs = [ "192.168.30.222/32" "2a0f:4ac0:f199:fa14::222/128" ];
+          PublicKey = "VUb1id67AUBzA8W4zulMGQMAS8sd1Lk7UbIfZAJWoV4=";
+          PresharedKeyFile = config.krops.secrets.files."wgFam.namu.psk".path;
+          PersistentKeepalive = 21;
         };
-      }  
+      }
       { # nein Drachensegler
         wireguardPeerConfig = {
-           AllowedIPs = [ "192.168.30.3/32" "2a0f:4ac0:f199:fa14::3/128" ];
-           PublicKey = "esYAvRGkZ1cRsPoqBVHWjKsKysB7SVv5pNz783k4cXs=";
-           #PresharedKeyFile = config.krops.secrets.files."wgFam.namu.psk".path;
-           PersistentKeepalive = 21;
+          AllowedIPs = [ "192.168.30.3/32" "2a0f:4ac0:f199:fa14::3/128" ];
+          PublicKey = "esYAvRGkZ1cRsPoqBVHWjKsKysB7SVv5pNz783k4cXs=";
+          #PresharedKeyFile = config.krops.secrets.files."wgFam.namu.psk".path;
+          PersistentKeepalive = 21;
         };
-      }  
+      }
       { # IPhone mum
         wireguardPeerConfig = {
-           AllowedIPs = [ "192.168.30.212/32" "2a0f:4ac0:f199:fa14::212/128" ];
-           PublicKey = "2Yz6+oEqP01haMf9yuh99/Ojt+81CJtLFyr+BPtK+X4=";
-           PresharedKeyFile = config.krops.secrets.files."wgFam.imum.psk".path;
-           PersistentKeepalive = 21;
+          AllowedIPs = [ "192.168.30.212/32" "2a0f:4ac0:f199:fa14::212/128" ];
+          PublicKey = "2Yz6+oEqP01haMf9yuh99/Ojt+81CJtLFyr+BPtK+X4=";
+          PresharedKeyFile = config.krops.secrets.files."wgFam.imum.psk".path;
+          PersistentKeepalive = 21;
         };
       }
       {
@@ -187,7 +183,10 @@
       { addressConfig.Address = "2a0f:4ac0:f199:fa14::/64"; }
     ];
     routes = [
-      { routeConfig.Destination = "192.168.30.0/24"; routeConfig.Table = "51820"; }
+      {
+        routeConfig.Destination = "192.168.30.0/24";
+        routeConfig.Table = "51820";
+      }
       { routeConfig.Destination = "2a0f:4ac0:f199:fa14::/64"; }
     ];
     extraConfig = ''
@@ -197,7 +196,6 @@
       Priority = 31000
     '';
   };
-
 
   systemd.network.netdevs."30-llg0" = {
     netdevConfig = {
@@ -212,26 +210,27 @@
     wireguardPeers = [
       { # io
         wireguardPeerConfig = {
-           AllowedIPs = [ "192.168.43.2/32" "2a0f:4ac0:f199:119::2/128" "10.0.0.0/8" ];
-           PublicKey = "rzyPnz6iliO5hyggfUJcmDrNeFPtMDeWRsq3liEfdQ4=";
-           PresharedKeyFile = config.krops.secrets.files."llg0.io.psk".path;
-           PersistentKeepalive = 21;
+          AllowedIPs =
+            [ "192.168.43.2/32" "2a0f:4ac0:f199:119::2/128" "10.0.0.0/8" ];
+          PublicKey = "rzyPnz6iliO5hyggfUJcmDrNeFPtMDeWRsq3liEfdQ4=";
+          PresharedKeyFile = config.krops.secrets.files."llg0.io.psk".path;
+          PersistentKeepalive = 21;
         };
-      }  
+      }
       { # kloenkX
         wireguardPeerConfig = {
-           AllowedIPs = [ "192.168.43.10/32" "2a0f:4ac0:f199:199::10/128" ];
-           PublicKey = "MYNYNLmxTBsr30JsHV1qSqKqA3Gk54wLaKJn/uwBBiY=";
-           #PresharedKeyFile = config.krops.secrets.files."llg0.kloenkX.psk".path;
-           PersistentKeepalive = 21;
+          AllowedIPs = [ "192.168.43.10/32" "2a0f:4ac0:f199:199::10/128" ];
+          PublicKey = "MYNYNLmxTBsr30JsHV1qSqKqA3Gk54wLaKJn/uwBBiY=";
+          #PresharedKeyFile = config.krops.secrets.files."llg0.kloenkX.psk".path;
+          PersistentKeepalive = 21;
         };
-      }  
-      { # phoenix 
+      }
+      { # phoenix
         wireguardPeerConfig = {
-           AllowedIPs = [ "192.168.43.235/32" "2a0f:4ac0:f199:199::235/128" ];
-           PublicKey = "IVwWeSQ034oDQytB3IfaxWI5yQcfzz977dN7Ak8nSD8=";
-           #PresharedKeyFile = config.krops.secrets.files."wgFam.imum.psk".path;
-           PersistentKeepalive = 21;
+          AllowedIPs = [ "192.168.43.235/32" "2a0f:4ac0:f199:199::235/128" ];
+          PublicKey = "IVwWeSQ034oDQytB3IfaxWI5yQcfzz977dN7Ak8nSD8=";
+          #PresharedKeyFile = config.krops.secrets.files."wgFam.imum.psk".path;
+          PersistentKeepalive = 21;
         };
       }
     ];
@@ -243,9 +242,15 @@
       { addressConfig.Address = "2a0f:4ac0:f199:199::/64"; }
     ];
     routes = [
-      { routeConfig.Destination = "192.168.43.0/24"; routeConfig.Table = "51820"; }
+      {
+        routeConfig.Destination = "192.168.43.0/24";
+        routeConfig.Table = "51820";
+      }
       { routeConfig.Destination = "2a0f:4ac0:f199:199::/64"; }
-      { routeConfig.Destination = "10.0.0.0/8"; routeConfig.Table = "51820"; }
+      {
+        routeConfig.Destination = "10.0.0.0/8";
+        routeConfig.Table = "51820";
+      }
     ];
     extraConfig = ''
       [RoutingPolicyRule]
@@ -266,6 +271,6 @@
   krops.secrets.files."llg0.key".owner = "systemd-network";
   krops.secrets.files."llg0.io.psk".owner = "systemd-network";
   krops.secrets.files."llg0.kloenkX.psk".owner = "systemd-network";
-  
+
   users.users.systemd-network.extraGroups = [ "keys" ];
 }

@@ -5,7 +5,8 @@ let
   hosts = import ../hosts { nixos-mailserver = null; };
   thisHost = hosts.${config.networking.hostName};
   # for now all bgp hosts are external from AS207921
-  bgpHosts = lib.filterAttrs (name: host: host ? bgp && host ? wireguard && name != config.networking.hostName) hosts;
+  bgpHosts = lib.filterAttrs (name: host:
+    host ? bgp && host ? wireguard && name != config.networking.hostName) hosts;
 
   as = toString cfg.localAS;
 
@@ -13,25 +14,19 @@ in {
   options = with lib; {
     services.bgp = {
       enable = mkEnableOption "KLOENK-NET router configuration";
-      localAS = mkOption {
-        type = types.int;
-      };
-      primaryIP = mkOption {
-        type = types.str;
-      };
-      primaryIP4 = mkOption {
-        type = types.str;
-      };
+      localAS = mkOption { type = types.int; };
+      primaryIP = mkOption { type = types.str; };
+      primaryIP4 = mkOption { type = types.str; };
       default = mkEnableOption "default";
     };
   };
 
   config = lib.mkIf cfg.enable {
-    networking.firewall.allowedUDPPorts = lib.mapAttrsToList (name: host: 51820 + host.magicNumber + thisHost.magicNumber) bgpHosts;
+    networking.firewall.allowedUDPPorts = lib.mapAttrsToList
+      (name: host: 51820 + host.magicNumber + thisHost.magicNumber) bgpHosts;
 
     systemd.network.netdevs = (lib.mapAttrs' (name: host:
-      let
-        port = 51820 + host.magicNumber + thisHost.magicNumber;
+      let port = 51820 + host.magicNumber + thisHost.magicNumber;
       in lib.nameValuePair "30-wg-${name}" {
         netdevConfig = {
           Kind = "wireguard";
@@ -42,40 +37,43 @@ in {
           ListenPort = port;
           PrivateKeyFile = config.krops.secrets.files."wg-pbb.key".path;
         };
-        wireguardPeers = [
+        wireguardPeers = [{
+          wireguardPeerConfig = {
+            AllowedIPs = [ "::/0" "0.0.0.0/0" ];
+            PublicKey = host.wireguard.publicKey;
+          } // (if host.wireguard ? endpoint then {
+            Endpoint = lib.optionalAttrs (host.wireguard ? endpoint)
+              "${host.wireguard.endpoint}:${toString port}";
+          } else
+            { });
+        }];
+      }) bgpHosts);
+
+    systemd.network.networks = (lib.mapAttrs' (name: host:
+      lib.nameValuePair "30-wg-${name}" {
+        name = "wg-${name}";
+        addresses = [
           {
-            wireguardPeerConfig = {
-              AllowedIPs = [ "::/0" "0.0.0.0/0" ];
-              PublicKey = host.wireguard.publicKey;
-            }
-              //
-            (
-              if host.wireguard ? endpoint then
-                { Endpoint = lib.optionalAttrs (host.wireguard ? endpoint) "${host.wireguard.endpoint}:${toString port}"; }
-              else
-                {}
-            );
+            addressConfig.Address =
+              "10.23.42.${toString thisHost.magicNumber}/32";
+          }
+          {
+            addressConfig.Address =
+              "fda0::${toString thisHost.magicNumber}/128";
+          }
+          {
+            addressConfig.Address = "fe80::${toString thisHost.magicNumber}/64";
           }
         ];
-      }
-    ) bgpHosts);
-
-    systemd.network.networks = (lib.mapAttrs' (name: host: lib.nameValuePair "30-wg-${name}" {
-      name = "wg-${name}";
-      addresses = [
-        { addressConfig.Address = "10.23.42.${toString thisHost.magicNumber}/32"; }
-        { addressConfig.Address = "fda0::${toString thisHost.magicNumber}/128"; }
-        { addressConfig.Address = "fe80::${toString thisHost.magicNumber}/64"; }
-      ];
-      extraConfig = ''
-        [RoutingPolicyRule]
-        FirewallMark = 51820
-        InvertRule = true
-        Table = ${as}
-        Family = both
-        Priority = 30000
-      '';
-    }) bgpHosts);
+        extraConfig = ''
+          [RoutingPolicyRule]
+          FirewallMark = 51820
+          InvertRule = true
+          Table = ${as}
+          Family = both
+          Priority = 30000
+        '';
+      }) bgpHosts);
 
     krops.secrets.files."wg-pbb.key".owner = "systemd-network";
     users.users.systemd-network.extraGroups = [ "keys" ];
@@ -87,8 +85,14 @@ in {
     boot.kernel.sysctl."net.ipv6.conf.all.forwarding" = true;
     boot.kernel.sysctl."net.ipv4.conf.all.forwarding" = true;
 
-    networking.interfaces.lo.ipv4.addresses = [ { address = cfg.primaryIP4; prefixLength = 32; }  ];
-    networking.interfaces.lo.ipv6.addresses = [ { address = cfg.primaryIP; prefixLength = 128; }  ];
+    networking.interfaces.lo.ipv4.addresses = [{
+      address = cfg.primaryIP4;
+      prefixLength = 32;
+    }];
+    networking.interfaces.lo.ipv6.addresses = [{
+      address = cfg.primaryIP;
+      prefixLength = 128;
+    }];
 
     services.bird2.enable = true;
     services.bird2.id = cfg.primaryIP4;
@@ -216,17 +220,26 @@ in {
           };
         };
         source address fda0::${toString thisHost.magicNumber};
-        neighbor fda0::${toString host.magicNumber} as ${if host.bgp ? as then (toString host.bgp.as) else toString (65000 + host.magicNumber)};
+        neighbor fda0::${toString host.magicNumber} as ${
+          if host.bgp ? as then
+            (toString host.bgp.as)
+          else
+            toString (65000 + host.magicNumber)
+        };
       }
       protocol bgp ${name}4 {
-        ${lib.optionalString (host.bgp ? internal) ''
-          local as ${toString (65000 + thisHost.magicNumber)};
-          confederation ${as};
-          confederation member yes;
-        ''}
-        ${lib.optionalString (!(host.bgp ? internal)) ''
-          local as ${as};
-        ''}
+        ${
+          lib.optionalString (host.bgp ? internal) ''
+            local as ${toString (65000 + thisHost.magicNumber)};
+            confederation ${as};
+            confederation member yes;
+          ''
+        }
+        ${
+          lib.optionalString (!(host.bgp ? internal)) ''
+            local as ${as};
+          ''
+        }
         graceful restart on;
         multihop 64;
         ipv4 {
@@ -249,7 +262,12 @@ in {
           };
         };
         source address 10.23.42.${toString thisHost.magicNumber};
-        neighbor 10.23.42.${toString host.magicNumber} as ${if host.bgp ? as then (toString host.bgp.as) else toString (65000 + host.magicNumber)};
+        neighbor 10.23.42.${toString host.magicNumber} as ${
+          if host.bgp ? as then
+            (toString host.bgp.as)
+          else
+            toString (65000 + host.magicNumber)
+        };
       }
     '') bgpHosts);
 
@@ -262,7 +280,10 @@ in {
           CONNMARK restore-mark;
           mod connmark mark 51820 MARK set-mark 0x1234;
           mod connmark mark ! 0x1234 MARK set-mark 51820;
-          mod connmark mark ! 0x1234 interface (${lib.concatStringsSep " " (lib.mapAttrsToList (name: host: "wg-${name}") bgpHosts)}) MARK set-mark 0x0;
+          mod connmark mark ! 0x1234 interface (${
+            lib.concatStringsSep " "
+            (lib.mapAttrsToList (name: host: "wg-${name}") bgpHosts)
+          }) MARK set-mark 0x0;
           mod connmark mark ! 0x1234 CONNMARK save-mark;
           MARK set-mark 0x0;
         }

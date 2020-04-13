@@ -1,21 +1,20 @@
 { nixpkgs, home-manager, nixos-mailserver, secrets, ... }@sources:
 
 let
-  pkgs = import nixpkgs {};
+  pkgs = import nixpkgs { };
   lib = pkgs.lib;
 
-  hosts = import ../configuration/hosts {};
+  hosts = import ../configuration/hosts { };
   nixosHosts = lib.filterAttrs (name: host: host ? hostname) hosts;
 
   sourcesModule = { lib, ... }: {
-    options.sources = lib.mkOption {
-    };
+    options.sources = lib.mkOption { };
 
     config.sources = sources;
   };
 in {
   configs = lib.mapAttrs (name: host:
-  { ... }:
+    { ... }:
 
     {
       imports = [
@@ -25,6 +24,5 @@ in {
         (toString nixos-mailserver)
         ../modules
       ];
-    }
-  ) nixosHosts;
+    }) nixosHosts;
 }

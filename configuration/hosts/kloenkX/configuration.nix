@@ -6,7 +6,7 @@ in {
   imports = [
     ./hardware-configuration.nix
     ./wireguard.nix
- #   ./bgp.nix
+    #   ./bgp.nix
     ./links.nix
 
     ../../default.nix
@@ -28,9 +28,7 @@ in {
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "nodev";
   boot.loader.grub.splashImage = ../../boot.png;
-  boot.initrd.availableKernelModules = [
-    "i915"
-  ];
+  boot.initrd.availableKernelModules = [ "i915" ];
   boot.initrd.luks.reusePassphrases = true;
   systemd.services.coreboot-battery-treshold = {
     serviceConfig.Type = "oneshot";
@@ -44,13 +42,13 @@ in {
   boot.consoleLogLevel = 0;
   boot.kernelParams = [ "quiet" ];
 
-
   networking.hostName = "kloenkX";
   networking.useDHCP = false;
   #networking.interfaces.bond0.useDHCP = true;
   networking.wireless.enable = true;
   networking.wireless.interfaces = [ "wlp2s0" ];
-  environment.etc."wpa_supplicant.conf".source = "/var/src/secrets/wpa_supplicant.conf";
+  environment.etc."wpa_supplicant.conf".source =
+    "/var/src/secrets/wpa_supplicant.conf";
   networking.wireless.userControlled.enable = true;
   networking.extraHosts = ''
     172.16.0.1 airlink.local unit.local
@@ -88,7 +86,8 @@ in {
   '';
   environment.etc.qemu-ifup.mode = "0755";
   environment.etc.qemu-ifdown.mode = "0755";
-  security.wrappers.spice-client-glib-usb-acl-helper.source = "${pkgs.spice_gtk}/bin/spice-client-glib-usb-acl-helper";
+  security.wrappers.spice-client-glib-usb-acl-helper.source =
+    "${pkgs.spice_gtk}/bin/spice-client-glib-usb-acl-helper";
 
   environment.systemPackages = with pkgs; [
     spice_gtk
@@ -106,23 +105,24 @@ in {
 
   #services.logind.lidSwitch = "ignore";
   services.tlp.enable = true;
-  home-manager.users.kloenk.programs.ssh.matchBlocks.hubble-encrypt.identityFile = toString /var/src/secrets/id_rsa;
+  home-manager.users.kloenk.programs.ssh.matchBlocks.hubble-encrypt.identityFile =
+    toString /var/src/secrets/id_rsa;
   users.users.kloenk.initialPassword = "foobaar";
   users.users.kloenk.packages = with pkgs; [
     lm_sensors
     tpacpi-bat
-    acpi                   # fixme: not in the kernel
-    wine                   # can we ditch it?
-    spotifywm              # spotify fixed for wms
-    python                 # includes python2 as dependency for vscode
-    platformio             # pio command
-    openocd                # pio upload for stlink
-    stlink                 # stlink software
+    acpi # fixme: not in the kernel
+    wine # can we ditch it?
+    spotifywm # spotify fixed for wms
+    python # includes python2 as dependency for vscode
+    platformio # pio command
+    openocd # pio upload for stlink
+    stlink # stlink software
     #teamspeak_client       # team speak
 
     # steam
     steam
-    steamcontroller    
+    steamcontroller
 
     # minecraft
     multimc
@@ -137,7 +137,6 @@ in {
     wpa_supplicant_gui
   ];
 
-
   # docker fo
   virtualisation.docker.enable = true;
 
@@ -147,15 +146,17 @@ in {
   };
 
   users.users.kloenk.extraGroups = [
-    "dialout"  # allowes serial connections
-    "plugdev"  # allowes stlink connection
-    "davfs2"   # webdav foo
-    "docker"   # docker controll group
+    "dialout" # allowes serial connections
+    "plugdev" # allowes stlink connection
+    "davfs2" # webdav foo
+    "docker" # docker controll group
     "libvirtd" # libvirt group
   ];
 
   # ssh key from yg-adminpc
-  users.users.kloenk.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPhvJ6hdf4pgsFl8c5lMuDAzUVmJwtSY/O66nDDRAK6J kloenk@adminpc" ];
+  users.users.kloenk.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPhvJ6hdf4pgsFl8c5lMuDAzUVmJwtSY/O66nDDRAK6J kloenk@adminpc"
+  ];
 
   services.udev.packages = [ pkgs.openocd ];
 
@@ -164,14 +165,11 @@ in {
   services.pcscd.enable = true;
   #services.pcscd.plugins = with pkgs; [ ccid pcsc-cyberjack ];
 
-
   hardware.bluetooth.enable = true;
 
   # add bluetooth sink
-  hardware.bluetooth.extraConfig = "
-    [General]
-    Enable=Source,Sink,Media,Socket
-  ";
+  hardware.bluetooth.extraConfig =
+    "\n    [General]\n    Enable=Source,Sink,Media,Socket\n  ";
   hardware.pulseaudio.zeroconf.discovery.enable = true;
 
   home-manager.users.root = {
@@ -213,7 +211,7 @@ in {
   nix.gc.automatic = false;
 
   services.prometheus.exporters.node.enabledCollectors = [ "tcpstat" "wifi" ];
-  
+
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you

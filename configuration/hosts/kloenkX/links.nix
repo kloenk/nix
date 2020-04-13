@@ -1,7 +1,6 @@
 { config, pgks, lib, ... }:
 
-let
-  bondName = "world";
+let bondName = "world";
 in {
   systemd.network = {
     #netdevs."30-bond0" = {
@@ -24,7 +23,6 @@ in {
     #  DHCP = "yes";
     #  matchConfig.SSID = "TT-WLAN";
     #};
-    
 
     networks."20-eno0" = {
       name = "eno0";

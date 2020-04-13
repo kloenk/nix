@@ -22,14 +22,14 @@
     wireguardConfig = {
       PrivateKeyFile = config.krops.secrets.files."wg.key".path;
     };
-    wireguardPeers = [
-      { wireguardPeerConfig = {
+    wireguardPeers = [{
+      wireguardPeerConfig = {
         AllowedIPs = [ "0.0.0.0/8" "::/0" ];
         PublicKey = "licaX8d5sOjz7OPZM2YDbEB/PKhwlqoJ3Ut10xfL9Co=";
         PersistentKeepalive = 21;
         Endpoint = "notnetcup.pbb.lc:51820";
-       }; }
-    ];
+      };
+    }];
   };
   systemd.network.networks."30-wg0" = {
     name = "wg0";
@@ -42,7 +42,8 @@
         routeConfig.Destination = "0.0.0.0/0";
         routeConfig.Table = "42";
         routeConfig.Source = "195.39.247.10";
-      } {
+      }
+      {
         routeConfig.Destination = "::/0";
         routeConfig.Table = "42";
         routeConfig.Source = "2a0f:4ac0::10";

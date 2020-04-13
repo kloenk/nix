@@ -3,10 +3,6 @@
 {
   services.sshguard = {
     enable = true;
-    services = [
-      "sshd"
-      "postfix"
-      "dovecot2"
-    ];
+    services = [ "sshd" "postfix" "dovecot2" ];
   };
 }

@@ -1,5 +1,5 @@
 { config, pkgs, ... }:
- 
+
 {
   home-manager.users.kloenk = {
     home.packages = [ pkgs.kitty ];

@@ -1,27 +1,26 @@
-{
-  config
-, pkgs
-, ...}:
+{ config, pkgs, ... }:
 
 let
   grubDev = "/dev/sda";
   interface = "eno0";
   hostname = "nixos";
   supportedFilesystems = [ ];
-  nixpkgs = (fetchTarball "https://github.com/nixos/nixpkgs/archive/nixos-unstable-small.tar.gz");
+  nixpkgs = (fetchTarball
+    "https://github.com/nixos/nixpkgs/archive/nixos-unstable-small.tar.gz");
   pkgs = import nixpkgs { };
   lib = pkgs.lib;
 in {
   imports = [
     ./hardware-configuration.nix
-    ((fetchTarball "https://github.com/rycee/home-manager/archive/master.tar.gz") + "/nixos")
+    ((fetchTarball
+      "https://github.com/rycee/home-manager/archive/master.tar.gz") + "/nixos")
   ];
 
   boot.loader.grub = {
-      enable = true;
-      version = 2;
-      device = grubDev;
-      useOSProber = true;
+    enable = true;
+    version = 2;
+    device = grubDev;
+    useOSProber = true;
   };
 
   environment.etc."src/nixpkgs".source = nixpkgs;
@@ -64,9 +63,7 @@ in {
   users.users.kloenk = {
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [
-      "wheel"
-    ];
+    extraGroups = [ "wheel" ];
     shell = pkgs.fish;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBps9Mp/xZax8/y9fW1Gt73SkskcBux1jDAB8rv0EYUt cardno:000611120054"
@@ -93,7 +90,7 @@ in {
         mkdir -p /nix/var/nix/profiles/per-user/kloenk
         mkdir -p /var/src/secrets
       '';
-      deps = [];
+      deps = [ ];
     };
   };
 
@@ -228,9 +225,7 @@ in {
         };
       };
 
-      vim = {
-        enable = true;
-      };
+      vim = { enable = true; };
     };
 
     services = {
@@ -242,7 +237,7 @@ in {
       };
     };
   };
-  
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;

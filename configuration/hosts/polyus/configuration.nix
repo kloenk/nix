@@ -15,13 +15,11 @@
   ];
 
   environment.variables.NIX_PATH = lib.mkForce "/var/src";
-  nix.nixPath = lib.mkForce [
-    "/var/src"
-  ];
+  nix.nixPath = lib.mkForce [ "/var/src" ];
 
   security.acme.email = "ca@kloenk.de";
   security.acme.acceptTerms = true;
-  
+
   networking.hostName = "polyus";
   networking.dhcpcd.enable = false;
   networking.useDHCP = false;
@@ -46,7 +44,6 @@
       linkConfig.Unmanaged = "yes";
     };
   };
-
 
   services.vnstat.enable = true;
 

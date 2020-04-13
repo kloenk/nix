@@ -39,18 +39,20 @@ in {
 
   # patches for systemd
   systemd.package = pkgs.systemd.overrideAttrs (old: {
-  patches = old.patches or [] ++ [
-    (pkgs.fetchpatch {
-      url = "https://github.com/petabyteboy/systemd/commit/c9476b836d647b470e6ff4d1bf843c9cec81748a.diff";
-      sha256 = "1vrkykwg05bhvk1q1k5dbxgblgvx6pci19k06npfdblsf7aycfsz";
-    })
-  ];
-});
+    patches = old.patches or [ ] ++ [
+      (pkgs.fetchpatch {
+        url =
+          "https://github.com/petabyteboy/systemd/commit/c9476b836d647b470e6ff4d1bf843c9cec81748a.diff";
+        sha256 = "1vrkykwg05bhvk1q1k5dbxgblgvx6pci19k06npfdblsf7aycfsz";
+      })
+    ];
+  });
 
-  environment.etc."systemd/networkd.conf".source = pkgs.writeText "networkd.conf" ''
-    [Network]
-    DropForeignRoutes=yes
-  '';
+  environment.etc."systemd/networkd.conf".source =
+    pkgs.writeText "networkd.conf" ''
+      [Network]
+      DropForeignRoutes=yes
+    '';
 
   boot.supportedFilesystems = [ "xfs" "ext2" ];
   boot.loader.grub.enable = true;
@@ -58,8 +60,10 @@ in {
   boot.loader.grub.device = "/dev/disk/by-path/pci-0000:00:0b.0";
 
   boot.initrd.luks.reusePassphrases = true;
-  boot.initrd.luks.devices."cryptHDD".device = "/dev/disk/by-partuuid/468bbd11-01";
-  boot.initrd.luks.devices."cryptSSD".device = "/dev/disk/by-partuuid/39aacc3e-02";
+  boot.initrd.luks.devices."cryptHDD".device =
+    "/dev/disk/by-partuuid/468bbd11-01";
+  boot.initrd.luks.devices."cryptSSD".device =
+    "/dev/disk/by-partuuid/39aacc3e-02";
 
   boot.initrd.network.enable = true;
   boot.initrd.availableKernelModules = [ "virtio-pci" ];
@@ -95,16 +99,16 @@ in {
     cd /
   '';
 
- # services.openssh.hostKeys = [
- #   { bits = 4096; path = config.krops.secrets.files."ssh_host_rsa_key".path; type = "rsa"; }
- #   { path = config.krops.secrets.files."ssh_host_ed25519_key".path; type = "ed25519"; }
- # ];
- # services.openssh.extraConfig = let
- #   hostCerfiticate = pkgs.writeText "host_cert_ed25519" (builtins.readFile (toString ../../ca/ssh_host_ed25519_key_hubble-cert.pub));
- # in "HostCertificate ${hostCerfiticate}";
+  # services.openssh.hostKeys = [
+  #   { bits = 4096; path = config.krops.secrets.files."ssh_host_rsa_key".path; type = "rsa"; }
+  #   { path = config.krops.secrets.files."ssh_host_ed25519_key".path; type = "ed25519"; }
+  # ];
+  # services.openssh.extraConfig = let
+  #   hostCerfiticate = pkgs.writeText "host_cert_ed25519" (builtins.readFile (toString ../../ca/ssh_host_ed25519_key_hubble-cert.pub));
+  # in "HostCertificate ${hostCerfiticate}";
 
- # krops.secrets.files."ssh_host_rsa_key".owner = "root";
- # krops.secrets.files."ssh_host_ed25519_key".owner = "root";
+  # krops.secrets.files."ssh_host_rsa_key".owner = "root";
+  # krops.secrets.files."ssh_host_ed25519_key".owner = "root";
 
   networking.firewall.allowedTCPPorts = [ 9092 ];
 
@@ -112,11 +116,23 @@ in {
   networking.dhcpcd.enable = false;
   networking.useDHCP = false;
   networking.nameservers = [ "8.8.8.8" ];
-  networking.interfaces.ens18.ipv4.addresses = [ { address = "51.254.249.187"; prefixLength = 32; } ];
-  networking.interfaces.ens18.ipv4.routes = [ { address = "164.132.202.254"; prefixLength = 32; } ];
+  networking.interfaces.ens18.ipv4.addresses = [{
+    address = "51.254.249.187";
+    prefixLength = 32;
+  }];
+  networking.interfaces.ens18.ipv4.routes = [{
+    address = "164.132.202.254";
+    prefixLength = 32;
+  }];
   #networking.defaultGateway = { address = "164.132.202.254"; interface = "enp0s18"; };
-  networking.interfaces.ens18.ipv6.addresses = [ { address = "2001:41d0:1004:1629:1337:0187::"; prefixLength = 112; } ];
-  networking.interfaces.ens18.ipv6.routes = [ { address = "2001:41d0:1004:16ff:ff:ff:ff:ff"; prefixLength = 128; } ];
+  networking.interfaces.ens18.ipv6.addresses = [{
+    address = "2001:41d0:1004:1629:1337:0187::";
+    prefixLength = 112;
+  }];
+  networking.interfaces.ens18.ipv6.routes = [{
+    address = "2001:41d0:1004:16ff:ff:ff:ff:ff";
+    prefixLength = 128;
+  }];
   #networking.defaultGateway6 = { address = "2001:41d0:1004:16ff:ff:ff:ff:ff"; interface = "ens18"; };
   networking.extraHosts = ''
     172.0.0.1 hubble.kloenk.de
@@ -124,19 +140,19 @@ in {
   services.resolved.enable = false; # running bind
 
   #systemd.network.networks."ens18".name = "ens18";
-  systemd.network.networks."40-ens18".routes = [
-    {
-      routeConfig.Gateway = "164.132.202.254";
-      routeConfig.GatewayOnLink = true;
-    }
-  ];
+  systemd.network.networks."40-ens18".routes = [{
+    routeConfig.Gateway = "164.132.202.254";
+    routeConfig.GatewayOnLink = true;
+  }];
 
   services.nginx.virtualHosts."kloenk.de" = {
     enableACME = true;
     forceSSL = true;
     root = "/data/http/kloenk";
-    locations."/PL".extraConfig = "return 301 https://www.dropbox.com/sh/gn1thweryxofoh3/AAC3ZW_vstHieX-9JIYIBP_ra;";
-    locations."/pl".extraConfig = "return 301 https://www.dropbox.com/sh/gn1thweryxofoh3/AAC3ZW_vstHieX-9JIYIBP_ra;";
+    locations."/PL".extraConfig =
+      "return 301 https://www.dropbox.com/sh/gn1thweryxofoh3/AAC3ZW_vstHieX-9JIYIBP_ra;";
+    locations."/pl".extraConfig =
+      "return 301 https://www.dropbox.com/sh/gn1thweryxofoh3/AAC3ZW_vstHieX-9JIYIBP_ra;";
   };
 
   services.nginx.virtualHosts."key.wass-er.com" = {
@@ -151,7 +167,6 @@ in {
     forceSSL = true;
     locations."/".proxyPass = "http://127.0.0.1:3004/";
   };
-
 
   services.nginx.virtualHosts."schule.kloenk.de" = {
     enableACME = true;
@@ -171,11 +186,15 @@ in {
     enableACME = true;
     forceSSL = true;
     locations = {
-      "/status/lycus".extraConfig = "return 301 http://grafana.llg/d/OVH6Hfliz/lycus?refresh=10s&orgId=1;";
-      "/status/pluto".extraConfig = "return 301 https://munin.kloenk.de/llg/pluto/index.html;";
-      "/status/yg-adminpc".extraConfig = "return 301 http://grafana.llg/d/6cyIlJlmk/yg-adminpc?refresh=5s&orgId=1;";
+      "/status/lycus".extraConfig =
+        "return 301 http://grafana.llg/d/OVH6Hfliz/lycus?refresh=10s&orgId=1;";
+      "/status/pluto".extraConfig =
+        "return 301 https://munin.kloenk.de/llg/pluto/index.html;";
+      "/status/yg-adminpc".extraConfig =
+        "return 301 http://grafana.llg/d/6cyIlJlmk/yg-adminpc?refresh=5s&orgId=1;";
       "/status/hubble".extraConfig = "return 301 https://grafana.kloenk.de;";
-      "/video".extraConfig = "return 301 https://media.ccc.de/v/jh-berlin-2018-27-config_foo;";
+      "/video".extraConfig =
+        "return 301 https://media.ccc.de/v/jh-berlin-2018-27-config_foo;";
     };
   };
 
@@ -183,7 +202,7 @@ in {
     enableACME = true;
     forceSSL = true;
   };
-  
+
   services.nginx.virtualHosts."punkte.landratlucas.de" = {
     enableACME = true;
     forceSSL = true;
@@ -193,10 +212,8 @@ in {
   # mosh
   programs.mosh.enable = true;
   programs.mosh.withUtempter = true;
-  
 
   services.vnstat.enable = true;
-
 
   # auto update/garbage collector
   #system.autoUpgrade.enable = true;
@@ -204,8 +221,12 @@ in {
   nix.gc.options = "--delete-older-than 14d";
 
   # fix tar gz error in autoupdate
-  systemd.services.nixos-upgrade.path = with pkgs; [  gnutar xz.bin gzip config.nix.package.out ];
-
+  systemd.services.nixos-upgrade.path = with pkgs; [
+    gnutar
+    xz.bin
+    gzip
+    config.nix.package.out
+  ];
 
   services.bgp = {
     enable = true;

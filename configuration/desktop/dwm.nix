@@ -1,32 +1,33 @@
 { config, pkgs, lib, ... }:
 
-let 
-  manager-dwm = import ../manager/dwm.nix { pkgs = pkgs; };
+let manager-dwm = import ../manager/dwm.nix { pkgs = pkgs; };
 in {
-    services.xserver = {
-        enable = true;
-        libinput.enable = true;
-        libinput.tappingDragLock = true;
-        displayManager.startx.enable = true;
+  services.xserver = {
+    enable = true;
+    libinput.enable = true;
+    libinput.tappingDragLock = true;
+    displayManager.startx.enable = true;
+  };
+
+  services.dbus.packages = with pkgs; [ gnome3.dconf ];
+
+  home-manager.users.kloenk = {
+    #manager-dwm.home.file.".wallpaper-image-hdmi".source = ./wallpaper-image-hdmi.png;
+    home = lib.recursiveUpdate manager-dwm.home {
+      file.".wallpaper-image-hdmi".source = ./wallpaper-image-hdmi.png;
     };
 
-    services.dbus.packages = with pkgs; [ gnome3.dconf ];
+    xsession = manager-dwm.xsession;
 
-    home-manager.users.kloenk = {
-        #manager-dwm.home.file.".wallpaper-image-hdmi".source = ./wallpaper-image-hdmi.png;
-        home = lib.recursiveUpdate manager-dwm.home { file.".wallpaper-image-hdmi".source = ./wallpaper-image-hdmi.png; };
+    services = manager-dwm.services;
 
-        xsession = manager-dwm.xsession;
+    programs = manager-dwm.programs;
+  };
 
-        services = manager-dwm.services;
-
-        programs = manager-dwm.programs;
-    };
-
-    fonts.fonts = with pkgs; [ noto-fonts noto-fonts-emoji source-code-pro ];
-    programs.gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-      pinentryFlavor = "gtk2";
-    };
+  fonts.fonts = with pkgs; [ noto-fonts noto-fonts-emoji source-code-pro ];
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+    pinentryFlavor = "gtk2";
+  };
 }

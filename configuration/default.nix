@@ -2,6 +2,6 @@
 
 {
   imports = [
-   # <sources/home-manager/nixos>
+    # <sources/home-manager/nixos>
   ];
 }

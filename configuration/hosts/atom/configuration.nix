@@ -9,7 +9,6 @@
 
     ../../common
 
-
     #../users.nix
     #../ssh.nix
 
@@ -28,11 +27,10 @@
   hardware.cpu.intel.updateMicrocode = true;
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
-  boot.loader.grub.device = "/dev/disk/by-id/ata-HTS721010G9SA00_MPDZN7Y0J7WN6L";
+  boot.loader.grub.device =
+    "/dev/disk/by-id/ata-HTS721010G9SA00_MPDZN7Y0J7WN6L";
   boot.supportedFilesystems = [ "ext2" "xfs" "nfs" "ext4" ];
-  boot.extraModulePackages = [
-    config.boot.kernelPackages.wireguard
-  ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
 
   networking.hostName = "atom";
   networking.useDHCP = false;
@@ -44,18 +42,10 @@
       { addressConfig.Address = "2a0a:a541:35a:0::248/64"; }
     ];
     routes = [
-      {
-        routeConfig.Destination = "192.168.178.0/24";
-      }
-      {
-        routeConfig.Destination = "2a0a:a541:35a:0::248/64";
-      }
-      {
-        routeConfig.Gateway = "192.168.178.1";
-      }
-      {
-        routeConfig.Gateway = "fe80::ca0e:14ff:fe07:a2fa";
-      }
+      { routeConfig.Destination = "192.168.178.0/24"; }
+      { routeConfig.Destination = "2a0a:a541:35a:0::248/64"; }
+      { routeConfig.Gateway = "192.168.178.1"; }
+      { routeConfig.Gateway = "fe80::ca0e:14ff:fe07:a2fa"; }
     ];
   };
 

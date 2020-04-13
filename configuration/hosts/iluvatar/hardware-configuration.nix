@@ -4,59 +4,57 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [ <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
-    ];
+  imports = [ <nixpkgs/nixos/modules/profiles/qemu-guest.nix> ];
 
-  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
+  boot.initrd.availableKernelModules =
+    [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/d819c30a-a826-4614-bd0f-9e579626cfb3";
-      fsType = "xfs";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/d819c30a-a826-4614-bd0f-9e579626cfb3";
+    fsType = "xfs";
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/84d938df-b56a-4c9b-9ddc-4c262daf17ad";
-      fsType = "ext2";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/84d938df-b56a-4c9b-9ddc-4c262daf17ad";
+    fsType = "ext2";
+  };
 
-  fileSystems."/persist/secrets" =
-    { device = "/dev/disk/by-uuid/3bdebe85-bf2e-435d-9bbb-9c93cd95ba60";
-      fsType = "xfs";
-      neededForBoot = true;
-    };
+  fileSystems."/persist/secrets" = {
+    device = "/dev/disk/by-uuid/3bdebe85-bf2e-435d-9bbb-9c93cd95ba60";
+    fsType = "xfs";
+    neededForBoot = true;
+  };
 
-  fileSystems."/var/src/secrets" =
-    { device = "/persist/secrets";
-      fsType = "none";
-      options = [ "bind" ];
-      neededForBoot = true;
-    };
+  fileSystems."/var/src/secrets" = {
+    device = "/persist/secrets";
+    fsType = "none";
+    options = [ "bind" ];
+    neededForBoot = true;
+  };
 
-  fileSystems."/persist/logs" =
-    { device = "/dev/disk/by-uuid/d4491cf5-c054-4147-aeb9-cc452e560976";
-      fsType = "xfs";
-      neededForBoot = true;
-    };
+  fileSystems."/persist/logs" = {
+    device = "/dev/disk/by-uuid/d4491cf5-c054-4147-aeb9-cc452e560976";
+    fsType = "xfs";
+    neededForBoot = true;
+  };
 
-  fileSystems."/var/log" =
-    { device = "/persist/logs";
-      fsType = "none";
-      options = [ "bind" ];
-      neededForBoot = true;
-    };
+  fileSystems."/var/log" = {
+    device = "/persist/logs";
+    fsType = "none";
+    options = [ "bind" ];
+    neededForBoot = true;
+  };
 
-  fileSystems."/persist/data" =
-    { device = "/dev/hdd/data";
-      fsType = "xfs";
-    };
+  fileSystems."/persist/data" = {
+    device = "/dev/hdd/data";
+    fsType = "xfs";
+  };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/52bfc5fc-11a6-4c7d-89ff-ad10fff537a9"; }
-    ];
+    [{ device = "/dev/disk/by-uuid/52bfc5fc-11a6-4c7d-89ff-ad10fff537a9"; }];
 
   nix.maxJobs = lib.mkDefault 6;
 }

@@ -33,7 +33,7 @@ in {
     recommendedTlsSettings = true;
 
     sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
-    
+
     commonHttpConfig = ''
       include ${mimetypes}/etc/mime.types;
       default_type application/octet-stream;

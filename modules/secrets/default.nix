@@ -28,7 +28,7 @@ let
       };
       source-path = mkOption {
         type = types.str;
-        default =  "/var/src/secrets/${config.name}";
+        default = "/var/src/secrets/${config.name}";
       };
     };
   });
@@ -36,13 +36,13 @@ in {
   options.krops.secrets = {
     files = mkOption {
       type = with types; attrsOf secret-file;
-      default = {};
+      default = { };
     };
   };
-  config = lib.mkIf (cfg.files != {}) {
+  config = lib.mkIf (cfg.files != { }) {
     system.activationScripts.setup-secrets = let
-      files = unique (map (flip removeAttrs ["_module"])
-                          (attrValues cfg.files));
+      files =
+        unique (map (flip removeAttrs [ "_module" ]) (attrValues cfg.files));
       script = ''
         echo setting up secrets...
         mkdir -p /run/keys -m 0750
@@ -60,6 +60,7 @@ in {
           || echo "failed to copy ${file.source-path} to ${file.path}"
         '') files}
       '';
-    in stringAfter [ "users" "groups" ] "source ${pkgs.writeText "setup-secrets.sh" script}";
+    in stringAfter [ "users" "groups" ]
+    "source ${pkgs.writeText "setup-secrets.sh" script}";
   };
 }

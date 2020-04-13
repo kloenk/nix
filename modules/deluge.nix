@@ -46,12 +46,13 @@ in {
         };
 
         hostName = mkOption {
-            type = types.str;
-            default = config.networking.hostName;
-            description = "set hostname for nginx";
+          type = types.str;
+          default = config.networking.hostName;
+          description = "set hostname for nginx";
         };
 
-        configureNginx = mkEnableOption "Use nginx to serve downloads directory";
+        configureNginx =
+          mkEnableOption "Use nginx to serve downloads directory";
 
         downloadsBasicAuthFile = mkOption {
           type = types.nullOr types.str;
@@ -101,9 +102,8 @@ in {
       description = "Deluge Daemon user";
     };
 
-    users.groups.deluge = mkIf (cfg.group == "deluge") {
-      gid = config.ids.gids.deluge;
-    };
+    users.groups.deluge =
+      mkIf (cfg.group == "deluge") { gid = config.ids.gids.deluge; };
 
     services.nginx = mkIf cfg.configureNginx {
       virtualHosts."${cfg.hostName}" = {

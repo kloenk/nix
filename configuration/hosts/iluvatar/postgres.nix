@@ -1,11 +1,11 @@
 { pkgs, lib, ... }:
 
 {
-  fileSystems."/var/lib/postgresql" = 
-    { device = "/persist/data/postgresql";
-      fsType = "none";
-      options = [ "bind" ];
-    };
+  fileSystems."/var/lib/postgresql" = {
+    device = "/persist/data/postgresql";
+    fsType = "none";
+    options = [ "bind" ];
+  };
 
   services.postgresql = {
     enable = true;
@@ -13,13 +13,14 @@
     extraConfig = ''
       unix_socket_directories = '/run/postgresql/'
     '';
-    /*authentication = lib.mkForce ''
-      # Generated file; do not edit!
-      # TYPE  DATABASE        USER            ADDRESS                 METHOD
-      local   all             all                                     trust
-      host    all             all             127.0.0.1/32            trust
-      host    all             all             ::1/128                 trust	
-    '';*/
+    /* authentication = lib.mkForce ''
+         # Generated file; do not edit!
+         # TYPE  DATABASE        USER            ADDRESS                 METHOD
+         local   all             all                                     trust
+         host    all             all             127.0.0.1/32            trust
+         host    all             all             ::1/128                 trust
+       '';
+    */
   };
 
   # TODO:

@@ -2,11 +2,11 @@
 
 {
 
-  fileSystems."/var/lib/bitwarden_rs" =
-    { device = "/persist/data/bitwarden_rs";
-      fsType = "none";
-      options = [ "bind" ];
-    };
+  fileSystems."/var/lib/bitwarden_rs" = {
+    device = "/persist/data/bitwarden_rs";
+    fsType = "none";
+    options = [ "bind" ];
+  };
 
   services.bitwarden_rs = {
     enable = true;

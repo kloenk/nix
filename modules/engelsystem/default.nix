@@ -15,9 +15,7 @@ in {
         '';
       };
 
-      domain = mkOption {
-        type = types.str;
-      };
+      domain = mkOption { type = types.str; };
     };
   };
 
@@ -43,14 +41,14 @@ in {
         "php_admin_value[error_log]" = "stderr";
         "php_admin_flag[log_errors]" = true;
         "catch_workers_output" = true;
-#        "security.limit_extensions" = "";
+        #        "security.limit_extensions" = "";
       };
       phpEnv."PATH" = lib.makeBinPath [ pkgs.php ];
     };
 
     services.nginx = {
       enable = true;
-      virtualHosts."${cfg.domain}".locations  = {
+      virtualHosts."${cfg.domain}".locations = {
         "/" = {
           root = "${package}/share/engelsystem/public";
           extraConfig = ''
@@ -96,6 +94,6 @@ in {
       home = "/var/lib/engelsystem";
       group = "engelsystem";
     };
-    users.groups.engelsystem = {};
+    users.groups.engelsystem = { };
   };
 }

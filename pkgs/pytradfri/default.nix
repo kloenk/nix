@@ -1,11 +1,6 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, aiocoap
-, cython
-}:
+{ lib, buildPythonPackage, fetchPypi, aiocoap, cython }:
 
-buildPythonPackage rec{
+buildPythonPackage rec {
   pname = "pytradfri";
   version = "6.0.1";
 
@@ -17,7 +12,7 @@ buildPythonPackage rec{
   checkInputs = [ aiocoap cython ];
 
   doCheck = false;
-  
+
   meta = with lib; {
     #homepage = https://github.com/pytoolz/toolz;
     description = "pytradfri module";

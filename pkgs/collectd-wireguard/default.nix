@@ -1,22 +1,10 @@
-{
-  stdenv
-, fetchFromGitHub
-, lib
-, bash
-, coreutils
-, wireguard-tools
-}:
+{ stdenv, fetchFromGitHub, lib, bash, coreutils, wireguard-tools }:
 
 with lib;
 
- let
-  dependencies = [
-    bash
-    coreutils
-    wireguard-tools
-  ];
+let dependencies = [ bash coreutils wireguard-tools ];
 
- in stdenv.mkDerivation {
+in stdenv.mkDerivation {
   name = "collectd-wireguard";
   version = "1.0.2";
 
@@ -35,7 +23,5 @@ with lib;
     install -Dm0755 collectd-wireguard.sh $out/bin/collectd-wireguard
   '';
 
-  meta = {
-    license = licenses.mit;
-  };
+  meta = { license = licenses.mit; };
 }

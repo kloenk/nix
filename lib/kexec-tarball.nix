@@ -8,7 +8,8 @@ let
       ];
       boot.loader.grub.enable = false;
       boot.kernelParams = [
-        "panic=30" "boot.panic_on_fail" # reboot the machine upon fatal boot issues
+        "panic=30"
+        "boot.panic_on_fail" # reboot the machine upon fatal boot issues
       ];
       systemd.services.sshd.wantedBy = lib.mkForce [ "multi-user.target" ];
       networking.hostName = "kexec";
@@ -16,10 +17,11 @@ let
 
       boot.postBootCommands = let
         nixpkgs = pkgs.lib.cleanSource pkgs.path;
-        channelSources = pkgs.runCommand "nixpkgs" { preferLocalBuild = true; } ''
-          cp -prd ${nixpkgs.outPath} $out
-          chmod -R u+w $out
-        '';
+        channelSources =
+          pkgs.runCommand "nixpkgs" { preferLocalBuild = true; } ''
+            cp -prd ${nixpkgs.outPath} $out
+            chmod -R u+w $out
+          '';
 
       in lib.mkAfter ''
         echo "unpacking the NixOS/Nixpkgs sources..."

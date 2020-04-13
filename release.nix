@@ -1,18 +1,8 @@
-{
-  krops
-, home-manager
-, nixpkgs
-, nixos-mailserver
-, secrets
-, hydra ? true
-, ...
-}:
+{ krops, home-manager, nixpkgs, nixos-mailserver, secrets, hydra ? true, ... }:
 
-let 
+let
   sources = {
     inherit krops home-manager nixpkgs nixos-mailserver secrets hydra;
   };
   home = (import ./lib/manager.nix sources).home;
-in {
-  inherit home;
-}
+in { inherit home; }

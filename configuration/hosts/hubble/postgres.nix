@@ -1,11 +1,11 @@
 { pkgs, lib, ... }:
 
 {
-  fileSystems."/var/lib/postgresql" = 
-    { device = "/persist/data/postgresql";
-      fsType = "none";
-      options = [ "bind" ];
-    };
+  fileSystems."/var/lib/postgresql" = {
+    device = "/persist/data/postgresql";
+    fsType = "none";
+    options = [ "bind" ];
+  };
 
   services.postgresql = {
     enable = true;

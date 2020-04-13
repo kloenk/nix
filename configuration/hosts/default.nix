@@ -1,10 +1,6 @@
-{ nixos-mailserver ? null
-}:
+{ nixos-mailserver ? null }:
 
-let
-  pbbAS = {
-    as = 207921;
-  };
+let pbbAS = { as = 207921; };
 
 in {
   iluvatar = {
@@ -37,13 +33,14 @@ in {
     wireguard.endpoint = "2001:41d0:1004:1629:1337:187::";
     magicNumber = 249;
   };
-  /*titan = {
-    #hostname = "kloenk@titan.kloenk.de:62954";
-    hostname = "kloenk@192.168.178.59:62954";
-    prometheusExporters = [ "node-exporter" "nginx-exporter" "wireguard" ];
-    wireguard.publicKey = "crMsdERA3xeV8tLpT817R78d4/hGMKS/6LWNyMlsFRQ=";
-    magicNumber = 251;
-  };*/
+  /* titan = {
+       #hostname = "kloenk@titan.kloenk.de:62954";
+       hostname = "kloenk@192.168.178.59:62954";
+       prometheusExporters = [ "node-exporter" "nginx-exporter" "wireguard" ];
+       wireguard.publicKey = "crMsdERA3xeV8tLpT817R78d4/hGMKS/6LWNyMlsFRQ=";
+       magicNumber = 251;
+     };
+  */
   atom = {
     hostname = "kloenk@192.168.178.248:62954";
     prometheusExporters = [ "node-exporter" "nginx-exporter" "wireguard" ];
@@ -62,18 +59,12 @@ in {
   };
 
   # for monitoring only
-  bbb-wass = {
-    prometheusExporters = [ "node-exporter" "bbb-exporter" ];
-  };
+  bbb-wass = { prometheusExporters = [ "node-exporter" "bbb-exporter" ]; };
 
   # for monitoring only
-  gdv01 = {
-    prometheusExporters = [ "node-exporter" "collectd" ];
-  };
+  gdv01 = { prometheusExporters = [ "node-exporter" "collectd" ]; };
   # for monitoring only
-  gdv02 = {
-    prometheusExporters = [ "node-exporter" "collectd" ];
-  };
+  gdv02 = { prometheusExporters = [ "node-exporter" "collectd" ]; };
 
   # for wireguard only
   combahton = {
@@ -104,7 +95,5 @@ in {
   };
 
   # for dotfiles only
-  adminpc = {
-    dotfiles = true;
-  };
+  adminpc = { dotfiles = true; };
 }

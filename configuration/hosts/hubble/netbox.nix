@@ -1,7 +1,6 @@
 { config, ... }:
 
-let
-  secrets = import <secrets/netbox.nix>;
+let secrets = import <secrets/netbox.nix>;
 in {
   services.netbox = {
     enable = true;

@@ -2,10 +2,10 @@
 
 {
 
-  fileSystems."/var/lib/mysql" =
-    { device = "/persist/data/mysql";
-      options = [ "bind" ];
-    };
+  fileSystems."/var/lib/mysql" = {
+    device = "/persist/data/mysql";
+    options = [ "bind" ];
+  };
 
   services.mysql = {
     enable = true;

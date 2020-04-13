@@ -35,8 +35,9 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    description = "Powerful yet simple to use screenshot software (kloenk's fork)";
-    homepage = https://github.com/kloenk/flameshot;
+    description =
+      "Powerful yet simple to use screenshot software (kloenk's fork)";
+    homepage = "https://github.com/kloenk/flameshot";
     #maintainers = [ maintainers.scode ];
     license = stdenv.lib.licenses.gpl3;
     platforms = stdenv.lib.platforms.linux;

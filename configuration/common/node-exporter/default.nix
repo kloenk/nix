@@ -22,8 +22,10 @@
       deny all;
     '';
     locations."/wireguard/".proxyPass = "http://127.0.0.1:9586/";
-    locations."/wireguard/".extraConfig = config.services.nginx.virtualHosts."${config.networking.hostName}.kloenk.de".locations."/node-exporter/".extraConfig;
+    locations."/wireguard/".extraConfig =
+      config.services.nginx.virtualHosts."${config.networking.hostName}.kloenk.de".locations."/node-exporter/".extraConfig;
     locations."/nginx-exporter/".proxyPass = "http://127.0.0.1:9113/";
-    locations."/nginx-exporter/".extraConfig = config.services.nginx.virtualHosts."${config.networking.hostName}.kloenk.de".locations."/node-exporter/".extraConfig;
+    locations."/nginx-exporter/".extraConfig =
+      config.services.nginx.virtualHosts."${config.networking.hostName}.kloenk.de".locations."/node-exporter/".extraConfig;
   };
 }

@@ -4,42 +4,40 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [ <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
-    ];
+  imports = [ <nixpkgs/nixos/modules/profiles/qemu-guest.nix> ];
 
   boot.supportedFilesystems = [ "xfs" ];
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/vda";
 
-  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
+  boot.initrd.availableKernelModules =
+    [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/4ae2c1f0-ebb2-4874-bc9b-adc7538cbde3";
-      fsType = "xfs";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/4ae2c1f0-ebb2-4874-bc9b-adc7538cbde3";
+    fsType = "xfs";
+  };
 
-    fileSystems."/nix" = {
-      device = "/dev/disk/by-uuid/5a6324cc-2313-4d93-b640-f6f39d408c65";
-      fsType = "xfs";
-      neededForBoot = true;
-      options = [ "noatime" ];
-    };
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-uuid/5a6324cc-2313-4d93-b640-f6f39d408c65";
+    fsType = "xfs";
+    neededForBoot = true;
+    options = [ "noatime" ];
+  };
 
- # fileSystems."/nix" =
- #   { device = "/dev/disk/by-uuid/80232e11-dbfd-465e-adaa-7f27c69fd0b1";
- #     fsType = "xfs";
- #     neededForBoot = true;
- #     options = [ "noatime" ];
- #   };
+  # fileSystems."/nix" =
+  #   { device = "/dev/disk/by-uuid/80232e11-dbfd-465e-adaa-7f27c69fd0b1";
+  #     fsType = "xfs";
+  #     neededForBoot = true;
+  #     options = [ "noatime" ];
+  #   };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/b9be4fb4-dad8-4650-a9d5-ed11d3d6316f"; }
-    ];
+    [{ device = "/dev/disk/by-uuid/b9be4fb4-dad8-4650-a9d5-ed11d3d6316f"; }];
 
   nix.maxJobs = lib.mkDefault 2;
 }

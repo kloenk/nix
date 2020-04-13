@@ -21,8 +21,10 @@
   boot.loader.grub.device = "/dev/disk/by-path/virtio-pci-0000:04:00.0";
 
   boot.initrd.luks.reusePassphrases = true;
-  boot.initrd.luks.devices.cryptHDD.device = "/dev/disk/by-path/virtio-pci-0000:05:00.0";
-  boot.initrd.luks.devices.cryptSSD.device = "/dev/disk/by-path/virtio-pci-0000:04:00.0-part2";
+  boot.initrd.luks.devices.cryptHDD.device =
+    "/dev/disk/by-path/virtio-pci-0000:05:00.0";
+  boot.initrd.luks.devices.cryptSSD.device =
+    "/dev/disk/by-path/virtio-pci-0000:04:00.0-part2";
 
   # initrd network
   boot.initrd.network.enable = true;
@@ -34,7 +36,8 @@
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC9fXR2sAD3q5hHURKg2of2OoZiKz9Nr2Z7qx6nfLLMwK1nie1rFhbwSRK8/6QUC+jnpTvUmItUo+etRB1XwEOc3rabDUYQ4dQ+PMtQNIc4IuKfQLHvD7ug9ebJkKYaunq6+LFn8C2Tz4vbiLcPFSVpVlLb1+yaREUrN9Yk+J48M3qvySJt9+fa6PZbTxOAgKsuurRb8tYCaQ9TzefKJvZXIVd+W2tzYV381sSBKRyAJLu/8tA+niSJ8VwHntAHzaKzv6ozP5yBW2SB7R7owGd1cnP7znEPxB9jeDBBWLonsocwFalP1RGt1WsOiIGEPhytp5RDXWgZM5sIS42iL61hMB9Yz3PaQYLuR+1XNzdGRLIKPUDh58lGdk2P5HUqPnvE/FqfzU3jkv6ebJmcGfZiEN1TPc5ar8sQkpn56hB2DnJYWICuryTm0XpzSizf9fGyLGBw3GVBlnZjzTaBf7iokGFIu+ade5AqEjX6FxlNja1ESFNKhDAdLAHFnaKJ3u0= kloenk@kloenkX"
     ];
     port = 62954;
-    hostKeys = [ <secrets/initrd/ecdsa_host_key> <secrets/initrd/ed25519_host_key> ];
+    hostKeys =
+      [ <secrets/initrd/ecdsa_host_key> <secrets/initrd/ed25519_host_key> ];
   };
   boot.initrd.preLVMCommands = lib.mkBefore (''
     ip li set enp1s0 up
@@ -70,19 +73,27 @@
     "2001:4860:4860::8844"
     "1.1.1.1"
   ];
-  networking.extraHosts = /* FIXME: replace with ’networking.hosts‘ */ ''
-    127.0.0.1 iluvatar.kloenk.de
-  '';
+  networking.extraHosts = # FIXME: replace with ’networking.hosts‘
+    ''
+      127.0.0.1 iluvatar.kloenk.de
+    '';
 
   networking.dhcpcd.enable = false;
   networking.useDHCP = false;
   networking.interfaces.enp1s0.ipv6.addresses = [
-    { address = "2a01:4f8:221:2b46::40"; prefixLength = 64; }
-    { address = "2a0f:4ac0::6"; prefixLength = 128; }
+    {
+      address = "2a01:4f8:221:2b46::40";
+      prefixLength = 64;
+    }
+    {
+      address = "2a0f:4ac0::6";
+      prefixLength = 128;
+    }
   ];
-  networking.interfaces.enp1s0.ipv4.addresses = [
-    { address = "195.39.246.6"; prefixLength = 32; }
-  ];
+  networking.interfaces.enp1s0.ipv4.addresses = [{
+    address = "195.39.246.6";
+    prefixLength = 32;
+  }];
 
   # default gateway
   systemd.network.networks."40-enp1s0".routes = [
@@ -106,7 +117,6 @@
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 14d";
   #systemd.services.nixos-upgrade.path = with pkgs; [  gnutar xz.bin gzip config.];
-
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

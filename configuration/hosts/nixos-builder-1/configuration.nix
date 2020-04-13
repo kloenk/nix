@@ -22,10 +22,8 @@
   '';
   networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
 
-
-  systemd.services.collectd.serviceConfig.AmbientCapabilities = [
-    "cap_net_raw"
-  ];
+  systemd.services.collectd.serviceConfig.AmbientCapabilities =
+    [ "cap_net_raw" ];
 
   # write to collect server
   services.collectd2.plugins = {
@@ -50,12 +48,13 @@
   '';
   environment.etc.qemu-ifup.mode = "0755";
   environment.etc.qemu-ifdown.mode = "0755";
-  security.wrappers.spice-client-glib-usb-acl-helper.source = "${pkgs.spice_gtk}/bin/spice-client-glib-usb-acl-helper";
+  security.wrappers.spice-client-glib-usb-acl-helper.source =
+    "${pkgs.spice_gtk}/bin/spice-client-glib-usb-acl-helper";
 
-  environment.systemPackages = with pkgs; [
-  
-  ];
+  environment.systemPackages = with pkgs;
+    [
 
+    ];
 
   # make autoupdates
   #system.autoUpgrade.enable = true;
@@ -69,7 +68,6 @@
 
   ];
 
-
   # docker fo
   virtualisation.docker.enable = true;
 
@@ -79,7 +77,7 @@
   };
 
   users.users.kloenk.extraGroups = [
-    "docker"   # docker controll group
+    "docker" # docker controll group
     "libvirtd" # libvirt group
   ];
 
@@ -88,8 +86,7 @@
   services.dbus.socketActivated = true;
 
   # build server
-  nix.buildMachines = [
-  ];
+  nix.buildMachines = [ ];
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

@@ -60,7 +60,6 @@
     rofi-pass
     xclip
     xorg.xmodmap
-    
 
     # audio
     audacity
@@ -77,13 +76,14 @@
     qutebrowser
   ];
 
-
   users.users.kloenk.extraGroups = [ "wireshark" "adbusers" "nitrokey" ];
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark-qt;
   nixpkgs.config.android_sdk.accept_license = true;
   programs.adb.enable = true;
-  programs.chromium = { enable = true; extensions = [
+  programs.chromium = {
+    enable = true;
+    extensions = [
       "cfhdojbkjhnklbpkdaibdccddilifddb" # ad block plus
       "kbfnbcaeplbcioakkpcpgfkobkghlhen" # gramarly
       "ppmmlchacdbknfphdeafcbmklcghghmd" # jwt debugger
@@ -98,12 +98,12 @@
   hardware.opengl.driSupport32Bit = true;
 
   home-manager.users.kloenk.programs.git.signing = {
-        key = "0x8609A7B519E5E342";
-        signByDefault = true;
+    key = "0x8609A7B519E5E342";
+    signByDefault = true;
   };
 
-
-  home-manager.users.kloenk.home.file.".config/VSCodium/User/settings.json".source = ./code-settings.json;
+  home-manager.users.kloenk.home.file.".config/VSCodium/User/settings.json".source =
+    ./code-settings.json;
   home-manager.users.kloenk.home.file.".config/qutebrowser/config.py".text = ''
     config.bind('p', 'spawn --userscript qute-pass --dmenu-invocation "wofi --show dmenu"')
     config.bind('P', 'spawn --userscript qute-pass --otp-only --dmenu-invocation "wofi --show dmenu"')
@@ -122,7 +122,8 @@
   '';
 
   home-manager.users.kloenk.home.packages = [ pkgs.kitty ];
-  home-manager.users.kloenk.xdg.configFile."kitty/kitty.conf".source = ./kitty.conf;
+  home-manager.users.kloenk.xdg.configFile."kitty/kitty.conf".source =
+    ./kitty.conf;
 
   sound.enable = true;
   hardware.pulseaudio = {

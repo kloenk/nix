@@ -11,7 +11,7 @@
     ../../common
     ../../desktop
     ../../desktop/sway.nix
-    ../../desktop/plasma.nix
+    #    ../../desktop/plasma.nix
 
     # fallback for detection
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
@@ -24,7 +24,8 @@
   # FIXME: needed?
   # services.openssh.passwordAuthentication = true;
 
-  boot.initrd.luks.devices."cryptLVM".device = "/dev/disk/by-id/wwn-0x5002538e40df324b-part2";
+  boot.initrd.luks.devices."cryptLVM".device =
+    "/dev/disk/by-id/wwn-0x5002538e40df324b-part2";
   boot.initrd.luks.devices."cryptLVM".allowDiscards = true;
 
   boot.kernelParams = [
@@ -39,9 +40,7 @@
   networking.useDHCP = false;
   networking.hostName = "barahir";
   networking.domain = "kloenk.de";
-  networking.hosts = {
-    "192.168.178.1" = [ "fritz.box" ];
-  };
+  networking.hosts = { "192.168.178.1" = [ "fritz.box" ]; };
   networking.nameservers = [ "1.1.1.1" "192.168.178.1" ];
   networking.search = [ "fritz.box" ];
 
@@ -68,12 +67,12 @@
   nix.package = pkgs.nixFlakes;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
-  '' /* TODO: builders-use-substitute?? */;
+  '' # TODO: builders-use-substitute??
+  ;
 
   services.printing.browsing = true;
   services.printing.enable = true;
   services.avahi.enable = true;
-
 
   environment.systemPackages = with pkgs; [
     lm_sensors

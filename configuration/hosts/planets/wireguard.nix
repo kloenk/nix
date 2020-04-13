@@ -12,15 +12,14 @@
       FwMark = 51820;
       PrivateKeyFile = config.krops.secrets.files."wg0.key".path;
     };
-    wireguardPeers = [
-      { wireguardPeerConfig = {
-          AllowedIPs = [ "0.0.0.0/0" "::/0" ];
-          PublicKey = "MUsPCkTKHBGvCI62CevFs6Wve+cXBLQIl/C3rW3PbVM=";
-          PersistentKeepalive = 21;
-          Endpoint = "51.254.249.187:51820";
-        };
-      }
-    ];
+    wireguardPeers = [{
+      wireguardPeerConfig = {
+        AllowedIPs = [ "0.0.0.0/0" "::/0" ];
+        PublicKey = "MUsPCkTKHBGvCI62CevFs6Wve+cXBLQIl/C3rW3PbVM=";
+        PersistentKeepalive = 21;
+        Endpoint = "51.254.249.187:51820";
+      };
+    }];
   };
   systemd.network.networks."30-wg0" = {
     name = "wg0";

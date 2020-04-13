@@ -1,21 +1,13 @@
-{ stdenv, fzf, jq, pass, termite, fetchgit, lib, makeWrapper, oathToolkit, xdotool, bash, coreutils }:
+{ stdenv, fzf, jq, pass, termite, fetchgit, lib, makeWrapper, oathToolkit
+, xdotool, bash, coreutils }:
 
 with lib;
 
- let
-  dependencies = [
-    fzf
-    termite
-    jq
-    pass
-    termite
-    oathToolkit
-    xdotool
-    bash
-    coreutils
-  ];
+let
+  dependencies =
+    [ fzf termite jq pass termite oathToolkit xdotool bash coreutils ];
 
- in stdenv.mkDerivation {
+in stdenv.mkDerivation {
   name = "rifo";
   version = "0.2.1_r1";
 
@@ -26,9 +18,7 @@ with lib;
     sha256 = "0czgssv5m57b995xv2558rqb7ym5cc2rvx57z9ag0a91a57vv5f6";
   };
 
-  nativeBuildInputs = [
-    makeWrapper
-  ];
+  nativeBuildInputs = [ makeWrapper ];
 
   installPhase = ''
     mkdir -p $out/bin
@@ -42,7 +32,5 @@ with lib;
     wrapProgram "$out/bin/rifo-init.sh" --set PATH ${makeBinPath dependencies}
   '';
 
-  meta = {
-    license = licenses.gpl3;
-  };
+  meta = { license = licenses.gpl3; };
 }

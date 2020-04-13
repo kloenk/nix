@@ -1,22 +1,15 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [
-    ./nginx
-    ./node-exporter
-    ./zsh
-    ./make-nixpkgs.nix
-  ];
+  imports = [ ./nginx ./node-exporter ./zsh ./make-nixpkgs.nix ];
 
-  nixpkgs.overlays = [
-    (import ../../pkgs/overlay.nix)
-  ];
+  nixpkgs.overlays = [ (import ../../pkgs/overlay.nix) ];
 
-# environment.etc."src/nixpkgs".source = config.sources.nixpkgs;
-#  environment.etc."src/nixos-config".text = ''
-#      ((import (fetchTarball "https://github.com/kloenk/nix/archive/master.tar.gz") { }).configs.${config.networking.hostName})
-#  '';
-#  environment.variables.NIX_PATH = lib.mkOverride 25 "/etc/src";
+  # environment.etc."src/nixpkgs".source = config.sources.nixpkgs;
+  #  environment.etc."src/nixos-config".text = ''
+  #      ((import (fetchTarball "https://github.com/kloenk/nix/archive/master.tar.gz") { }).configs.${config.networking.hostName})
+  #  '';
+  #  environment.variables.NIX_PATH = lib.mkOverride 25 "/etc/src";
 
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
   nix.gc.automatic = lib.mkDefault true;
@@ -33,15 +26,23 @@
   services.openssh = {
     enable = true;
     ports = [ 62954 ];
-    passwordAuthentication = lib.mkDefault (if (config.networking.hostName != "kexec") then false else true);
+    passwordAuthentication = lib.mkDefault
+      (if (config.networking.hostName != "kexec") then false else true);
     challengeResponseAuthentication = false;
     permitRootLogin = lib.mkDefault "no";
-    hostKeys = if (config.networking.hostName != "kexec") then [
-      { path = config.krops.secrets.files."ssh_host_ed25519_key".path; type = "ed25519"; }
-    ] else [];
-    extraConfig = if (config.networking.hostName != "kexec") then let
-      hostCertificate = pkgs.writeText "host_cert_ed25519" (builtins.readFile (toString ../ca + "/ssh_host_ed25519_key_${config.networking.hostName}-cert.pub"));
-    in "HostCertificate ${hostCertificate}" else "";
+    hostKeys = if (config.networking.hostName != "kexec") then [{
+      path = config.krops.secrets.files."ssh_host_ed25519_key".path;
+      type = "ed25519";
+    }] else
+      [ ];
+    extraConfig = if (config.networking.hostName != "kexec") then
+      let
+        hostCertificate = pkgs.writeText "host_cert_ed25519" (builtins.readFile
+          (toString ../ca
+            + "/ssh_host_ed25519_key_${config.networking.hostName}-cert.pub"));
+      in "HostCertificate ${hostCertificate}"
+    else
+      "";
   };
   krops.secrets.files."ssh_host_ed25519_key".owner = "root";
 
@@ -80,11 +81,7 @@
     isNormalUser = true;
     uid = 1000;
     initialPassword = lib.mkDefault "foobar";
-    extraGroups = [
-      "wheel"
-      "bluetooth"
-      "libvirt"
-    ];
+    extraGroups = [ "wheel" "bluetooth" "libvirt" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBps9Mp/xZax8/y9fW1Gt73SkskcBux1jDAB8rv0EYUt cardno:000611120054"
@@ -105,7 +102,7 @@
       parallel
       skim
       file
-                        #git
+      #git
       elinks
       bc
       zstd
@@ -128,7 +125,10 @@
     ];
   };
 
-  home-manager.users.kloenk = import ./home.nix { pkgs = pkgs; lib = lib; };
+  home-manager.users.kloenk = import ./home.nix {
+    pkgs = pkgs;
+    lib = lib;
+  };
 
   programs.gnupg.agent = {
     enable = true;

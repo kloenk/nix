@@ -11,7 +11,7 @@
   '';
 
   users.users.kloenk.packages = with pkgs; [
-    (redshift.overrideAttrs (oldAttrs: {  # wayland redshift
+    (redshift.overrideAttrs (oldAttrs: { # wayland redshift
       src = pkgs.fetchFromGitHub {
         owner = "minus7";
         repo = "redshift";
@@ -27,7 +27,13 @@
     alacritty
   ];
 
-  fonts.fonts = with pkgs; [ dejavu_fonts liberation_ttf noto-fonts noto-fonts-emoji font-awesome_4 ];
+  fonts.fonts = with pkgs; [
+    dejavu_fonts
+    liberation_ttf
+    noto-fonts
+    noto-fonts-emoji
+    font-awesome_4
+  ];
 
   home-manager.users.kloenk = {
     xdg.configFile."sway/config".source = ./config.sway;

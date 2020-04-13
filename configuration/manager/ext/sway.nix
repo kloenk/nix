@@ -1,7 +1,10 @@
 { pkgs, lib, ... }:
 
 let
-  config = (import ../../desktop/sway.nix { lib = lib; pkgs = pkgs; });
+  config = (import ../../desktop/sway.nix {
+    lib = lib;
+    pkgs = pkgs;
+  });
 in {
   home.packages = config.users.users.kloenk.packages;
   wayland.windowManager.sway = {

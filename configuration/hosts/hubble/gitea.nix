@@ -2,11 +2,11 @@
 
 {
 
-  fileSystems."/var/lib/gitea" =
-    { device = "/persist/data/gitea";
-      fsType = "none";
-      options = [ "bind" ];
-    };
+  fileSystems."/var/lib/gitea" = {
+    device = "/persist/data/gitea";
+    fsType = "none";
+    options = [ "bind" ];
+  };
 
   networking.firewall.allowedTCPPorts = [
     2222 # ssh
@@ -38,14 +38,14 @@
     extraConfig = ''
       [repository]
       PREFERRED_LICENSES = AGPL-3.0,GPL-3.0,GPL-2.0,LGPL-3.0,LGPL-2.1
-      
+
       [server]
       START_SSH_SERVER = true
       BUILTIN_SSH_SERVER_USER = git
       SSH_LISTEN_HOST = 
       SSH_PORT = 2222
       DISABLE_ROUTER_LOG = true
-      
+
       [mailer]
       ENABLED = true
       SUBJECT = %(APP_NAME)s
@@ -54,11 +54,11 @@
       SEND_AS_PLAIN_TEXT = true
       USE_SENDMAIL = false
       FROM = "Kloenks's Gitea" <gitea@kloenk.de>
-      
-      
+
+
       [attachment]
       ALLOWED_TYPES = */*
-      
+
       [service]
       SKIP_VERIFY = true
       REGISTER_EMAIL_CONFIRM = true
@@ -66,7 +66,7 @@
       ENABLE_CAPTCHA = false
       NO_REPLY_ADDRESS = kloenk.de
       DISABLE_REGISTRATION = true
-    '';  # mailer.PASSWD = "${secrets.gitea.mailpassword}"
+    ''; # mailer.PASSWD = "${secrets.gitea.mailpassword}"
   };
 
   services.nginx.virtualHosts."gitea.kloenk.de" = {
@@ -84,5 +84,6 @@
   '';
 
   #systemd.services.gitea.serviceConfig.AmbientCapabilities = "cap_net_bind_service";
-  systemd.services.gitea.serviceConfig.SystemCallFilter = lib.mkForce "~@clock @cpu-emulation @debug @keyring @memlock @module @obsolete @raw-io @reboot @resources @setuid @swap";
+  systemd.services.gitea.serviceConfig.SystemCallFilter = lib.mkForce
+    "~@clock @cpu-emulation @debug @keyring @memlock @module @obsolete @raw-io @reboot @resources @setuid @swap";
 }

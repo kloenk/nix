@@ -27,14 +27,14 @@
       #   name = "zsh-fast-syntax-highlighting";
       #   src = pkgs.zsh-fast-syntax-highlighting;
       # }
-       {
-         name = "zsh-syntax-highlighting";
-         src = pkgs.zsh-syntax-highlighting;
-       }
+      {
+        name = "zsh-syntax-highlighting";
+        src = pkgs.zsh-syntax-highlighting;
+      }
     ];
     shellAliases = {
       ls = "exa";
-      l  = "exa -a";
+      l = "exa -a";
       ll = "exa -lgh";
       la = "exa -lagh";
       lt = "exa -T";

@@ -8,7 +8,8 @@
     }
     {
       name = "dm-inline";
-      patch = ./patches/0023-Add-DM_CRYPT_FORCE_INLINE-flag-to-dm-crypt-target.patch;
+      patch =
+        ./patches/0023-Add-DM_CRYPT_FORCE_INLINE-flag-to-dm-crypt-target.patch;
     }
   ];
 }
