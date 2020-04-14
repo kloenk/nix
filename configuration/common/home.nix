@@ -139,7 +139,7 @@
       extraConfig = ''
         set viminfo='20,<1000
         set shiftwidth=2
-        set cc=80
+        "set cc=80
         set nu
       '';
       plugins = with pkgs; [

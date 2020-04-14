@@ -15,6 +15,11 @@
   nix.gc.automatic = lib.mkDefault true;
   nix.gc.options = lib.mkDefault "--delete-older-than 7d";
   nix.trustedUsers = [ "root" "@wheel" "kloenk" ];
+  # nix flakes
+  nix.package = lib.mkDefault pkgs.nixFlakes;
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
 
   networking.useNetworkd = lib.mkDefault true;
   networking.search = [ "kloenk.de" ];
@@ -122,6 +127,7 @@
       todo-txt-cli
       tcpdump
       binutils
+      nixfmt
     ];
   };
 

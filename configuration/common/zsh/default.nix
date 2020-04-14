@@ -4,8 +4,17 @@
   home-manager.users.kloenk.programs.zsh = {
     initExtra = ''
       function use {
-        nix-shell -p $@ --run zsh
+        packages=()
+        packages_fmt=()
+        while [ "$#" -gt 0 ]; do
+          i="$1"; shift 1
+          packages_fmt+=$(echo $i | ${pkgs.gnused}/bin/sed 's/[a-zA-Z]*#//')
+          [[ $i =~ [a-zA-Z]*#[a-zA-Z]* ]] || i="nixpkgs#$i"
+          packages+=$i
+        done
+        env prompt_sub="%F{blue}($packages_fmt) %F{white}$PROMPT" nix run $packages -c zsh
       }
+      PROMPT=''${prompt_sub:=$PROMPT}
     '';
     enable = true;
     autocd = true;
