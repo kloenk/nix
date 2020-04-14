@@ -66,7 +66,7 @@
               [ ] #nixos-mailserver
             else
               [ ]);
-        }).config.system.build.toplevel) nixosHosts);
+        })) nixosHosts);
 
       nixosModules = {
         secrets = import ./modules/secrets;
