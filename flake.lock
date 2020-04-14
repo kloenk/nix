@@ -2,8 +2,8 @@
   "nodes": {
     "home-manager": {
       "info": {
-        "lastModified": 1586783434,
-        "narHash": "sha256-zxPfpc1CXgTYjT8UMsVFMZgJzl/axHILKHXa+BZwqoo="
+        "lastModified": 1586855708,
+        "narHash": "sha256-/BbxFDEBFk3LQt06vGQsgOeKiJabhZ8oUtn0cjP9g64="
       },
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -11,7 +11,7 @@
       "locked": {
         "owner": "kloenk",
         "repo": "home-manager",
-        "rev": "74f0c1ede180b323423b3f762c8390f60f9c7a48",
+        "rev": "567f5b7f6c6529129d93ccafb2fd2903a97b4f59",
         "type": "github"
       },
       "original": {
@@ -23,18 +23,19 @@
     },
     "nixpkgs": {
       "info": {
-        "lastModified": 1586763797,
-        "narHash": "sha256-SR0hUvXbiNN2yy6MYecfskFM4HO4S8xcPbSA/7vy0O4="
+        "lastModified": 1586861880,
+        "narHash": "sha256-POGEGJwF98Q7dORpCi5xXUTjNFe8zph2EM5N5rARiKw="
       },
       "locked": {
-        "owner": "NixOS",
+        "owner": "kloenk",
         "repo": "nixpkgs",
-        "rev": "87d598e310ce6d159bf7a91806eda75538475e16",
+        "rev": "6dccd1700b589c9e797f9df7bc92dc3bb5232246",
         "type": "github"
       },
       "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
+        "owner": "kloenk",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "root": {

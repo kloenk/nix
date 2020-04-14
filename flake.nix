@@ -11,6 +11,12 @@
     inputs.nixpkgs.follows = "/nixpkgs";
   };
 
+  inputs.nixpkgs = {
+    type = "github";
+    owner = "kloenk";
+    repo = "nixpkgs";
+  };
+
   outputs = inputs@{ self, nixpkgs, home-manager }:
     let
 
