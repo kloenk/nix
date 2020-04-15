@@ -2,8 +2,8 @@
   "nodes": {
     "home-manager": {
       "info": {
-        "lastModified": 1586855708,
-        "narHash": "sha256-/BbxFDEBFk3LQt06vGQsgOeKiJabhZ8oUtn0cjP9g64="
+        "lastModified": 1586881412,
+        "narHash": "sha256-VQhcs/qEFHkdIYXhRpb96PwBWqhMwDx/ew3SiD0iuRU="
       },
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -11,7 +11,7 @@
       "locked": {
         "owner": "kloenk",
         "repo": "home-manager",
-        "rev": "567f5b7f6c6529129d93ccafb2fd2903a97b4f59",
+        "rev": "91cc0e122641b282e879baef1c19147b47bb7224",
         "type": "github"
       },
       "original": {
@@ -21,15 +21,33 @@
         "type": "github"
       }
     },
+    "mail-server": {
+      "flake": false,
+      "info": {
+        "lastModified": 1583515667,
+        "narHash": "sha256-8FcuezGdFP5caiwkyLpTbewCL9ochs3ygfZrGKxDrI8=",
+        "revCount": 401
+      },
+      "locked": {
+        "ref": "master",
+        "rev": "6563abc1c45de0d9e6b02cf8842005800b4e2745",
+        "type": "git",
+        "url": "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git"
+      }
+    },
     "nixpkgs": {
       "info": {
-        "lastModified": 1586861880,
-        "narHash": "sha256-POGEGJwF98Q7dORpCi5xXUTjNFe8zph2EM5N5rARiKw="
+        "lastModified": 1586894709,
+        "narHash": "sha256-6i2a4NhQaEzmBj66N/6Xx/+ymMk641kZOm8epvhpPMY="
       },
       "locked": {
         "owner": "kloenk",
         "repo": "nixpkgs",
-        "rev": "6dccd1700b589c9e797f9df7bc92dc3bb5232246",
+        "rev": "1d5d605670e622ec0fba2934ac790fe60475c698",
         "type": "github"
       },
       "original": {
@@ -41,7 +59,27 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "mail-server": "mail-server",
+        "nixpkgs": "nixpkgs",
+        "secrets": "secrets"
+      }
+    },
+    "secrets": {
+      "flake": false,
+      "info": {
+        "lastModified": 1586963258,
+        "narHash": "sha256-rnpJa0x3K5s0jp5nptq4Z5COmEWtMH991l9bRBTLCHM=",
+        "revCount": 852
+      },
+      "locked": {
+        "ref": "master",
+        "rev": "9e445a7808a7e4a9aecf5539ed187ee993ca2379",
+        "type": "git",
+        "url": "git+ssh://git@git.kloenk.de/kloenk/pass.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "git+ssh://git@git.kloenk.de/kloenk/pass.git"
       }
     }
   },

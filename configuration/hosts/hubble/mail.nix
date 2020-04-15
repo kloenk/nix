@@ -1,8 +1,6 @@
-{ ... }:
+{ config, ... }:
 
-let secrets = import <secrets/mail.nix>;
-
-in {
+{
   fileSystems."/var/vmail" = {
     device = "/persist/data/vmail";
     options = [ "bind" ];
@@ -23,7 +21,8 @@ in {
 
     loginAccounts = {
       "kloenk@kloenk.de" = {
-        hashedPassword = secrets.kloenk;
+        hashedPasswordFile =
+          config.krops.secrets.files."mail/kloenk@kloenk.de.sha512".path;
 
         aliases = [
           "admin@kloenk.de"
@@ -46,7 +45,8 @@ in {
       };
 
       "finn@kloenk.de" = {
-        hashedPassword = secrets.finn;
+        hashedPasswordFile =
+          config.krops.secrets.files."mail/finn@kloenk.de.sha512".path;
 
         aliases = [
           "finn.behrens@kloenk.de"
@@ -57,42 +57,55 @@ in {
       };
 
       "praesidium@kloenk.de" = {
-        hashedPassword = secrets.praesidium;
+        hashedPasswordFile =
+          config.krops.secrets.files."mail/praesidium@kloenk.de.sha512".path;
 
         aliases = [ "präsidium@kloenk.de" ];
       };
 
       "chaos@kloenk.de" = {
-        hashedPassword = secrets.chaos;
+        hashedPasswordFile =
+          config.krops.secrets.files."mail/chaos@kloenk.de.sha512".path;
 
         aliases =
           [ "35c3@kloenk.de" "eventphone@kloenk.de" "cryptoparty@kloenk.de" ];
       };
 
       "schule@kloenk.de" = {
-        hashedPassword = secrets.schule;
+        hashedPasswordFile =
+          config.krops.secrets.files."mail/schule@kloenk.de.sha512".path;
         aliases = [ "moodle+llg@kloenk.de" ];
       };
 
-      "yougen@kloenk.de" = { hashedPassword = secrets.yougen; };
+      "yougen@kloenk.de" = {
+        hashedPasswordFile =
+          config.krops.secrets.files."mail/yougen@kloenk.de.sha512".path;
+      };
 
-      "grafana@kloenk.de" = { hashedPassword = secrets.grafana; };
-
-      "gitlab@kloenk.de" = { hashedPassword = secrets.gitlab; };
-
-      "lkml@kloenk.de" = { hashedPassword = secrets.lkml; };
+      "grafana@kloenk.de" = {
+        hashedPasswordFile =
+          config.krops.secrets.files."mail/grafana@kloenk.de.sha512".path;
+      };
 
       "eljoy@kloenk.de" = {
-        hashedPassword = secrets.eljoy;
+        hashedPasswordFile =
+          config.krops.secrets.files."mail/eljoy@kloenk.de.sha512".path;
         aliases = [ "eljoy2@kloenk.de" ];
       };
 
-      "noreply-punkte@kloenk.de" = { hashedPassword = secrets.nrpunkte; };
+      "noreply-punkte@kloenk.de" = {
+        hashedPasswordFile =
+          config.krops.secrets.files."mail/nrpunkte@kloenk.de.sha512".path;
+      };
 
-      "alertmanager@kloenk.de" = { hashedPassword = secrets.alert; };
+      "alertmanager@kloenk.de" = {
+        hashedPasswordFile =
+          config.krops.secrets.files."mail/alert@kloenk.de.sha512".path;
+      };
 
       "ad@kloenk.de" = {
-        hashedPassword = secrets.ad;
+        hashedPasswordFile =
+          config.krops.secrets.files."mail/ad@kloenk.de.sha512".path;
 
         aliases = [
           "llgcompanion@kloenk.de"
@@ -105,7 +118,8 @@ in {
       };
 
       "drachensegler@drachensegler.kloenk.de" = {
-        hashedPassword = secrets.drachensegler;
+        hashedPasswordFile =
+          config.krops.secrets.files."mail/drachensegler@drachensegler.kloenk.de.sha512".path;
 
         aliases = [
           "drachensegler@kloenk.de"
@@ -118,9 +132,10 @@ in {
         catchAll = [ "drachensegler.kloenk.de" ];
       };
 
-      "git@kloenk.de" = { hashedPassword = secrets.git; };
-
-      "information@kloenk.de" = { hashedPassword = secrets.information; };
+      "git@kloenk.de" = {
+        hashedPasswordFile =
+          config.krops.secrets.files."mail/git@kloenk.de.sha512".path;
+      };
     };
 
     extraVirtualAliases = {
@@ -143,4 +158,21 @@ in {
     # 1 Gb RAM for the server. Without virus scanning 256 MB RAM should be plenty)
     virusScanning = false;
   };
+
+  krops.secrets.files = {
+    "mail/kloenk@kloenk.de.sha512".owner = "root";
+    "mail/finn@kloenk.de.sha512".owner = "root";
+    "mail/praesidium@kloenk.de.sha512".owner = "root";
+    "mail/chaos@kloenk.de.sha512".owner = "root";
+    "mail/schule@kloenk.de.sha512".owner = "root";
+    "mail/yougen@kloenk.de.sha512".owner = "root";
+    "mail/grafana@kloenk.de.sha512".owner = "root";
+    "mail/eljoy@kloenk.de.sha512".owner = "root";
+    "mail/nrpunkte@kloenk.de.sha512".owner = "root";
+    "mail/alert@kloenk.de.sha512".owner = "root";
+    "mail/ad@kloenk.de.sha512".owner = "root";
+    "mail/git@kloenk.de.sha512".owner = "root";
+    "mail/drachensegler@drachensegler.kloenk.de.sha512".owner = "root";
+  };
+  users.users.engelsystem.extraGroups = [ "keys" ];
 }

@@ -3,6 +3,9 @@ let inherit (final) callPackage;
 in {
   collectd-wireguard = callPackage ./collectd-wireguard { };
   jblock = callPackage ./jblock { };
+  deploy_secrets = callPackage ./deploy_secrets { };
+
+
   quassel = prev.quassel.overrideAttrs (oldAttrs: rec {
     name = "quassel-${version}";
     version = "0.14-pre";

@@ -17,7 +17,19 @@
     repo = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager }:
+  inputs.mail-server = {
+    type = "git";
+    url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git";
+    flake = false;
+  };
+
+  inputs.secrets = {
+    type = "git";
+    url = "git+ssh://git@git.kloenk.de/kloenk/pass.git";
+    flake = false;
+  };
+
+  outputs = inputs@{ self, nixpkgs, home-manager, mail-server, secrets }:
     let
 
       systems = [ "x86_64-linux" ];
@@ -41,7 +53,6 @@
               + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"))
             nixpkgs.nixosModules.notDetected
             (import (nixpkgs + "/nixos/modules/installer/cd-dvd/channel.nix"))
-            #          (import (home-manager + "/nixos") nixpkgs)
             home-manager.nixosModules.home-manager
           ];
         }).config.system.build.isoImage;
@@ -64,12 +75,14 @@
             (import (./configuration + "/hosts/${name}/configuration.nix"))
             self.nixosModules.secrets
             self.nixosModules.ferm2
+            self.nixosModules.deluge2
+            #            (import (mail-server + "/default.nix"))
           ] ++ (if (if (host ? vm) then host.vm else false) then
             (nixpkgs.lib.singleton
               (import (nixpkgs + "/nixos/modules/profiles/qemu-guest.nix")))
           else
             [ ]) ++ (if (if (host ? mail) then host.mail else false) then
-              [ ] #nixos-mailserver
+              [ (import (mail-server + "/default.nix")) ] # nixos-mailserver
             else
               [ ]);
         })) nixosHosts);
@@ -77,6 +90,19 @@
       nixosModules = {
         secrets = import ./modules/secrets;
         ferm2 = import ./modules/ferm2;
+        deluge2 = import ./modules/deluge.nix;
       };
+
+      # apps
+      apps = forAllSystems (system: {
+        deploy_secrets = let
+          app = self.packages.${system}.deploy_secrets.override {
+            passDir = toString (secrets + "/");
+          };
+        in {
+          type = "app";
+          program = "${app}";
+        };
+      });
     };
 }

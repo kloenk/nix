@@ -6,6 +6,7 @@
   security.rngd.enable = lib.mkDefault false;
   users.users.kloenk.packages = with pkgs; [
     flameshot
+    grim
     rustup
     gcc
     yarn

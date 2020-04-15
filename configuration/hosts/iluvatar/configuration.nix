@@ -33,13 +33,15 @@
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC9fXR2sAD3q5hHURKg2of2OoZiKz9Nr2Z7qx6nfLLMwK1nie1rFhbwSRK8/6QUC+jnpTvUmItUo+etRB1XwEOc3rabDUYQ4dQ+PMtQNIc4IuKfQLHvD7ug9ebJkKYaunq6+LFn8C2Tz4vbiLcPFSVpVlLb1+yaREUrN9Yk+J48M3qvySJt9+fa6PZbTxOAgKsuurRb8tYCaQ9TzefKJvZXIVd+W2tzYV381sSBKRyAJLu/8tA+niSJ8VwHntAHzaKzv6ozP5yBW2SB7R7owGd1cnP7znEPxB9jeDBBWLonsocwFalP1RGt1WsOiIGEPhytp5RDXWgZM5sIS42iL61hMB9Yz3PaQYLuR+1XNzdGRLIKPUDh58lGdk2P5HUqPnvE/FqfzU3jkv6ebJmcGfZiEN1TPc5ar8sQkpn56hB2DnJYWICuryTm0XpzSizf9fGyLGBw3GVBlnZjzTaBf7iokGFIu+ade5AqEjX6FxlNja1ESFNKhDAdLAHFnaKJ3u0= kloenk@kloenkX"
     ];
     port = 62954;
-    hostKeys =
-      [ "/var/src/secrets/initrd/ecdsa_host_key" "/var/src/secrets/initrd/ed25519_host_key" ];
+    hostKeys = [
+      "/var/src/secrets/initrd/ecdsa_host_key"
+      "/var/src/secrets/initrd/ed25519_host_key"
+    ];
   };
   boot.initrd.preLVMCommands = lib.mkBefore (''
     ip li set enp1s0 up
-    ip addr add 195.39.246.6/32 dev enp1s0
-    ip route add default via 195.39.246.2 onlink dev enp1s0
+    ip addr add 195.39.247.6/32 dev enp1s0
+    ip route add default via 195.39.247.2 onlink dev enp1s0
     # some ip stuff??
     hasNetwork=1
   '');
@@ -77,32 +79,33 @@
 
   networking.dhcpcd.enable = false;
   networking.useDHCP = false;
-  networking.interfaces.enp1s0.ipv6.addresses = [
-    {
-      address = "2a01:4f8:221:2b46::40";
-      prefixLength = 64;
-    }
-    {
-      address = "2a0f:4ac0::6";
-      prefixLength = 128;
-    }
-  ];
+  networking.interfaces.enp1s0.ipv6.addresses = [{
+    address = "2a0f:4ac0::6";
+    prefixLength = 128;
+  }];
   networking.interfaces.enp1s0.ipv4.addresses = [{
-    address = "195.39.246.6";
+    address = "195.39.247.6";
     prefixLength = 32;
   }];
 
   # default gateway
-  systemd.network.networks."40-enp1s0".routes = [
-    {
-      routeConfig.Gateway = "2a0f:4ac0::2";
-      routeConfig.GatewayOnLink = "yes";
-    }
-    {
-      routeConfig.Gateway = "195.49.246.2";
-      routeConfig.GatewayOnLink = "yes";
-    }
-  ];
+  systemd.network.networks."40-enp1s0" = {
+    name = "enp1s0";
+    networkConfig = {
+      IPv6AcceptRA = "no";
+    };
+    routes = [
+      {
+        routeConfig.Gateway = "2a0f:4ac0::2";
+        routeConfig.GatewayOnLink = "yes";
+        routeConfig.PreferredSource = "2a0f:4ac0::6";
+      }
+      {
+        routeConfig.Gateway = "195.39.247.2";
+        routeConfig.GatewayOnLink = "yes";
+      }
+    ];
+  };
 
   # running bind
   services.resolved.enable = false;
