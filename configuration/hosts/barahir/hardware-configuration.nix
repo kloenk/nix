@@ -64,6 +64,12 @@
     options = [ "noatime" ];
   };
 
+  fileSystems."/var/lib/bluetooth" = {
+    device = "/persist/data/bluetooth";
+    fsType = "none";
+    options = [ "bind" ];
+  };
+
   swapDevices =
     [{ device = "/dev/disk/by-uuid/375f0101-104b-4643-a6c1-1d66d5c1a067"; }];
 

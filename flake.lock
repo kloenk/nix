@@ -2,8 +2,8 @@
   "nodes": {
     "home-manager": {
       "info": {
-        "lastModified": 1586881412,
-        "narHash": "sha256-VQhcs/qEFHkdIYXhRpb96PwBWqhMwDx/ew3SiD0iuRU="
+        "lastModified": 1587202986,
+        "narHash": "sha256-7wh7dqvIHmKXnJhaDlmXkfxcFWqk45sGKHUONif21S8="
       },
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -11,12 +11,11 @@
       "locked": {
         "owner": "kloenk",
         "repo": "home-manager",
-        "rev": "91cc0e122641b282e879baef1c19147b47bb7224",
+        "rev": "3eab3011a10dd89045ac5dc44f2ac248c8814cad",
         "type": "github"
       },
       "original": {
         "owner": "kloenk",
-        "ref": "feature/flake-overlay",
         "repo": "home-manager",
         "type": "github"
       }
@@ -41,14 +40,15 @@
     },
     "nixpkgs": {
       "info": {
-        "lastModified": 1586894709,
-        "narHash": "sha256-6i2a4NhQaEzmBj66N/6Xx/+ymMk641kZOm8epvhpPMY="
+        "lastModified": 1587373753,
+        "narHash": "sha256-xZZccejs0jEQmNQek064iqPUQyiOFx/MLYtkxZeRNTM=",
+        "revCount": 221708
       },
       "locked": {
-        "owner": "kloenk",
-        "repo": "nixpkgs",
-        "rev": "1d5d605670e622ec0fba2934ac790fe60475c698",
-        "type": "github"
+        "ref": "HEAD",
+        "rev": "8dbdef5c9e5b7bbdc07f4c7a3276288852472803",
+        "type": "git",
+        "url": "file:///home/kloenk/proj/nixpkgs"
       },
       "original": {
         "owner": "kloenk",
@@ -61,7 +61,8 @@
         "home-manager": "home-manager",
         "mail-server": "mail-server",
         "nixpkgs": "nixpkgs",
-        "secrets": "secrets"
+        "secrets": "secrets",
+        "website": "website"
       }
     },
     "secrets": {
@@ -80,6 +81,24 @@
       "original": {
         "type": "git",
         "url": "git+ssh://git@git.kloenk.de/kloenk/pass.git"
+      }
+    },
+    "website": {
+      "flake": false,
+      "info": {
+        "lastModified": 1587198265,
+        "narHash": "sha256-lqeysAlUeZw27F1ksBTq9rxCouS/Q2CO6+FKTQrVJIQ=",
+        "revCount": 14
+      },
+      "locked": {
+        "ref": "master",
+        "rev": "24045fa19c1eefbb0b98f63240b77228c3030ccc",
+        "type": "git",
+        "url": "https://git.pbb.lc/kloenk/website.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.pbb.lc/kloenk/website.git"
       }
     }
   },

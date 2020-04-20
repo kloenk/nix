@@ -4,8 +4,28 @@ in {
   collectd-wireguard = callPackage ./collectd-wireguard { };
   jblock = callPackage ./jblock { };
   deploy_secrets = callPackage ./deploy_secrets { };
+  wallpapers = callPackage ./wallpapers {};
+
+  # broken packages
+  waybar = prev.waybar.overrideAttrs (oldAttrs: rec {
+    version = "0.9.1";
+    src = final.fetchFromGitHub {
+      owner = "Alexays";
+      repo = "Waybar";
+      rev = version;
+      sha256 = "0drlv8im5phz39jxp3gxkc40b6f85bb3piff2v3hmnfzh7ib915s";
+    };
+  });
 
 
+  redshift = prev.redshift.overrideAttrs (oldAttrs: rec {
+    src = final.fetchFromGitHub {
+      owner = "minus7";
+      repo = "redshift";
+      rev = "eecbfedac48f827e96ad5e151de8f41f6cd3af66";
+      sha256 = "0rs9bxxrw4wscf4a8yl776a8g880m5gcm75q06yx2cn3lw2b7v22";
+    };
+  });
   quassel = prev.quassel.overrideAttrs (oldAttrs: rec {
     name = "quassel-${version}";
     version = "0.14-pre";

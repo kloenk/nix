@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
 
 {
   programs.sway.enable = true;
@@ -36,12 +36,23 @@
   ];
 
   home-manager.users.kloenk = {
-    xdg.configFile."sway/config".source = ./config.sway;
+    inherit (import ./sway-hm.nix { config = config.home-manager.users.kloenk; remap_win = (config.networking.hostName != "barahir"); inherit pkgs lib; }) wayland;
+    #xdg.configFile."sway/config".source = ./config.sway;
     xdg.configFile."waybar/config".source = ./config.waybar;
     xdg.configFile."waybar/style.css".source = ./style.waybar;
     xdg.configFile."quassel-irc.org/Dracula.qss".source = ./Dracula.qss;
     xdg.configFile."alacritty/alacritty.yml".source = ./alacritty.yml;
     home.file.".wallpaper-image".source = ./wallpaper-image;
+
+    # mvp optimazation for wayland
+    xdg.configFile.mpv = {
+      text = ''
+        vo=gpu
+        hwdec=vaapi
+        gpu-context=wayland
+      '';
+      target = "mpv/mpv.conf";
+    };
   };
 
   environment.variables.TERMINAL = "alacritty";

@@ -4,6 +4,11 @@
   home-manager.useUserPackages = true;
 
   security.rngd.enable = lib.mkDefault false;
+
+  environment.systemPackages = with pkgs; [
+    qt5.qtwayland
+  ];
+
   users.users.kloenk.packages = with pkgs; [
     flameshot
     grim
@@ -34,7 +39,7 @@
     screen # for usb serial
     pass-otp
     mosh
-    libreoffice
+    #libreoffice
     blueman
     mkpasswd
     lxappearance-gtk3
@@ -137,6 +142,10 @@
 
     # extra codes for pulseaudio bluetooth
     extraModules = [ pkgs.pulseaudio-modules-bt ];
+
+    # allow other servers
+    tcp.enable = true;
+    tcp.anonymousClients.allowedIpRanges = [ "195.39.246.0/24" "2a0f:4ac0::/64" "2a0f:4ac0:f199::/48" "2a0f:4ac0:40::/44" ];
   };
   nixpkgs.config.pulseaudio = true;
 }

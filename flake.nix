@@ -7,7 +7,6 @@
     type = "github";
     owner = "kloenk";
     repo = "home-manager";
-    ref = "feature/flake-overlay";
     inputs.nixpkgs.follows = "/nixpkgs";
   };
 
@@ -23,13 +22,20 @@
     flake = false;
   };
 
+  inputs.website = {
+    type = "git";
+    url = "https://git.pbb.lc/kloenk/website.git";
+    flake = false;
+  };
+
   inputs.secrets = {
     type = "git";
     url = "git+ssh://git@git.kloenk.de/kloenk/pass.git";
     flake = false;
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, mail-server, secrets }:
+  outputs =
+    inputs@{ self, nixpkgs, home-manager, mail-server, website, secrets }:
     let
 
       systems = [ "x86_64-linux" ];
@@ -60,6 +66,15 @@
       # evals
       hosts = import ./configuration/hosts { };
       nixosHosts = nixpkgs.lib.filterAttrs (name: host: host ? hostname) hosts;
+      makeSourcesModule = hostName:
+        let
+          inherit (nixpkgs) lib;
+          inherit (lib) mkIf;
+        in
+        { lib, ... }: {
+          options.sources = nixpkgs.lib.mkOption { };
+          config.sources = mkIf (hostName == "iluvatar") { website = website; };
+        };
     in {
       overlay = import ./pkgs/overlay.nix;
 
@@ -76,7 +91,7 @@
             self.nixosModules.secrets
             self.nixosModules.ferm2
             self.nixosModules.deluge2
-            #            (import (mail-server + "/default.nix"))
+            (makeSourcesModule name)
           ] ++ (if (if (host ? vm) then host.vm else false) then
             (nixpkgs.lib.singleton
               (import (nixpkgs + "/nixos/modules/profiles/qemu-guest.nix")))

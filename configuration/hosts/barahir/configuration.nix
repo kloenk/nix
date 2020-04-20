@@ -6,9 +6,12 @@
     ./wireguard.nix
     ./links.nix
 
+    ./mysql.nix
+
     ../../default.nix
 
     ../../common
+    ../../common/pbb.nix
     ../../desktop
     ../../desktop/sway.nix
     #    ../../desktop/plasma.nix
@@ -58,6 +61,10 @@
 
     cd /
   '';
+  # save password changings
+  systemd.tmpfiles.rules = [
+    "L /etc/shadow - - - - /persist/secrets/shadow"
+  ];
 
   nixpkgs.config.allowUnfree = true;
   nix.gc.automatic = false;
@@ -84,6 +91,7 @@
     steamcontroller
     minecraft
     multimc
+    elementary-planner
   ];
 
   # docker foo
@@ -125,9 +133,11 @@
   hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
   hardware.pulseaudio.support32Bit = true;
+  hardware.pulseaudio.tcp.anonymousClients.allowedIpRanges = [ "192.168.178.0/24" ];
 
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
+
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

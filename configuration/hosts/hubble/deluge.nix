@@ -18,16 +18,16 @@
     configureNginx = true;
     downloadsBasicAuthFile = config.krops.secrets.files."BasicAuth.deluge".path;
     web.enable = true;
-    hostName = "kloenk.de";
+    hostName = "hubble.kloenk.de";
   };
 
   krops.secrets.files."BasicAuth.deluge".owner = "nginx";
   users.users.nginx.extraGroups = [ "keys" ];
 
-  services.nginx.virtualHosts."kloenk.de" = {
+  /*services.nginx.virtualHosts."kloenk.de" = {
     enableACME = true;
     forceSSL = true;
-  };
+  };*/
 
   networking.firewall.allowedTCPPorts = [ 58846 60000 ];
   networking.firewall.allowedUDPPorts = [ 60000 ];
