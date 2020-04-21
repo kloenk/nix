@@ -19,6 +19,11 @@ in {
     # FIXME: bgp
   };
 
+  thrain = {
+    hostname = "kloenk@192.168.178.248:62954";
+    prometheusExporters = [ "node-exporter" "nginx-exporter" ];
+  };
+
   kloenkX = {
     #hostname = "kloenk@127.0.0.1:62954";
     hostname = "kloenk@kloenkX.kloenk.de:62954";

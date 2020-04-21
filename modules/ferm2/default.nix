@@ -98,6 +98,15 @@ in {
               lib.concatStringsSep " " (map toString fwcfg.allowedUDPPorts)
             }) ACCEPT;
 
+            ${lib.concatStringsSep "\n" (lip.mapAttrsToList (name: config: ''
+              interface ${name} proto udp dport (${
+                lib.concatStringsSep " " (map toString config.allowedUDPPorts)
+              }) ACCEPT;
+              interface ${name} proto tcp dport (${
+                lib.concatStringsSep " " (map toString config.allowedTCPPorts)
+              }) ACCEPT;
+            '') fwcfg.interfaces)}
+
             proto udp dport 546 daddr fe80::/64 ACCEPT;
 
             ${cfg.extraInput}
