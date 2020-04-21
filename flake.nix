@@ -14,6 +14,7 @@
     type = "github";
     owner = "kloenk";
     repo = "nixpkgs";
+    ref = "from-unstable";
   };
 
   inputs.mail-server = {

@@ -3,10 +3,10 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./wireguard.nix
+#    ./wireguard.nix
     ./links.nix
 
-    ./mysql.nix
+#    ./mysql.nix
 
     ../../default.nix
 
@@ -18,19 +18,22 @@
   ];
 
   hardware.cpu.intel.updateMicrocode = true;
-  boot.loader.grub.device = "/dev/disk/by-id/wwn-0x5002538e40df324b";
-  boot.kernelModules = [ "vfio-pci" "amdgpu" ];
+  boot.loader.grub.device = "/dev/disk/by-id/wwn-0x5002538d00000000";
+  boot.kernelModules = [
+    #"vfio-pci"
+    "amdgpu"
+  ];
 
   # FIXME: needed?
   # services.openssh.passwordAuthentication = true;
 
   boot.initrd.luks.devices."cryptLVM".device =
-    "/dev/disk/by-id/wwn-0x5002538e40df324b-part2";
+    "/dev/disk/by-id/wwn-0x5002538d00000000-part2";
   boot.initrd.luks.devices."cryptLVM".allowDiscards = true;
 
   boot.kernelParams = [
-    "intel_iommu=on"
-    "vfio-pci.ids=1002:699f,1002:aae0"
+  #  "intel_iommu=on"
+  #  "vfio-pci.ids=1002:699f,1002:aae0"
     "radeon.cik_support=0"
     "amdgpu.cik_support=1"
     "radeon.si_support=0"
@@ -48,10 +51,10 @@
   boot.initrd.postMountCommands = ''
     cd /mnt-root
     chattr -i var/lib/empty
-    rm -rf $(ls -A /mnt-root | grep -v 'nix' | grep -v 'boot' | grep -v 'persist' | grep -v 'var')
+    rm -rf $(ls -A /mnt-root | grep -v 'nix' |  grep -v 'persist' | grep -v 'var')
 
     cd /mnt-root/persist
-    rm -rf $(ls -A /mnt-root/persist | grep -v 'secrets' | grep -v 'log' )
+    rm -rf $(ls -A /mnt-root/persist | grep -v 'data' )
 
     cd /mnt-root/var
     rm -rf $(ls -A /mnt-root/var | grep -v 'src' | grep -v 'log')
@@ -59,12 +62,14 @@
     cd /mnt-root/var/src
     rm -rf $(ls -A /mnt-root/var/src | grep -v 'secrets')
 
+    mkdir /mnt-root/mnt
+
     cd /
   '';
-  # save password changings
-  systemd.tmpfiles.rules = [
-    "L /etc/shadow - - - - /persist/secrets/shadow"
-  ];
+  # save password changings FIXME: replace with environment.etc.".."
+  #systemd.tmpfiles.rules = [
+  #  "L /etc/shadow - - - - /persist/secrets/shadow"
+  #];
 
   nixpkgs.config.allowUnfree = true;
   nix.gc.automatic = false;

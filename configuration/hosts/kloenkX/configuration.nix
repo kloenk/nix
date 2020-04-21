@@ -105,8 +105,8 @@ in {
 
   #services.logind.lidSwitch = "ignore";
   services.tlp.enable = true;
-  home-manager.users.kloenk.programs.ssh.matchBlocks.hubble-encrypt.identityFile =
-    toString /var/src/secrets/id_rsa;
+  #home-manager.users.kloenk.programs.ssh.matchBlocks.hubble-encrypt.identityFile =
+  #  toString /var/src/secrets/id_rsa;
   users.users.kloenk.initialPassword = "foobaar";
   users.users.kloenk.packages = with pkgs; [
     lm_sensors

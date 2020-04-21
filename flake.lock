@@ -41,17 +41,17 @@
     "nixpkgs": {
       "info": {
         "lastModified": 1587373753,
-        "narHash": "sha256-xZZccejs0jEQmNQek064iqPUQyiOFx/MLYtkxZeRNTM=",
-        "revCount": 221708
+        "narHash": "sha256-xZZccejs0jEQmNQek064iqPUQyiOFx/MLYtkxZeRNTM="
       },
       "locked": {
-        "ref": "HEAD",
+        "owner": "kloenk",
+        "repo": "nixpkgs",
         "rev": "8dbdef5c9e5b7bbdc07f4c7a3276288852472803",
-        "type": "git",
-        "url": "file:///home/kloenk/proj/nixpkgs"
+        "type": "github"
       },
       "original": {
         "owner": "kloenk",
+        "ref": "from-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
