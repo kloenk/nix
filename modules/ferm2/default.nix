@@ -93,18 +93,34 @@ in {
 
             proto tcp dport (${
               lib.concatStringsSep " " (map toString fwcfg.allowedTCPPorts)
+            } ${
+              lib.concatStringsSep " "
+              (map (range: "${toString range.from}:${toString range.to}")
+                fwcfg.allowedTCPPortRanges)
             }) ACCEPT;
             proto udp dport (${
               lib.concatStringsSep " " (map toString fwcfg.allowedUDPPorts)
+            } ${
+              lib.concatStringsSep " "
+              (map (range: "${toString range.from}:${toString range.to}")
+                fwcfg.allowedUDPPortRanges)
             }) ACCEPT;
 
             ${
               lib.concatStringsSep "\n" (lib.mapAttrsToList (name: config: ''
                 interface ${name} proto udp dport (${
                   lib.concatStringsSep " " (map toString config.allowedUDPPorts)
+                } ${
+                  lib.concatStringsSep " "
+                  (map (range: "${toString range.from}:${toString range.to}")
+                    config.allowedUDPPortRanges)
                 }) ACCEPT;
                 interface ${name} proto tcp dport (${
                   lib.concatStringsSep " " (map toString config.allowedTCPPorts)
+                } ${
+                  lib.concatStringsSep " "
+                  (map (range: "${toString range.from}:${toString range.to}")
+                    config.allowedTCPPortRanges)
                 }) ACCEPT;
               '') fwcfg.interfaces)
             }
@@ -148,38 +164,54 @@ in {
 
             proto tcp dport (${
               lib.concatStringsSep " " (map toString fwcfg.allowedTCPPorts)
+            } ${
+              lib.concatStringsSep " "
+              (map (range: "${toString range.from}:${toString range.to}")
+                fwcfg.allowedTCPPortRanges)
             }) ACCEPT;
             proto udp dport (${
               lib.concatStringsSep " " (map toString fwcfg.allowedUDPPorts)
+            } ${
+              lib.concatStringsSep " "
+              (map (range: "${toString range.from}:${toString range.to}")
+                fwcfg.allowedUDPPortRanges)
             }) ACCEPT;
 
             ${
               lib.concatStringsSep "\n" (lib.mapAttrsToList (name: config: ''
                 interface ${name} proto udp dport (${
                   lib.concatStringsSep " " (map toString config.allowedUDPPorts)
+                } ${
+                  lib.concatStringsSep " "
+                  (map (range: "${toString range.from}:${toString range.to}")
+                    config.allowedUDPPortRanges)
                 }) ACCEPT;
                 interface ${name} proto tcp dport (${
                   lib.concatStringsSep " " (map toString config.allowedTCPPorts)
+                } ${
+                  lib.concatStringsSep " "
+                  (map (range: "${toString range.from}:${toString range.to}")
+                    config.allowedTCPPortRanges)
                 }) ACCEPT;
               '') fwcfg.interfaces)
             }
 
-            ${cfg.extraInput}
-            ${cfg.extraInput4}
-          }
-          chain OUTPUT {
-            policy ${cfg.outputPolicy};
+                ${cfg.extraInput}
+                ${cfg.extraInput4}
+              }
+              chain OUTPUT {
+                policy ${cfg.outputPolicy};
 
-            ${cfg.extraOutput}
-            ${cfg.extraOutput4}
-          }
-          chain FORWARD {
-            policy ${cfg.forwardPolicy};
+                ${cfg.extraOutput}
+                ${cfg.extraOutput4}
+              }
+              chain FORWARD {
+                policy ${cfg.forwardPolicy};
 
-            ${cfg.extraForward}
-            ${cfg.extraForward4}
-          }
-        }
+                ${cfg.extraForward}
+                ${cfg.extraForward4}
+              }
+            }
 
         ${cfg.extraConfig}
         ${cfg.extraConfig4}
