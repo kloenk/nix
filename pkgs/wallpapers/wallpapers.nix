@@ -37,6 +37,14 @@ in {
     url = "https://git.pbb.lc/petabyteboy/nixfiles/raw/branch/master/configuration/desktop/wallpapers/cubes.png";
     sha256 = "9c61d241a53907900bd9e688e5ac347475847c3cd178e32ef7a38c435554286f";
   };
+  voyager-pbb = fetchurl {
+    url = "https://git.pbb.lc/petabyteboy/nixfiles/raw/branch/master/configuration/desktop/wallpapers/voyager.png";
+    sha256 = "da587ba6c1fd0bfc0a2d6d566f1dc0aeb13931a093e45ea1c452a0b10b4d7c2b";
+  };
+  sao-pbb = fetchurl {
+    url = "https://git.pbb.lc/petabyteboy/nixfiles/raw/branch/master/configuration/desktop/wallpapers/sao.png";
+    sha256 = "a7d39c5ea5c47cba7db58c304da613b1c8318fbbdb7e190ddb8e3a1248f148ea";
+  };
   bioshock_big_dady = fetchurl {
     url = "https://i.imgur.com/63nJZTP.jpg";
     sha256 = "016d7416b0f71c851121d19f145aa4bf8bb03324f21e198cf0d2577a39208864";
