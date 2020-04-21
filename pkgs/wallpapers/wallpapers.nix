@@ -33,6 +33,10 @@ in {
     url = "https://raw.githubusercontent.com/NixOS/nixos-artwork/766f10e0c93cb1236a85925a089d861b52ed2905/wallpapers/nix-wallpaper-stripes-logo.png";
     sha256 = "0cqjkgp30428c1yy8s4418k4qz0ycr6fzcg4rdi41wkh5g1hzjnl";
   };
+  cubes-pbb = fetchurl {
+    url = "https://git.pbb.lc/petabyteboy/nixfiles/raw/branch/master/configuration/desktop/wallpapers/cubes.png";
+    sha256 = "9c61d241a53907900bd9e688e5ac347475847c3cd178e32ef7a38c435554286f";
+  };
   bioshock_big_dady = fetchurl {
     url = "https://i.imgur.com/63nJZTP.jpg";
     sha256 = "016d7416b0f71c851121d19f145aa4bf8bb03324f21e198cf0d2577a39208864";
