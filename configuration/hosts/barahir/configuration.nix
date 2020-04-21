@@ -57,7 +57,10 @@
     rm -rf $(ls -A /mnt-root/persist | grep -v 'data' )
 
     cd /mnt-root/var
-    rm -rf $(ls -A /mnt-root/var | grep -v 'src' | grep -v 'log')
+    rm -rf $(ls -A /mnt-root/var | grep -v 'src' | grep -v 'log' | grep -v 'lib' )
+
+    cd /mnt-root/var/lib
+    rm -rf $(ls -A /mnt-root/var/lib | grep -v 'bluetooth' )
 
     cd /mnt-root/var/src
     rm -rf $(ls -A /mnt-root/var/src | grep -v 'secrets')
@@ -142,6 +145,9 @@
 
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
+
+  # fix home-manager
+  systemd.services.home-manager-kloenk.after  = [ "home-kloenk.mount" ];
 
 
   # This value determines the NixOS release with which your system is to be
