@@ -9,6 +9,8 @@ in {
     #   ./bgp.nix
     ./links.nix
 
+    ./postgres.nix
+
     ../../default.nix
     ../../common
     ../../desktop/sway.nix
