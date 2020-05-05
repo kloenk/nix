@@ -78,6 +78,8 @@
     bash-completion
     whois
     qt5.qtwayland
+
+    erlang # for escript scripts
   ];
 
   environment.variables.EDITOR = "vim";

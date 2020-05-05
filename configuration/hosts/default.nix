@@ -1,11 +1,21 @@
 { nixos-mailserver ? null }:
 
-let pbbAS = { as = 207921; };
+let
+  pbbAS = { as = 207921; };
+
+  makeHost = { host, port ? 62954, user ? "kloenk"
+    , prometheusExporters ? [ "node-exporter" "nginx-exporter" ]
+    , hostname ? "${user}@${host}:${toString port}", ... }@extraArgs:
+    (extraArgs // {
+      host.ip = host;
+      host.port = port;
+      host.user = user;
+      inherit hostname prometheusExporters;
+    });
 
 in {
-  iluvatar = {
-    hostname = "kloenk@iluvatar.kloenk.de:62954";
-    prometheusExporters = [ "node-exporter" "nginx-exporter" ];
+  iluvatar = makeHost {
+    host = "iluvatar.kloenk.de";
     vm = true;
     mail = false;
     #wireguard.publicKey = "";
@@ -13,26 +23,29 @@ in {
     magicNumber = 252;
   };
 
-  barahir = {
-    hostname = "kloenk@192.168.178.66:62954";
-    prometheusExporters = [ "node-exporter" "nginx-exporter" ];
+  barahir = makeHost {
+    host = "192.168.178.95";
     # FIXME: bgp
   };
 
-  thrain = {
-    hostname = "kloenk@192.168.178.248:62954";
-    prometheusExporters = [ "node-exporter" "nginx-exporter" ];
+  thrain = makeHost { host = "192.168.178.248"; };
+  eradan = makeHost {
+    host = "192.168.178.249";
+    vm = true;
+    wireguard.publicKey = "x4UDiy+s08NLWKQ2IUizw38qh4PlWSn6tzDh3O4Vh38=";
+    #wireguard.endpoint = ""; # FIXME: port forwarding??
   };
 
-  kloenkX = {
+  kloenkX = makeHost {
+    host = "192.168.178.69";
     #hostname = "kloenk@127.0.0.1:62954";
-    hostname = "kloenk@kloenkX.kloenk.de:62954";
+    #hostname = "kloenk@kloenkX.kloenk.de:62954";
     prometheusExporters = [ "node-exporter" "nginx-exporter" "wireguard" ];
     wireguard.publicKey = "crMsdERA3xeV8tLpT817R78d4/hGMKS/6LWNyMlsFRQ=";
     magicNumber = 250;
   };
-  hubble = {
-    hostname = "kloenk@hubble.kloenk.de:62954";
+  hubble = makeHost {
+    host = "hubble.kloenk.de";
     #prometheusExporters = [ 9100 3001 9090 9154 9187 7980 9586 9119 9166 9113 ];
     prometheusExporters = [ "node-exporter" "nginx-exporter" "wireguard" ];
     vm = true;
@@ -41,30 +54,29 @@ in {
     wireguard.endpoint = "2001:41d0:1004:1629:1337:187::";
     magicNumber = 249;
   };
-  atom = {
-    hostname = "kloenk@192.168.178.248:62954";
-    prometheusExporters = [ "node-exporter" "nginx-exporter" "wireguard" ];
-  };
-  #nixos-builder-1 = {
-  #  hostname = "kloenk@192.168.178.48:62954";
-  #  prometheusExporters = [ "node-exporter" "nginx-exporter" ];
-  #};
   gurke = {
     hostname = "gurke.pbb.lc:62954";
     prometheusExporters = [ "node-exporter" "nginx-exporter" ];
   };
-  planets = {
-    hostname = "[2001:678:bbc:3e7:f199::1]:62954";
-    prometheusExporters = [ "node-exporter" "nginx-exporter" ];
+
+  # for monitoring only
+  bbb-wass = makeHost {
+    host = "bbb-wass.kloenk.de";
+    nixos = false;
+    user = "root";
+    prometheusExporters = [ "node-exporter" "bbb-exporter" ];
   };
 
   # for monitoring only
-  bbb-wass = { prometheusExporters = [ "node-exporter" "bbb-exporter" ]; };
-
+  gdv01 = makeHost {
+    host = "gdv01.eventphone.de";
+    user = "root";
+  };
   # for monitoring only
-  gdv01 = { prometheusExporters = [ "node-exporter" "collectd" ]; };
-  # for monitoring only
-  gdv02 = { prometheusExporters = [ "node-exporter" "collectd" ]; };
+  gdv02 = makeHost {
+    host = "gdv02.eventphone.de";
+    user = "root";
+  };
 
   # for wireguard only
   combahton = {

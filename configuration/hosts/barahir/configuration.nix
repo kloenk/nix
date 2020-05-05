@@ -3,10 +3,11 @@
 {
   imports = [
     ./hardware-configuration.nix
-#    ./wireguard.nix
+    #    ./wireguard.nix
     ./links.nix
 
-#    ./mysql.nix
+    #    ./mysql.nix
+    ./postgresql.nix
 
     ../../default.nix
 
@@ -25,15 +26,15 @@
   ];
 
   # FIXME: needed?
-  # services.openssh.passwordAuthentication = true;
+  services.openssh.passwordAuthentication = true;
 
   boot.initrd.luks.devices."cryptLVM".device =
     "/dev/disk/by-id/wwn-0x5002538d00000000-part2";
   boot.initrd.luks.devices."cryptLVM".allowDiscards = true;
 
   boot.kernelParams = [
-  #  "intel_iommu=on"
-  #  "vfio-pci.ids=1002:699f,1002:aae0"
+    #  "intel_iommu=on"
+    #  "vfio-pci.ids=1002:699f,1002:aae0"
     "radeon.cik_support=0"
     "amdgpu.cik_support=1"
     "radeon.si_support=0"
@@ -43,7 +44,10 @@
   networking.useDHCP = false;
   networking.hostName = "barahir";
   networking.domain = "kloenk.de";
-  networking.hosts = { "192.168.178.1" = [ "fritz.box" ]; };
+  networking.hosts = {
+    "192.168.178.1" = [ "fritz.box" ];
+    "192.168.178.248" = [ "thrain" "thrain.fritz.box" ];
+  };
   networking.nameservers = [ "1.1.1.1" "192.168.178.1" ];
   networking.search = [ "fritz.box" ];
 
@@ -91,6 +95,8 @@
     wine
     docker
     virtmanager
+    gnumake
+    postgresql_12
   ];
 
   users.users.kloenk.packages = with pkgs; [
@@ -141,14 +147,14 @@
   hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
   hardware.pulseaudio.support32Bit = true;
-  hardware.pulseaudio.tcp.anonymousClients.allowedIpRanges = [ "192.168.178.0/24" ];
+  hardware.pulseaudio.tcp.anonymousClients.allowedIpRanges =
+    [ "192.168.178.0/24" ];
 
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
 
   # fix home-manager
-  systemd.services.home-manager-kloenk.after  = [ "home-kloenk.mount" ];
-
+  systemd.services.home-manager-kloenk.after = [ "home-kloenk.mount" ];
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

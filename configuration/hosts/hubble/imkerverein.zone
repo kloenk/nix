@@ -1,0 +1,19 @@
+$TTL 1M
+@		SOA	ns1.burscheider-imkerverein.de. hostmaster.burscheider-imkerverein.de. (
+    2020042901    	; serial (yyyymmdd##)
+    3600            ; refresh
+    1000            ; retry
+    604800          ; expiry
+    600             ; minimum ttl
+)
+	
+	NS  ns1.he.net.
+	NS	ns2.he.net.
+	NS	ns4.he.net.
+	NS	ns3.he.net.
+
+	AAAA  2a0f:4ac0::6
+	A 195.39.247.6
+
+ns1	CNAME ns1.kloenk.de.
+hostmaster CNAME hostmaster.kloenk.de.

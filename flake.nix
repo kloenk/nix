@@ -14,7 +14,7 @@
     type = "github";
     owner = "kloenk";
     repo = "nixpkgs";
-    ref = "from-unstable";
+    #    ref = "from-unstable";
   };
 
   inputs.mail-server = {
@@ -71,8 +71,7 @@
         let
           inherit (nixpkgs) lib;
           inherit (lib) mkIf;
-        in
-        { lib, ... }: {
+        in { lib, ... }: {
           options.sources = nixpkgs.lib.mkOption { };
           config.sources = mkIf (hostName == "iluvatar") { website = website; };
         };

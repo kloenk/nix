@@ -5,9 +5,7 @@
 
   security.rngd.enable = lib.mkDefault false;
 
-  environment.systemPackages = with pkgs; [
-    qt5.qtwayland
-  ];
+  environment.systemPackages = with pkgs; [ qt5.qtwayland ];
 
   users.users.kloenk.packages = with pkgs; [
     flameshot
@@ -54,6 +52,9 @@
     gradle
     (jetbrains.idea-community.override { jdk = jdk; })
 
+    # elixir
+    elixir
+
     # Archives (e.g., tar.gz and zip)
     ark
 
@@ -76,6 +77,9 @@
 
     # vs code (mit license)
     #vscodium
+    atom
+    gvfs
+    gnome3.nautilus # Dependency for atom?
 
     # web browser
     #firefox-wayland
@@ -145,7 +149,12 @@
 
     # allow other servers
     tcp.enable = true;
-    tcp.anonymousClients.allowedIpRanges = [ "195.39.246.0/24" "2a0f:4ac0::/64" "2a0f:4ac0:f199::/48" "2a0f:4ac0:40::/44" ];
+    tcp.anonymousClients.allowedIpRanges = [
+      "195.39.246.0/24"
+      "2a0f:4ac0::/64"
+      "2a0f:4ac0:f199::/48"
+      "2a0f:4ac0:40::/44"
+    ];
   };
   nixpkgs.config.pulseaudio = true;
 }

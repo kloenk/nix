@@ -17,7 +17,12 @@
     enable = true;
     localDnsResolver = false; # already running bind
     fqdn = "mail.kloenk.de";
-    domains = [ "kloenk.de" "ad.kloenk.de" "drachensegler.kloenk.de" ];
+    domains = [
+      "kloenk.de"
+      "ad.kloenk.de"
+      "drachensegler.kloenk.de"
+      "burscheider-imkerverein.de"
+    ];
 
     loginAccounts = {
       "kloenk@kloenk.de" = {
@@ -39,6 +44,10 @@
           "hostmaster@drachensegler.kloenk.de"
           "webmaster@drachensegler.kloenk.de"
           "abuse@drachensegler.kloenk.de"
+          "postmaster@burscheider-imkerverein.de"
+          "hostmaster@burscheider-imkerverein.de"
+          "webmaster@burscheider-imkerverein.de"
+          "abuse@burscheider-imkerverein.de"
           "delta@kloenk.de"
           "mail@kloenk.de"
         ];
@@ -136,6 +145,19 @@
         hashedPasswordFile =
           config.krops.secrets.files."mail/git@kloenk.de.sha512".path;
       };
+
+      # burscheider-imkerverein
+      "tjaard@burscheider-imkerverein.de" = {
+        hashedPasswordFile =
+          config.krops.secrets.files."mail/drachensegler@drachensegler.kloenk.de.sha512".path;
+      };
+
+      "info@burscheider-imkerverein.de" = {
+        hashedPasswordFile =
+          config.krops.secrets.files."mail/info@burscheider-imkerverein.de.sha512".path;
+
+        catchAll = [ "burscheider-imkerverein.de" ];
+      };
     };
 
     extraVirtualAliases = {
@@ -173,6 +195,7 @@
     "mail/ad@kloenk.de.sha512".owner = "root";
     "mail/git@kloenk.de.sha512".owner = "root";
     "mail/drachensegler@drachensegler.kloenk.de.sha512".owner = "root";
+    "mail/info@burscheider-imkerverein.de.sha512".owner = "root";
   };
   users.users.engelsystem.extraGroups = [ "keys" ];
 }

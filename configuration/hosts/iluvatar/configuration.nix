@@ -9,6 +9,9 @@
     ./gitea.nix
     ./website.nix
 
+    ./wordpress.nix
+    ./mysql.nix
+
     ../../default.nix
     ../../common
   ];
@@ -92,9 +95,7 @@
   # default gateway
   systemd.network.networks."40-enp1s0" = {
     name = "enp1s0";
-    networkConfig = {
-      IPv6AcceptRA = "no";
-    };
+    networkConfig = { IPv6AcceptRA = "no"; };
     routes = [
       {
         routeConfig.Gateway = "2a0f:4ac0::2";

@@ -4,7 +4,8 @@ in {
   collectd-wireguard = callPackage ./collectd-wireguard { };
   jblock = callPackage ./jblock { };
   deploy_secrets = callPackage ./deploy_secrets { };
-  wallpapers = callPackage ./wallpapers {};
+  wallpapers = callPackage ./wallpapers { };
+  fabric-server = callPackage ./fabric-server { };
 
   # broken packages
   waybar = prev.waybar.overrideAttrs (oldAttrs: rec {
@@ -16,7 +17,6 @@ in {
       sha256 = "0drlv8im5phz39jxp3gxkc40b6f85bb3piff2v3hmnfzh7ib915s";
     };
   });
-
 
   redshift = prev.redshift.overrideAttrs (oldAttrs: rec {
     src = final.fetchFromGitHub {
