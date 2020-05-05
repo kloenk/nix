@@ -7,6 +7,7 @@
     ./links.nix
 
     #    ./mysql.nix
+    ./postgresql.nix
 
     ../../default.nix
 
@@ -25,7 +26,7 @@
   ];
 
   # FIXME: needed?
-  # services.openssh.passwordAuthentication = true;
+  services.openssh.passwordAuthentication = true;
 
   boot.initrd.luks.devices."cryptLVM".device =
     "/dev/disk/by-id/wwn-0x5002538d00000000-part2";
@@ -94,6 +95,8 @@
     wine
     docker
     virtmanager
+    gnumake
+    postgresql_12
   ];
 
   users.users.kloenk.packages = with pkgs; [

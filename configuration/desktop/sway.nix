@@ -1,6 +1,8 @@
 { pkgs, config, lib, ... }:
 
 {
+  hardware.opengl.enable = true;
+
   programs.sway.enable = true;
   programs.sway.extraSessionCommands = ''
     export SDL_VIDEODRIVER=wayland
@@ -36,7 +38,12 @@
   ];
 
   home-manager.users.kloenk = {
-    inherit (import ./sway-hm.nix { config = config.home-manager.users.kloenk; remap_win = (config.networking.hostName != "barahir"); inherit pkgs lib; }) wayland;
+    inherit (import ./sway-hm.nix {
+      config = config.home-manager.users.kloenk;
+      remap_win = (config.networking.hostName != "barahir");
+      inherit pkgs lib;
+    })
+      wayland;
     #xdg.configFile."sway/config".source = ./config.sway;
     xdg.configFile."waybar/config".source = ./config.waybar;
     xdg.configFile."waybar/style.css".source = ./style.waybar;

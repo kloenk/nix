@@ -23,13 +23,13 @@
     "mail-server": {
       "flake": false,
       "info": {
-        "lastModified": 1583515667,
-        "narHash": "sha256-8FcuezGdFP5caiwkyLpTbewCL9ochs3ygfZrGKxDrI8=",
-        "revCount": 401
+        "lastModified": 1587594197,
+        "narHash": "sha256-h1WOSGZ9y2HktNLBypphNovFIWuZ/on+WO0XFF72EPU=",
+        "revCount": 409
       },
       "locked": {
         "ref": "master",
-        "rev": "6563abc1c45de0d9e6b02cf8842005800b4e2745",
+        "rev": "899d68ac7ab8580ff0ca05860bf81381ae172ae3",
         "type": "git",
         "url": "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git"
       },
@@ -40,18 +40,17 @@
     },
     "nixpkgs": {
       "info": {
-        "lastModified": 1587373753,
-        "narHash": "sha256-xZZccejs0jEQmNQek064iqPUQyiOFx/MLYtkxZeRNTM="
+        "lastModified": 1588166057,
+        "narHash": "sha256-Be27C1/dQyo9SlGg3u99pas0VaMEs7bGs/Qz47g54GQ="
       },
       "locked": {
         "owner": "kloenk",
         "repo": "nixpkgs",
-        "rev": "8dbdef5c9e5b7bbdc07f4c7a3276288852472803",
+        "rev": "1e2512cba61a083b8d90127abcac760aa17e323b",
         "type": "github"
       },
       "original": {
         "owner": "kloenk",
-        "ref": "from-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -68,13 +67,13 @@
     "secrets": {
       "flake": false,
       "info": {
-        "lastModified": 1586963258,
-        "narHash": "sha256-rnpJa0x3K5s0jp5nptq4Z5COmEWtMH991l9bRBTLCHM=",
-        "revCount": 852
+        "lastModified": 1588165516,
+        "narHash": "sha256-io5QnND7OBGnDjSMQVEaQQ5ND9DbvbSExZgxbqNdryk=",
+        "revCount": 872
       },
       "locked": {
         "ref": "master",
-        "rev": "9e445a7808a7e4a9aecf5539ed187ee993ca2379",
+        "rev": "8313be8e80fcf858e0285d2f66a73d3519cd035c",
         "type": "git",
         "url": "git+ssh://git@git.kloenk.de/kloenk/pass.git"
       },
@@ -86,13 +85,13 @@
     "website": {
       "flake": false,
       "info": {
-        "lastModified": 1587198265,
-        "narHash": "sha256-lqeysAlUeZw27F1ksBTq9rxCouS/Q2CO6+FKTQrVJIQ=",
-        "revCount": 14
+        "lastModified": 1588193270,
+        "narHash": "sha256-t3im3Do7CECZQJfJPEgKc7gOH7sC0ZyblkeLnNUHd1Q=",
+        "revCount": 15
       },
       "locked": {
         "ref": "master",
-        "rev": "24045fa19c1eefbb0b98f63240b77228c3030ccc",
+        "rev": "6cbdea74fd1176cafafd4f88e959744b65383b87",
         "type": "git",
         "url": "https://git.pbb.lc/kloenk/website.git"
       },

@@ -196,22 +196,22 @@ in {
               '') fwcfg.interfaces)
             }
 
-                ${cfg.extraInput}
-                ${cfg.extraInput4}
-              }
-              chain OUTPUT {
-                policy ${cfg.outputPolicy};
+            ${cfg.extraInput}
+            ${cfg.extraInput4}
+          }
+          chain OUTPUT {
+            policy ${cfg.outputPolicy};
 
-                ${cfg.extraOutput}
-                ${cfg.extraOutput4}
-              }
-              chain FORWARD {
-                policy ${cfg.forwardPolicy};
+            ${cfg.extraOutput}
+            ${cfg.extraOutput4}
+          }
+          chain FORWARD {
+            policy ${cfg.forwardPolicy};
 
-                ${cfg.extraForward}
-                ${cfg.extraForward4}
-              }
-            }
+            ${cfg.extraForward}
+            ${cfg.extraForward4}
+          }
+        }
 
         ${cfg.extraConfig}
         ${cfg.extraConfig4}

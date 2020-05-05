@@ -1,6 +1,19 @@
 { pkgs, lib, ... }:
 
-{
+let
+  hosts = import ../hosts { };
+  sshHosts = lib.filterAttrs (name: host: host ? host) hosts;
+
+  genMatchBlocks = (lib.mapAttrs' (name: host:
+    lib.nameValuePair name {
+      hostname = host.host.ip;
+      port = host.host.port;
+      forwardAgent =
+        (if host ? noForwardAgent then !host.noForwardAgent else true);
+      user = host.host.user;
+    }) sshHosts);
+
+in {
   programs = {
     git = {
       enable = true;
@@ -16,13 +29,7 @@
       forwardAgent = false;
       controlMaster = "auto";
       controlPersist = "15m";
-      matchBlocks = {
-        hubble = {
-          hostname = "hubble.kloenk.de";
-          port = 62954;
-          user = "kloenk";
-          forwardAgent = true;
-        };
+      matchBlocks = genMatchBlocks // {
         hubble-encrypt = {
           hostname = "51.254.249.187";
           port = 62954;
@@ -88,29 +95,6 @@
           user = "kloenk";
           forwardAgent = true;
         };
-        atom = {
-          hostname = "192.168.178.248";
-          port = 62954;
-          user = "kloenk";
-          forwardAgent = true;
-        };
-        atom-wg = {
-          hostname = "atom.kloenk.de";
-          port = 62954;
-          user = "kloenk";
-          forwardAgent = true;
-        };
-        gurke = {
-          hostname = "gurke.pbb.lc";
-          port = 62954;
-          user = "kloenk";
-        };
-        polyus = {
-          hostname = "polyus.kloenk.de";
-          port = 62954;
-          user = "kloenk";
-        };
-
         # nyantec
         "berlin.nyantec.com" = {
           hostname = "berlin.nyantec.com";
@@ -119,17 +103,18 @@
           forwardAgent = true;
         };
 
-        # gdv
-        gdv01 = {
-          hostname = "gdv01.eventphone.de";
-          port = 22;
-          user = "root";
-        };
-        gdv02 = {
-          hostname = "gdv02.eventphone.de";
-          port = 22;
-          user = "root";
-        };
+        /* # gdv
+           gdv01 = {
+             hostname = "gdv01.eventphone.de";
+             port = 22;
+             user = "root";
+           };
+           gdv02 = {
+             hostname = "gdv02.eventphone.de";
+             port = 22;
+             user = "root";
+           };
+        */
       };
     };
 
@@ -147,6 +132,7 @@
         vimPlugins.tabular
         vimPlugins.vim-nix
         vimPlugins.vim-table-mode
+        vimPlugins.vim-elixir
       ];
     };
   };

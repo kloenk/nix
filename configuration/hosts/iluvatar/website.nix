@@ -1,7 +1,9 @@
 { config, lib, ... }:
 
 let
-  commonHeaders = lib.concatStringsSep "\n" (lib.filter (line: lib.hasPrefix "add_header" line) (lib.splitString "\n" config.services.nginx.commonHttpConfig));
+  commonHeaders = lib.concatStringsSep "\n"
+    (lib.filter (line: lib.hasPrefix "add_header" line)
+      (lib.splitString "\n" config.services.nginx.commonHttpConfig));
 in {
   services.nginx.virtualHosts = {
     "kloenk.de" = {
@@ -16,7 +18,12 @@ in {
       '';
     };
     "iluvatar.kloenk.de" = {
-      locations."/public/".alias = config.services.nginx.virtualHosts."kloenk.de".locations."/public/".alias;
+      locations."/public/".alias =
+        config.services.nginx.virtualHosts."kloenk.de".locations."/public/".alias;
+    };
+    "kloenk.de" = {
+      locations."/public/".alias =
+        config.services.nginx.virtualHosts."kloenk.de".locations."/public/".alias;
     };
   };
 }
