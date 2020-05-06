@@ -40,13 +40,13 @@
     },
     "nixpkgs": {
       "info": {
-        "lastModified": 1588166057,
-        "narHash": "sha256-Be27C1/dQyo9SlGg3u99pas0VaMEs7bGs/Qz47g54GQ="
+        "lastModified": 1588180702,
+        "narHash": "sha256-m95LbUDHQKInQm0bJtxs9qBjq8hvx/l77bFTFKT/Y70="
       },
       "locked": {
-        "owner": "kloenk",
+        "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1e2512cba61a083b8d90127abcac760aa17e323b",
+        "rev": "3b00e78e63b6539369821660245cd579f6723b58",
         "type": "github"
       },
       "original": {
@@ -55,11 +55,50 @@
         "type": "github"
       }
     },
+    "nixpkgs-qutebrowser": {
+      "info": {
+        "lastModified": 1588768574,
+        "narHash": "sha256-oNKwKATkUSNRsWRmiPrft5vwQTgn0X8EMq7nkUeR7nw="
+      },
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "owner": "kloenk",
+        "repo": "nixpkgs-qutebrowser",
+        "rev": "86c1886f93294d636f7e5b73e3bb3f728d774561",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kloenk",
+        "repo": "nixpkgs-qutebrowser",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "info": {
+        "lastModified": 1587961704,
+        "narHash": "sha256-/aqrj8zYfwz8Wd0qu7jgNvddXj7Bro3QHz2YKJOJO5M="
+      },
+      "locked": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "fce7562cf46727fdaf801b232116bc9ce0512049",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "fce7562cf46727fdaf801b232116bc9ce0512049",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "mail-server": "mail-server",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-qutebrowser": "nixpkgs-qutebrowser",
         "secrets": "secrets",
         "website": "website"
       }

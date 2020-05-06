@@ -82,8 +82,8 @@
     gnome3.nautilus # Dependency for atom?
 
     # web browser
-    #firefox-wayland
-    qutebrowser
+    firefox-wayland
+    #qutebrowser
   ];
 
   users.users.kloenk.extraGroups = [ "wireshark" "adbusers" "nitrokey" ];

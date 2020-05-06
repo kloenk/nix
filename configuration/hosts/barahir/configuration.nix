@@ -26,7 +26,7 @@
   ];
 
   # FIXME: needed?
-  services.openssh.passwordAuthentication = true;
+  #services.openssh.passwordAuthentication = true;
 
   boot.initrd.luks.devices."cryptLVM".device =
     "/dev/disk/by-id/wwn-0x5002538d00000000-part2";

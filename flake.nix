@@ -35,8 +35,14 @@
     flake = false;
   };
 
-  outputs =
-    inputs@{ self, nixpkgs, home-manager, mail-server, website, secrets }:
+  inputs.nixpkgs-qutebrowser = {
+    type = "github";
+    owner = "kloenk";
+    repo = "nixpkgs-qutebrowser";
+  };
+
+  outputs = inputs@{ self, nixpkgs, home-manager, mail-server, website, secrets
+    , nixpkgs-qutebrowser }:
     let
 
       systems = [ "x86_64-linux" ];
@@ -82,9 +88,13 @@
         (system: nixpkgsFor.${system} // { isoImage = (iso system); });
 
       nixosConfigurations = (nixpkgs.lib.mapAttrs (name: host:
-        (nixpkgs.lib.nixosSystem {
+        (nixpkgs.lib.nixosSystem rec {
           system = "x86_64-linux"; # TODO: change, for raspies and so
           modules = [
+            {
+              environment.systemPackages =
+                [ nixpkgs-qutebrowser.packages.${system}.qutebrowser ];
+            }
             nixpkgs.nixosModules.notDetected
             home-manager.nixosModules.home-manager
             (import (./configuration + "/hosts/${name}/configuration.nix"))
