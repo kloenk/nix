@@ -21,7 +21,7 @@ in {
     ./monitoring
     ./quassel.nix
     ./deluge.nix
-    ./xonotic.nix
+    #./xonotic.nix
     ./engelsystem.nix
     #./netbox.nix
     #./redis.nix

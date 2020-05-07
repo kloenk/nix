@@ -21,9 +21,5 @@ in {
       locations."/public/".alias =
         config.services.nginx.virtualHosts."kloenk.de".locations."/public/".alias;
     };
-    "kloenk.de" = {
-      locations."/public/".alias =
-        config.services.nginx.virtualHosts."kloenk.de".locations."/public/".alias;
-    };
   };
 }

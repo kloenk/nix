@@ -6,7 +6,9 @@ let
   makeHost = { host, port ? 62954, user ? "kloenk"
     , prometheusExporters ? [ "node-exporter" "nginx-exporter" ]
     , hostname ? "${user}@${host}:${toString port}", ... }@extraArgs:
-    (extraArgs // {
+    ({
+      nixos = true;
+    } // extraArgs // {
       host.ip = host;
       host.port = port;
       host.user = user;
@@ -54,10 +56,10 @@ in {
     wireguard.endpoint = "2001:41d0:1004:1629:1337:187::";
     magicNumber = 249;
   };
-  gurke = {
-    hostname = "gurke.pbb.lc:62954";
-    prometheusExporters = [ "node-exporter" "nginx-exporter" ];
-  };
+  #gurke = {
+  #  hostname = "gurke.pbb.lc:62954";
+  #  prometheusExporters = [ "node-exporter" "nginx-exporter" ];
+  #};
 
   # for monitoring only
   bbb-wass = makeHost {
@@ -71,11 +73,13 @@ in {
   gdv01 = makeHost {
     host = "gdv01.eventphone.de";
     user = "root";
+    nixos = false;
   };
   # for monitoring only
   gdv02 = makeHost {
     host = "gdv02.eventphone.de";
     user = "root";
+    nixos = false;
   };
 
   # for wireguard only
@@ -107,5 +111,9 @@ in {
   };
 
   # for dotfiles only
-  adminpc = { dotfiles = true; };
+  adminpc = makeHost {
+    dotfiles = true;
+    nixos = false;
+    host = "10.66.6.42";
+  };
 }

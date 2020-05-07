@@ -23,13 +23,13 @@
     "mail-server": {
       "flake": false,
       "info": {
-        "lastModified": 1587594197,
-        "narHash": "sha256-h1WOSGZ9y2HktNLBypphNovFIWuZ/on+WO0XFF72EPU=",
-        "revCount": 409
+        "lastModified": 1588705666,
+        "narHash": "sha256-MaDcYaTMkVVJHxqAXUgWYOp2w5MtbFMjik+SuoIjJK8=",
+        "revCount": 414
       },
       "locked": {
         "ref": "master",
-        "rev": "899d68ac7ab8580ff0ca05860bf81381ae172ae3",
+        "rev": "b7c49fa26a66a724e4e985851e34cf76bc01c9e1",
         "type": "git",
         "url": "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git"
       },
@@ -40,17 +40,53 @@
     },
     "nixpkgs": {
       "info": {
-        "lastModified": 1588832676,
-        "narHash": "sha256-HemPlND51AZ7GQNZvn8v0jMYgIWmooxr7Inu7p/kRh4="
+        "lastModified": 1588845688,
+        "narHash": "sha256-IbjSXPEysz8m8ItB1vyRkrR+7KZTP0YSmS3D4LeNeQc="
       },
       "locked": {
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "8ccf1943707e7ef475c86cb4234c4099e5a5a326",
+        "rev": "4acf1e66506e05f41c4a4d0a86e999b30f35bdf3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-es": {
+      "info": {
+        "lastModified": 1588849140,
+        "narHash": "sha256-XX3fjKXBKgSSUtTAhtSzwn2Cgzn61WqKGNBaJvlBGtU="
+      },
+      "locked": {
+        "owner": "kloenk",
+        "repo": "nixpkgs",
+        "rev": "2a7566b6634fad9f45b6d45d44d888ba0d3434e6",
         "type": "github"
       },
       "original": {
         "owner": "kloenk",
+        "ref": "feature/engelsystem",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-lopsided": {
+      "info": {
+        "lastModified": 1588481885,
+        "narHash": "sha256-lOE/atw8upOrJw+JVifOhpVTS65u0FvoQWY9lnJ44V0="
+      },
+      "locked": {
+        "owner": "lopsided98",
+        "repo": "nixpkgs",
+        "rev": "c9c568244684a89e4927aa59e14441fc018cb0b5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lopsided98",
+        "ref": "grub-initrd-secrets",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -98,6 +134,8 @@
         "home-manager": "home-manager",
         "mail-server": "mail-server",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-es": "nixpkgs-es",
+        "nixpkgs-lopsided": "nixpkgs-lopsided",
         "nixpkgs-qutebrowser": "nixpkgs-qutebrowser",
         "secrets": "secrets",
         "website": "website"
@@ -106,13 +144,13 @@
     "secrets": {
       "flake": false,
       "info": {
-        "lastModified": 1588165516,
-        "narHash": "sha256-io5QnND7OBGnDjSMQVEaQQ5ND9DbvbSExZgxbqNdryk=",
-        "revCount": 872
+        "lastModified": 1588777531,
+        "narHash": "sha256-fQLE10J3oOFeCjuB8ACJU/40FAKgMEm5ZCPOxs+vlt0=",
+        "revCount": 880
       },
       "locked": {
         "ref": "master",
-        "rev": "8313be8e80fcf858e0285d2f66a73d3519cd035c",
+        "rev": "3b4df177ec332698258d5ca842dd5600906d9a8a",
         "type": "git",
         "url": "git+ssh://git@git.kloenk.de/kloenk/pass.git"
       },

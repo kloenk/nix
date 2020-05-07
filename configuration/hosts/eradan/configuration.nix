@@ -12,8 +12,9 @@
 
   # vm agent connection
   services.qemuGuest.enable = true;
+  networking.useDHCP = false;
 
-  boot.loader.grub.device = buitins.trace "TODO: grub device" "";
+  boot.loader.grub.device = builtins.trace "TODO: grub device" "/dev/null";
 
   boot.initrd.postMountCommands = ''
     cd /mnt-root

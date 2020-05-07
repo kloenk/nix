@@ -83,8 +83,8 @@
 
     # web browser
     firefox-wayland
-    #qutebrowser
-    config.sources.nixpkgs-qutebrowser.packages."x86_64-linux".qutebrowser
+    qutebrowser
+    #config.sources.nixpkgs-qutebrowser.packages."x86_64-linux".qutebrowser
   ];
 
   users.users.kloenk.extraGroups = [ "wireshark" "adbusers" "nitrokey" ];

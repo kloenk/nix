@@ -10,9 +10,23 @@
 
   inputs.nixpkgs = {
     type = "github";
-    owner = "kloenk";
+    owner = "nixos";
     repo = "nixpkgs";
     #    ref = "from-unstable";
+  };
+
+  inputs.nixpkgs-lopsided = {
+    type = "github";
+    owner = "lopsided98";
+    repo = "nixpkgs";
+    ref = "grub-initrd-secrets";
+  };
+
+  inputs.nixpkgs-es = {
+    type = "github";
+    owner = "kloenk";
+    repo = "nixpkgs";
+    ref = "feature/engelsystem";
   };
 
   inputs.mail-server = {
@@ -40,7 +54,8 @@
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, mail-server, website, secrets
-    , nixpkgs-qutebrowser }:
+    , nixpkgs-qutebrowser, nixpkgs-lopsided # grub patch
+    , nixpkgs-es }:
     let
 
       systems = [ "x86_64-linux" ];
@@ -51,8 +66,24 @@
       nixpkgsFor = forAllSystems (system:
         import nixpkgs {
           inherit system;
-          overlays = [ self.overlay home-manager.overlay ];
+          overlays = [ self.overlay home-manager.overlay overlays ];
         });
+
+      # patche modules
+      patchModule = {
+        disabledModules = [ "system/boot/loader/grub/grub.nix" ];
+        imports = [
+          "${nixpkgs-lopsided}/nixos/modules/system/boot/loader/grub/grub.nix"
+          "${nixpkgs-es}/nixos/modules/services/web-apps/engelsystem.nix"
+        ];
+        nixpkgs.overlays = [ overlays ];
+      };
+
+      overlays = final: prev: {
+        engelsystem = final.callPackage
+          "${nixpkgs-es}/pkgs/servers/web-apps/engelsystem/default.nix" { };
+        qutebrowser = nixpkgs-qutebrowser.packages."x86_64-linux".qutebrowser;
+      };
 
       # iso image
       iso = system:
@@ -70,7 +101,8 @@
 
       # evals
       hosts = import ./configuration/hosts { };
-      nixosHosts = nixpkgs.lib.filterAttrs (name: host: host ? hostname) hosts;
+      nixosHosts = nixpkgs.lib.filterAttrs
+        (name: host: if host ? nixos then host.nixos else false) hosts;
       makeSourcesModule = hostName:
         let
           inherit (nixpkgs) lib;
@@ -82,8 +114,13 @@
     in {
       overlay = import ./pkgs/overlay.nix;
 
-      packages = forAllSystems
+      legacyPackages = forAllSystems
         (system: nixpkgsFor.${system} // { isoImage = (iso system); });
+
+      packages = forAllSystems (system: {
+        inherit (self.legacyPackages.${system})
+          isoImage home-manager redshift jblock deploy_secrets wallpapers;
+      });
 
       nixosConfigurations = (nixpkgs.lib.mapAttrs (name: host:
         (nixpkgs.lib.nixosSystem rec {
@@ -97,6 +134,7 @@
             self.nixosModules.ferm2
             self.nixosModules.deluge2
             (makeSourcesModule name)
+            patchModule
           ] ++ (if (if (host ? vm) then host.vm else false) then
             (nixpkgs.lib.singleton
               (import (nixpkgs + "/nixos/modules/profiles/qemu-guest.nix")))
