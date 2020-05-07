@@ -1,0 +1,10 @@
+on: push
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: cachix/install-nix-action@v8
+    - run: "nix build -f <nixpkgs> nixFlakes"
+    - run: ./result/bin/nix flake check
