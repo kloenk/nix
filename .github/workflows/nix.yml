@@ -6,5 +6,5 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: cachix/install-nix-action@v8
-    - run: "nix build -f <nixpkgs> nixFlakes"
+    - run: "nix build -f '<nixpkgs>' nixFlakes -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/master.tar.gz"
     - run: ./result/bin/nix flake check
