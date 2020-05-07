@@ -1,6 +1,4 @@
 {
-  edition = 201909;
-
   description = "Kloenk's Nixos configuration";
 
   inputs.home-manager = {
@@ -79,7 +77,7 @@
           inherit (lib) mkIf;
         in { lib, ... }: {
           options.sources = nixpkgs.lib.mkOption { };
-          config.sources = mkIf (hostName == "iluvatar") { website = website; };
+          config.sources = inputs;
         };
     in {
       overlay = import ./pkgs/overlay.nix;
@@ -91,10 +89,7 @@
         (nixpkgs.lib.nixosSystem rec {
           system = "x86_64-linux"; # TODO: change, for raspies and so
           modules = [
-            {
-              environment.systemPackages =
-                [ nixpkgs-qutebrowser.packages.${system}.qutebrowser ];
-            }
+            { nixpkgs.overlays = [ self.overlay home-manager.overlay ]; }
             nixpkgs.nixosModules.notDetected
             home-manager.nixosModules.home-manager
             (import (./configuration + "/hosts/${name}/configuration.nix"))

@@ -3,8 +3,6 @@
 {
   imports = [ ./nginx ./node-exporter ./zsh ./make-nixpkgs.nix ];
 
-  nixpkgs.overlays = [ (import ../../pkgs/overlay.nix) ];
-
   # environment.etc."src/nixpkgs".source = config.sources.nixpkgs;
   #  environment.etc."src/nixos-config".text = ''
   #      ((import (fetchTarball "https://github.com/kloenk/nix/archive/master.tar.gz") { }).configs.${config.networking.hostName})
@@ -18,8 +16,17 @@
   # nix flakes
   nix.package = lib.mkDefault pkgs.nixFlakes;
   nix.extraOptions = ''
-    experimental-features = nix-command flakes
+    experimental-features = nix-command flakes ca-references
   '';
+  nix.registry = {
+    kloenk = {
+      from.type = "indirect";
+      from.id = "kloenk";
+      to.owner = "kloenk";
+      to.repo = "nix";
+      to.type = "github";
+    };
+  };
 
   networking.useNetworkd = lib.mkDefault true;
   networking.search = [ "kloenk.de" ];

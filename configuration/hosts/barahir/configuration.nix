@@ -80,11 +80,6 @@
 
   nixpkgs.config.allowUnfree = true;
   nix.gc.automatic = false;
-  nix.package = pkgs.nixFlakes;
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '' # TODO: builders-use-substitute??
-  ;
 
   services.printing.browsing = true;
   services.printing.enable = true;

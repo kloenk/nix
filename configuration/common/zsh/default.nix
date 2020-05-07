@@ -12,7 +12,7 @@
           [[ $i =~ [a-zA-Z]*#[a-zA-Z]* ]] || i="kloenk#$i"
           packages+=$i
         done
-        env prompt_sub="%F{blue}($packages_fmt) %F{white}$PROMPT" nix run $packages -c zsh
+        env prompt_sub="%F{blue}($packages_fmt) %F{white}$PROMPT" nix shell $packages
       }
       PROMPT=''${prompt_sub:=$PROMPT}
     '';
