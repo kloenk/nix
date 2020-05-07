@@ -13,8 +13,7 @@
   ];
 
   # FIME: remove
-  security.acme.server =
-    builtins.trace "remove staging environment from acme"
+  security.acme.server = builtins.trace "remove staging environment from acme"
     "https://acme-staging-v02.api.letsencrypt.org/directory";
 
   hardware.cpu.intel.updateMicrocode = true;

@@ -8,12 +8,8 @@
       vlan = lib.singleton "vlan1337";
       addresses = [{ addressConfig.Address = "192.168.178.248/24"; }];
       routes = [
-        {
-          routeConfig.Gateway = "192.168.178.1";
-        }
-        {
-          routeConfig.Gateway = "fd00::ca0e:14ff:fe07:a2fa";
-        }
+        { routeConfig.Gateway = "192.168.178.1"; }
+        { routeConfig.Gateway = "fd00::ca0e:14ff:fe07:a2fa"; }
       ];
     };
 
@@ -27,9 +23,7 @@
     networks."25-vlan" = {
       name = config.systemd.network.netdevs."25-vlan".netdevConfig.Name;
       DHCP = "no";
-      addresses = [
-        { addressConfig.Address = "6.0.2.2/24"; }
-      ];
+      addresses = [{ addressConfig.Address = "6.0.2.2/24"; }];
     };
 
     networks."20-lo" = {

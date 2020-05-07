@@ -18,9 +18,7 @@
     networks."25-vlan" = {
       name = config.systemd.network.netdevs."25-vlan".netdevConfig.Name;
       DHCP = "no";
-      addresses = [
-        { addressConfig.Address = "6.0.2.3/24"; }
-      ];
+      addresses = [{ addressConfig.Address = "6.0.2.3/24"; }];
     };
 
     networks."20-lo" = {

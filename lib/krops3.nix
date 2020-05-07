@@ -30,8 +30,12 @@ in {
     kropsPkgs.krops3.writeDeploy name {
       buildTarget = "localhost:62954";
       # useHostNixpkgs = true;
-      extraSources = [ (home-manager + "/nixos") ../modules sourcesModule (nixpkgs + "/nixos/modules/installer/scan/not-detected.nix") ]
-        ++ (if host ? extraSources then host.extraSources else [ ]);
+      extraSources = [
+        (home-manager + "/nixos")
+        ../modules
+        sourcesModule
+        (nixpkgs + "/nixos/modules/installer/scan/not-detected.nix")
+      ] ++ (if host ? extraSources then host.extraSources else [ ]);
       sudo = true;
       configuration = (toString ../configuration)
         + "/hosts/${name}/configuration.nix";

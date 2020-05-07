@@ -25,11 +25,12 @@
     fsType = "nfs4";
   };
 
-  /*fileSystems."/home/kloenk/local" = {
-    device = "/persist/data/local";
-    fsType = "none";
-    options = [ "bind" ];
-  };*/
+  /* fileSystems."/home/kloenk/local" = {
+       device = "/persist/data/local";
+       fsType = "none";
+       options = [ "bind" ];
+     };
+  */
 
   swapDevices =
     [{ device = "/dev/disk/by-uuid/2cba420b-2509-4d3f-a69c-52dac00f0e0a"; }];

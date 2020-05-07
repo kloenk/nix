@@ -1,13 +1,5 @@
-{ lib
-, substituteAll
-, bash
-, coreutils
-, openssh
-, pass
-, rsync
-, findutils
-, passDir ? "/home/$USER/.password-store"
-}:
+{ lib, substituteAll, bash, coreutils, openssh, pass, rsync, findutils
+, passDir ? "/home/$USER/.password-store" }:
 
 substituteAll {
   name = "deploy-secrets";
@@ -15,16 +7,9 @@ substituteAll {
 
   src = ./deploy_secrets.sh;
   isExecutable = true;
-  
-  path = lib.makeBinPath [
-    coreutils
-    openssh
-    pass
-    rsync
-    findutils
-  ];
-  secrets = passDir;
 
+  path = lib.makeBinPath [ coreutils openssh pass rsync findutils ];
+  secrets = passDir;
 
   meta = { license = lib.licenses.mit; };
 }
