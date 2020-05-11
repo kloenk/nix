@@ -1,4 +1,4 @@
-{ config, libs, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   services.restic.backups.hubble = {
@@ -7,7 +7,6 @@
     paths = [
       "/var/vmail"
       "/var/dkim"
-      "/var/lib/gitea"
       "/var/lib/mysql"
       "/var/backup/mysql"
       "/var/lib/postgresql"
@@ -17,10 +16,12 @@
   };
 
   systemd.services.restic-backups-hubble.path = [ pkgs.rclone ];
-  systemd.services.restic-backups-hubble.preStart = ''
+  systemd.services.restic-backups-hubble.preStart = lib.mkBefore (''
     mkdir -p /root/.config/rclone
-    ln -s ${config.krops.secrets.files."restic/rclone.conf".path} /root/.config/rclone/rclone.conf
-  '';
+    ln -s ${
+      config.krops.secrets.files."restic/rclone.conf".path
+    } /root/.config/rclone/rclone.conf
+  '');
 
   krops.secrets.files."restic/password".owner = "root";
   krops.secrets.files."restic/rclone.conf".owner = "root";

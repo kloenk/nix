@@ -12,7 +12,5 @@
     package = pkgs.mariadb;
   };
 
-  services.mysqlBackup = {
-    enable = true;
-  };
+  services.mysqlBackup = { enable = true; };
 }
