@@ -171,5 +171,11 @@
           program = "${app}";
         };
       });
+
+      # hydra jobs
+      hydraJobs = {
+        isoImage.x86_64-linux = (iso "x86_64-linux");
+        configurations = { inherit (self) nixosConfigurations; };
+      };
     };
 }
