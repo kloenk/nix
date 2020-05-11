@@ -12,6 +12,7 @@
     package = pkgs.mariadb;
   };
 
-  # TODO: Backup
-
+  services.mysqlBackup = {
+    enable = true;
+  };
 }

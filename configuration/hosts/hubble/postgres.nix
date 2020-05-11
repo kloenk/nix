@@ -22,6 +22,5 @@
     '';
   };
 
-  # TODO:
-  # services.postgresqlBackup.enable = true;
+  services.postgresqlBackup.enable = true;
 }

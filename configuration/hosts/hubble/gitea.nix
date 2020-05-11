@@ -27,6 +27,7 @@
     httpAddress = "127.0.0.1";
     httpPort = 3000;
     cookieSecure = true;
+    dump.enable = true;
 
     database = {
       type = "postgres";

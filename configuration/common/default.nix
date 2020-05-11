@@ -87,6 +87,7 @@
     qt5.qtwayland
 
     erlang # for escript scripts
+    rclone
   ];
 
   environment.variables.EDITOR = "vim";

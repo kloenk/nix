@@ -25,6 +25,7 @@ in {
     ./engelsystem.nix
     #./netbox.nix
     #./redis.nix
+    ./restic.nix
 
     ../../default.nix
     ../../common
