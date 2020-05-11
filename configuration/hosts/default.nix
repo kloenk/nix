@@ -8,6 +8,7 @@ let
     , hostname ? "${user}@${host}:${toString port}", ... }@extraArgs:
     ({
       nixos = true;
+      system = "x86_64-linux";
     } // extraArgs // {
       host.ip = host;
       host.port = port;

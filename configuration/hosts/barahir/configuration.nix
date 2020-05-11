@@ -28,6 +28,10 @@
   # FIXME: needed?
   #services.openssh.passwordAuthentication = true;
 
+  boot.binfmt.emulatedSystems = [
+    "aarch64-linux" # "x86_64-windows"
+  ];
+
   boot.initrd.luks.devices."cryptLVM".device =
     "/dev/disk/by-id/wwn-0x5002538d00000000-part2";
   boot.initrd.luks.devices."cryptLVM".allowDiscards = true;
@@ -134,10 +138,11 @@
 
   hardware.bluetooth.enable = true;
   # add bluetooth sink
-  hardware.bluetooth.extraConfig = ''
-    [General]
-    Enable=Source,Sink,Media,Socket
-  '';
+  #hardware.bluetooth.extraConfig = ''
+  #  [General]
+  #  Enable=Source,Sink,Media,Socket
+  #'';
+  hardware.bluetooth.config.General.Enable = "Source,Sink,Media,Socket";
   hardware.pulseaudio.zeroconf.discovery.enable = true;
   hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
   hardware.pulseaudio.package = pkgs.pulseaudioFull;

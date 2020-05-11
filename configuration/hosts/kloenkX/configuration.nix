@@ -170,8 +170,7 @@ in {
   hardware.bluetooth.enable = true;
 
   # add bluetooth sink
-  hardware.bluetooth.extraConfig =
-    "\n    [General]\n    Enable=Source,Sink,Media,Socket\n  ";
+  hardware.bluetooth.config.General.Enable = "Source,Sink,Media,Socket";
   hardware.pulseaudio.zeroconf.discovery.enable = true;
 
   home-manager.users.root = {

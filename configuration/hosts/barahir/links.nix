@@ -32,6 +32,27 @@
       ];
     };
 
+    links."30-xiaomi" = {
+      matchConfig = { Property = "ID_SERIAL=Xiaomi_Mi_Note_2_d10974cf"; };
+      linkConfig = {
+        Description = "Xiaomi phone";
+        Name = "xiaomi";
+      };
+    };
+
+    networks."30-xiaomi" = {
+      name = "xiaomi";
+      DHCP = "yes";
+      # routes = [{
+      #   routeConfig = {
+      #     Gateway = "_dhcp";
+      #     Metric = 512;
+      #   };
+      # }];
+      dhcpConfig.RouteMetric = 512;
+      linkConfig.RequiredForOnline = "no";
+    };
+
     networks."99-how_cares".linkConfig.RequiredForOnline = "no";
     networks."99-how_cares".linkConfig.Unmanaged = "yes";
   };

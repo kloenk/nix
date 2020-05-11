@@ -23,13 +23,13 @@
     "mail-server": {
       "flake": false,
       "info": {
-        "lastModified": 1588705666,
-        "narHash": "sha256-MaDcYaTMkVVJHxqAXUgWYOp2w5MtbFMjik+SuoIjJK8=",
-        "revCount": 414
+        "lastModified": 1588964575,
+        "narHash": "sha256-r40GCPoCZbBK/ApH7g1XPW45wC2iKqintUIBk1sg0RU=",
+        "revCount": 420
       },
       "locked": {
         "ref": "master",
-        "rev": "b7c49fa26a66a724e4e985851e34cf76bc01c9e1",
+        "rev": "7788eccc24475e52245acd09c9a082ea5e24a04e",
         "type": "git",
         "url": "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git"
       },
@@ -38,15 +38,36 @@
         "url": "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git"
       }
     },
+    "nix": {
+      "info": {
+        "lastModified": 1588846396,
+        "narHash": "sha256-hUaWny0R5mBgHkP8Z+NBR7uBR7zp2FyxhcDi5LK4qxI="
+      },
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "owner": "nixos",
+        "repo": "nix",
+        "rev": "14a3a62bfca6c572b9a415cfa80cdbd7ad4326b3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "flakes",
+        "repo": "nix",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "info": {
-        "lastModified": 1588845688,
-        "narHash": "sha256-IbjSXPEysz8m8ItB1vyRkrR+7KZTP0YSmS3D4LeNeQc="
+        "lastModified": 1589223127,
+        "narHash": "sha256-QUuc6hlDsitO5C0jd7lJYpkie9njrsdKyfN5RsjxLck="
       },
       "locked": {
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "4acf1e66506e05f41c4a4d0a86e999b30f35bdf3",
+        "rev": "0f89908eeef67ed23be412d187e872e48be50d11",
         "type": "github"
       },
       "original": {
@@ -133,6 +154,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "mail-server": "mail-server",
+        "nix": "nix",
         "nixpkgs": "nixpkgs",
         "nixpkgs-es": "nixpkgs-es",
         "nixpkgs-lopsided": "nixpkgs-lopsided",

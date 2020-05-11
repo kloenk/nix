@@ -15,6 +15,14 @@
     #    ref = "from-unstable";
   };
 
+  inputs.nix = {
+    type = "github";
+    owner = "nixos";
+    repo = "nix";
+    ref = "flakes";
+    inputs.nixpkgs.follows = "/nixpkgs";
+  };
+
   inputs.nixpkgs-lopsided = {
     type = "github";
     owner = "lopsided98";
@@ -53,8 +61,8 @@
     repo = "nixpkgs-qutebrowser";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, mail-server, website, secrets
-    , nixpkgs-qutebrowser, nixpkgs-lopsided # grub patch
+  outputs = inputs@{ self, nixpkgs, nix, home-manager, mail-server, website
+    , secrets, nixpkgs-qutebrowser, nixpkgs-lopsided # grub patch
     , nixpkgs-es }:
     let
 
@@ -66,23 +74,24 @@
       nixpkgsFor = forAllSystems (system:
         import nixpkgs {
           inherit system;
-          overlays = [ self.overlay home-manager.overlay overlays ];
+          overlays = [ self.overlay home-manager.overlay (overlays system) ];
         });
 
       # patche modules
-      patchModule = {
+      patchModule = system: {
         disabledModules = [ "system/boot/loader/grub/grub.nix" ];
         imports = [
           "${nixpkgs-lopsided}/nixos/modules/system/boot/loader/grub/grub.nix"
           "${nixpkgs-es}/nixos/modules/services/web-apps/engelsystem.nix"
         ];
-        nixpkgs.overlays = [ overlays ];
+        nixpkgs.overlays = [ (overlays system) ];
       };
 
-      overlays = final: prev: {
+      overlays = system: final: prev: {
         engelsystem = final.callPackage
           "${nixpkgs-es}/pkgs/servers/web-apps/engelsystem/default.nix" { };
-        qutebrowser = nixpkgs-qutebrowser.packages."x86_64-linux".qutebrowser;
+        qutebrowser = nixpkgs-qutebrowser.packages.${system}.qutebrowser;
+        nixFlakes = nix.packages.${system}.nix;
       };
 
       # iso image
@@ -124,7 +133,7 @@
 
       nixosConfigurations = (nixpkgs.lib.mapAttrs (name: host:
         (nixpkgs.lib.nixosSystem rec {
-          system = "x86_64-linux"; # TODO: change, for raspies and so
+          system = host.system;
           modules = [
             { nixpkgs.overlays = [ self.overlay home-manager.overlay ]; }
             nixpkgs.nixosModules.notDetected
@@ -134,7 +143,7 @@
             self.nixosModules.ferm2
             self.nixosModules.deluge2
             (makeSourcesModule name)
-            patchModule
+            (patchModule host.system)
           ] ++ (if (if (host ? vm) then host.vm else false) then
             (nixpkgs.lib.singleton
               (import (nixpkgs + "/nixos/modules/profiles/qemu-guest.nix")))

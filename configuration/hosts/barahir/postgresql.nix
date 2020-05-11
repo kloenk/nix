@@ -13,10 +13,11 @@
     extraConfig = ''
       unix_socket_directories = '/run/postgresql/'
     '';
-    ensureDatabases = [ "ve_collector" ];
+    ensureDatabases = [ "ve_collector" "ve_collector_test" ];
     ensureUsers = [{
       name = "kloenk";
       ensurePermissions."DATABASE ve_collector" = "ALL PRIVILEGES";
+      ensurePermissions."DATABASE ve_collector_test" = "ALL PRIVILEGES";
     }];
   };
 }
