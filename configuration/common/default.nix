@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [ ./nginx ./node-exporter ./zsh ./make-nixpkgs.nix ];
+  imports = [ ./nginx ./node-exporter ./zsh ./make-nixpkgs.nix ./kloenk.nix ];
 
   # environment.etc."src/nixpkgs".source = config.sources.nixpkgs;
   #  environment.etc."src/nixos-config".text = ''
@@ -18,15 +18,6 @@
   nix.extraOptions = ''
     experimental-features = nix-command flakes ca-references
   '';
-  nix.registry = {
-    kloenk = {
-      from.type = "indirect";
-      from.id = "kloenk";
-      to.owner = "kloenk";
-      to.repo = "nix";
-      to.type = "github";
-    };
-  };
 
   networking.useNetworkd = lib.mkDefault true;
   networking.search = [ "kloenk.de" ];
@@ -92,71 +83,11 @@
 
   environment.variables.EDITOR = "vim";
 
-  users.users.kloenk = {
-    isNormalUser = true;
-    uid = 1000;
-    initialPassword = lib.mkDefault "foobar";
-    extraGroups = [ "wheel" "bluetooth" "libvirt" ];
-    shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBps9Mp/xZax8/y9fW1Gt73SkskcBux1jDAB8rv0EYUt cardno:000611120054"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAEDZjcKdYViw9cPrLNkO37+1NgUj8Ul1PTlbXMMwlMR kloenk@kloenkX"
-    ];
-    packages = with pkgs; [
-      wget
-      #vim
-      tmux
-      nload
-      htop
-      rsync
-      ripgrep
-      exa
-      bat
-      progress
-      pv
-      parallel
-      skim
-      file
-      #git
-      elinks
-      bc
-      zstd
-      usbutils
-      pciutils
-      mediainfo
-      ffmpeg_4
-      mktorrent
-      unzip
-      gptfdisk
-      jq
-      nix-prefetch-git
-      pass-otp
-      gopass
-      neofetch
-      sl
-      todo-txt-cli
-      tcpdump
-      binutils
-      nixfmt
-    ];
-  };
+  users.users.kloenk.shell = pkgs.zsh;
 
   home-manager.users.kloenk = import ./home.nix {
     pkgs = pkgs;
     lib = lib;
-  };
-
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-
-  programs.ssh.knownHosts = {
-    "kloenk.de" = {
-      hostNames = [ "*.kloenk.de" ];
-      certAuthority = true;
-      publicKeyFile = toString ./server_ca.pub;
-    };
   };
 
   #programs.fish.enable = true;
