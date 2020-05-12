@@ -8,6 +8,7 @@
     ./postgres.nix
     ./gitea.nix
     ./website.nix
+    ./restic.nix
 
     ./wordpress.nix
     ./mysql.nix
