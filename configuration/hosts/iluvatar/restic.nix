@@ -16,8 +16,8 @@
     repository = "rclone:google:iluvatar";
   };
 
-  systemd.services.restic-backups-hubble.path = [ pkgs.rclone ];
-  systemd.services.restic-backups-hubble.preStart = lib.mkBefore (''
+  systemd.services.restic-backups-iluvatar.path = [ pkgs.rclone ];
+  systemd.services.restic-backups-iluvatar.preStart = lib.mkBefore (''
      mkdir -p /root/.config/rclone
      ln -sf ${
        config.krops.secrets.files."restic/rclone.conf".path
