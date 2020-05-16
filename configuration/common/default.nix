@@ -79,6 +79,7 @@
 
     erlang # for escript scripts
     rclone
+    wireguard-tools
   ];
 
   environment.variables.EDITOR = "vim";

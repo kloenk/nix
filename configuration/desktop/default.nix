@@ -84,6 +84,8 @@
     # web browser
     firefox-wayland
     qutebrowser
+    chromium
+    browserpass # for pass integration
     #config.sources.nixpkgs-qutebrowser.packages."x86_64-linux".qutebrowser
   ];
 
@@ -100,8 +102,20 @@
       "ppmmlchacdbknfphdeafcbmklcghghmd" # jwt debugger
       "laookkfknpbbblfpciffpaejjkokdgca" # momentum
       "pdiebiamhaleloakpcgmpnenggpjbcbm" # tab snooze
+      "naepdomgkenhinolocfifgehidddafch" # browserpass
+      "dbepggeogbaibhgnhhndojpepiihcmeb" # Vimium
+      "hjdoplcnndgiblooccencgcggcoihigg" # terms of services didn't read
     ];
+    defaultSearchProviderSearchURL = "https://duckduckgo.com/?q={searchTerms}";
+    extraOpts = {
+      DefaultSearchProviderEnabled = true;
+      DefaultSearchProviderName = "duckduckgo";
+      PasswordManagerEnabled = false;
+    };
   };
+
+  nixpkgs.config.chromium = { enableWideVine = true; };
+
   hardware.nitrokey.enable = true;
 
   # steam hardware

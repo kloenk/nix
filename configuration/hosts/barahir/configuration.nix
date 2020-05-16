@@ -3,7 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    #    ./wireguard.nix
+    ./wireguard.nix
     ./links.nix
 
     #    ./mysql.nix
@@ -91,7 +91,7 @@
 
   environment.systemPackages = with pkgs; [
     lm_sensors
-    wine
+    #wine
     docker
     virtmanager
     gnumake

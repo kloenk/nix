@@ -166,13 +166,13 @@
     "secrets": {
       "flake": false,
       "info": {
-        "lastModified": 1589228151,
-        "narHash": "sha256-kykMtaLPDowkmU0EcOXK9WcXn/m3rkI5BuVHRong4fQ=",
-        "revCount": 890
+        "lastModified": 1589664598,
+        "narHash": "sha256-jaiN02XCVRQdnpOkSaK/036Qu3KQ4k/k9GYc7YwVoi4=",
+        "revCount": 899
       },
       "locked": {
         "ref": "master",
-        "rev": "610b943e921b191c1d95dd70e9413ca37a6017f3",
+        "rev": "943915770f783df09ee50d056a846ef8c7172958",
         "type": "git",
         "url": "git+ssh://git@git.kloenk.de/kloenk/pass.git"
       },

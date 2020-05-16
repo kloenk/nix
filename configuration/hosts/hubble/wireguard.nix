@@ -12,6 +12,22 @@
     ];
   };
 
+  boot.kernel.sysctl = { "net.ipv4.ip_forward" = 1; };
+
+  services.ferm2.extraConfig4 = ''
+    table nat {
+      chain POSTROUTING {
+        daddr 10.0.0.0/8 outerface llg0 MASQUERADE;
+      }
+    }
+  '';
+  services.ferm2.extraForward = ''
+    mod state state INVALID DROP;
+    mod state state (ESTABLISHED RELATED) ACCEPT;
+
+    interface (wg0) ACCEPT;
+  '';
+
   systemd.network.netdevs."30-y0sh0" = {
     netdevConfig = {
       Kind = "wireguard";
@@ -89,6 +105,13 @@
           ];
           PublicKey = "009Wk3RP7zOmu61Zc7ZCeS6lJyhUcXZwZsBJoadHOA0=";
           PresharedKeyFile = config.krops.secrets.files."wg0.atom.psk".path;
+          PersistentKeepalive = 21;
+        };
+      }
+      { # iluvatar
+        wireguardPeerConfig = {
+          AllowedIPs = [ "192.168.42.50/32" ];
+          PublicKey = "UoIRXpG/EHmDNDhzFPxZS18YBlj9vBQRRQZMCFhonDA=";
           PersistentKeepalive = 21;
         };
       }
