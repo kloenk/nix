@@ -85,7 +85,6 @@
     firefox-wayland
     qutebrowser
     chromium
-    browserpass # for pass integration
     #config.sources.nixpkgs-qutebrowser.packages."x86_64-linux".qutebrowser
   ];
 
@@ -94,6 +93,8 @@
   programs.wireshark.package = pkgs.wireshark-qt;
   nixpkgs.config.android_sdk.accept_license = true;
   programs.adb.enable = true;
+
+  programs.browserpass.enable = true;
   programs.chromium = {
     enable = true;
     extensions = [
