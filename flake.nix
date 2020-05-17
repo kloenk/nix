@@ -91,7 +91,9 @@
         engelsystem = final.callPackage
           "${nixpkgs-es}/pkgs/servers/web-apps/engelsystem/default.nix" { };
         qutebrowser = nixpkgs-qutebrowser.packages.${system}.qutebrowser;
-        nixFlakes = nix.packages.${system}.nix;
+        nixFlakes =
+          (nix.packages.${system}.nix // { version = "2.4pre-Kloenk"; });
+        nix = (nix.packages.${system}.nix // { version = "2.4pre"; });
       };
 
       # iso image

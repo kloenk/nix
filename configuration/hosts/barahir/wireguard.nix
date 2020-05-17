@@ -43,7 +43,7 @@
   };
   systemd.network.networks."30-wg0" = {
     name = "wg0";
-    linkConfig = { RequiredForOnline = "no"; };
+    linkConfig = { RequiredForOnline = "yes"; };
     addresses = [
       { addressConfig.Address = "192.168.42.3/24"; }
       { addressConfig.Address = "2001:41d0:1004:1629:1337:187:1:3/112"; }

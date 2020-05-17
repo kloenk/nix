@@ -39,6 +39,15 @@ in {
     cmakeFlags = oldAttrs.cmakeFlags
       ++ [ "-DPSQL_INCDIR=${final.postgresql}/include" ];
   });
+
+  hydra-patched = prev.hydra-unstable.overrideAttrs (oldAttrs: rec {
+    src = final.fetchFromGitHub {
+      owner = "NixOS";
+      repo = "hydra";
+      rev = "c4104fe1fa7f1326b959c0c38ed8a3fbfd65e339";
+      sha256 = "1bw5mq5a6ym4prxzd705xk8wwfb5z9a4m6014i2w5yrqxgclnr6v";
+    };
+  });
 }
 
 /* let

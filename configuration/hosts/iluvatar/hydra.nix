@@ -1,13 +1,23 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
+
+  fileSystems."/var/lib/hydra" = {
+    device = "/persist/data/hydra";
+    fsType = "none";
+    options = [ "bind" ];
+  };
+
   services.hydra = {
     enable = true;
-    package = pkgs.hydra-unstable;
-    port = 315;
+    package = pkgs.hydra-patched;
+    port = 3015;
     listenHost = "0.0.0.0";
     notificationSender = "hydra@kloenk.de";
+
+    hydraURL = "hydra.kloenk.de";
   };
+  nix.trustedUsers = [ "hydra" ];
 
   services.nginx.virtualHosts."hydra.kloenk.de" = {
     enableACME = true;

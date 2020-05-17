@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ./wireguard.nix
 
+    ./hydra.nix
     ./bitwarden.nix
     ./postgres.nix
     ./gitea.nix
