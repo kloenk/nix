@@ -12,6 +12,8 @@
       "/var/lib/mysql"
       "/var/lib/bitwarden_rs/backup"
       "/var/lib/wordpress"
+      "/persist/data/minecraft"
+      "/persist"
     ];
     repository = "rclone:google:iluvatar";
   };
