@@ -60,6 +60,6 @@
   };
 
   users.users.systemd-network.extraGroups = [ "keys" ];
-  krops.secrets.files."wg0.key".owner = "systemd-netwok";
-  krops.secrets.files."wg0.psk".owner = "systemd-netwok";
+  krops.secrets.files."wg0.key".owner = "systemd-network";
+  krops.secrets.files."wg0.psk".owner = "systemd-network";
 }

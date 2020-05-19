@@ -32,7 +32,7 @@
     passwordAuthentication = lib.mkDefault
       (if (config.networking.hostName != "kexec") then false else true);
     challengeResponseAuthentication = false;
-    permitRootLogin = lib.mkDefault "no";
+    permitRootLogin = lib.mkDefault "prohibit-password";
     hostKeys = if (config.networking.hostName != "kexec") then [{
       path = config.krops.secrets.files."ssh_host_ed25519_key".path;
       type = "ed25519";
@@ -97,7 +97,7 @@
 
   #users.users.root.shell = pkgs.fish;
   users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBps9Mp/xZax8/y9fW1Gt73SkskcBux1jDAB8rv0EYUt cardno:000611120054"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBps9Mp/xZax8/y9fW1Gt73SkskcBux1jDAB8rv0EYUt cardno:000612029874"
   ];
 
   # initrd ssh foo
