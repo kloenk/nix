@@ -18,7 +18,13 @@
       motd = builtins.trace "TODO: set motd for minecraft" "please provide a motd for me";
       difficulty = "normal";
       force-gamemode = true;
+      white-list = true;
       #"rcon.password"
+    };
+    whitelist = {
+      kloenk = "c16d92b1-eca1-4387-93de-4f27de56ff03";
+      Drachensegler = "7698b19e-6cb9-4ce1-9a16-3f578263eea3";
+      Ennsn456 = "812e9708-f096-41bc-a64d-9251c211dd32";
     };
   };
 }
