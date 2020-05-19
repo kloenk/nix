@@ -10,6 +10,7 @@
     declarative = true;
     eula = true;
     package = pkgs.minecraft-20w20a;
+    openFirewall = true;
     serverProperties = {
       server-port = 25565;
       max-players = 20;
