@@ -39,6 +39,11 @@ in {
     #wireguard.endpoint = ""; # FIXME: port forwarding??
   };
 
+  sauron = makeHost {
+    host = "sauron.kloenk.de";
+    vm = true;
+  };
+
   kloenkX = makeHost {
     host = "192.168.178.69";
     #hostname = "kloenk@127.0.0.1:62954";

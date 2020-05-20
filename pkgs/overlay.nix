@@ -21,8 +21,10 @@ in {
   minecraft-20w20a = prev.minecraft-server.overrideAttrs (oldAttrs: rec {
     version = "1.16-pre20w20a";
     src = final.fetchurl {
-      url = "https://launcher.mojang.com/v1/objects/0393774fb1f9db8288a56dbbcf45022b71f7939f/server.jar";
-      sha256 = "933a424ad1e82d33b0d782b54158e877969dd0893329f190495ca3ba287e8358";
+      url =
+        "https://launcher.mojang.com/v1/objects/0393774fb1f9db8288a56dbbcf45022b71f7939f/server.jar";
+      sha256 =
+        "933a424ad1e82d33b0d782b54158e877969dd0893329f190495ca3ba287e8358";
     };
   });
 

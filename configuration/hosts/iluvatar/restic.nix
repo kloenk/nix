@@ -20,12 +20,12 @@
 
   systemd.services.restic-backups-iluvatar.path = [ pkgs.rclone ];
   systemd.services.restic-backups-iluvatar.preStart = lib.mkBefore (''
-     mkdir -p /root/.config/rclone
-     ln -sf ${
-       config.krops.secrets.files."restic/rclone.conf".path
-     } /root/.config/rclone/rclone.conf
-   '');
+    mkdir -p /root/.config/rclone
+    ln -sf ${
+      config.krops.secrets.files."restic/rclone.conf".path
+    } /root/.config/rclone/rclone.conf
+  '');
 
-   krops.secrets.files."restic/password".owner = "root";
-   krops.secrets.files."restic/rclone.conf".owner = "root";
+  krops.secrets.files."restic/password".owner = "root";
+  krops.secrets.files."restic/rclone.conf".owner = "root";
 }

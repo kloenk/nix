@@ -19,11 +19,13 @@
     experimental-features = nix-command flakes ca-references
   '';
 
+  networking.domain = lib.mkDefault "kloenk.de";
   networking.useNetworkd = lib.mkDefault true;
   networking.search = [ "kloenk.de" ];
   networking.extraHosts = ''
     127.0.0.1 ${config.networking.hostName}.kloenk.de
   '';
+  networking.useDHCP = lib.mkDefault false;
 
   # ssh
   services.openssh = {

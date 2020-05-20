@@ -1,6 +1,6 @@
 $TTL 1M
 @		SOA	ns1.kloenk.de. hostmaster.kloenk.de. (
-    2020051601  	; serial (yyyymmdd##)
+    2020051901  	; serial (yyyymmdd##)
     3600            ; refresh
     1000            ; retry
     604800          ; expiry
@@ -84,6 +84,9 @@ luna		CNAME	luna.pbb.lc.
 iluvatar	AAAA	2a0f:4ac0::6
 iluvatar	A			195.39.247.6
 
+suaron    AAAA  2a0f:4ac4:42:0:f199::1
+sauron    A     195.39.221.54
+
 bitwarden	AAAA	2a0f:4ac0::6
 bitwarden	A			195.39.247.6
 
@@ -117,7 +120,7 @@ _ts3._udp.ftb	SRV	1	1	790	web.xorit.de.
 survey		A 51.254.249.180
 survey		CAA 0 issue letsencrypt.org
 
-hydra	CNAME	iluvatar.kloenk.de.
+hydra	CNAME	sauron.kloenk.de.
 gurke   CNAME   gurke.pbb.lc.
 
 cache CNAME gurke.pbb.lc.

@@ -31,7 +31,7 @@
     sskKey = config.krops.secrets.files."buildkey".path;
     system = "x86_64-linux";
     maxJobs = 8;
-    speedFactor = 2;
+    speedFactor = 1;
     supportedFeatures = [ "kvm" "nixos-test" "benchmark" "big-parallel" ];
   }];
   krops.secrets.files."buildkey".owner = "root";

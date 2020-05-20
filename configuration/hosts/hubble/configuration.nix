@@ -29,6 +29,7 @@ in {
 
     ../../default.nix
     ../../common
+    ../../common/pbb.nix
     #    ../../bgp
   ];
 
