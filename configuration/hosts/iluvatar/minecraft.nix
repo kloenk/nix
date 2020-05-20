@@ -11,6 +11,7 @@
     eula = true;
     package = pkgs.minecraft-20w20a;
     openFirewall = true;
+    fifo = "/run/minecraft/stdin";
     serverProperties = {
       server-port = 25565;
       max-players = 20;
@@ -28,12 +29,13 @@
     };
   };
 
-  systemd.services.minecraft-server.serviceConfig.StandardInput = "socket";
-  systemd.services.minecraft-server.serviceConfig.StandardOutput = "journal";
+  /* systemd.services.minecraft-server.serviceConfig.StandardInput = "socket";
+     systemd.services.minecraft-server.serviceConfig.StandardOutput = "journal";
 
-  systemd.sockets.minecraft-server = {
-    description = "controll process for the minecraft server";
-    socketConfig.ListenFIFO = "/run/minecraft/stdin";
-    wantedBy = [ "sockets.target" ];
-  };
+     systemd.sockets.minecraft-server = {
+       description = "controll process for the minecraft server";
+       socketConfig.ListenFIFO = "/run/minecraft/stdin";
+       wantedBy = [ "sockets.target" ];
+     };
+  */
 }

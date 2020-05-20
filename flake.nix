@@ -37,6 +37,13 @@
     ref = "feature/engelsystem";
   };
 
+  inputs.nixpkgs-mc = {
+    type = "github";
+    owner = "kloenk";
+    repo = "nixpkgs";
+    ref = "feature/mc-fifo";
+  };
+
   inputs.mail-server = {
     type = "git";
     url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git";
@@ -63,7 +70,7 @@
 
   outputs = inputs@{ self, nixpkgs, nix, home-manager, mail-server, website
     , secrets, nixpkgs-qutebrowser, nixpkgs-lopsided # grub patch
-    , nixpkgs-es }:
+    , nixpkgs-es, nixpkgs-mc }:
     let
 
       systems = [ "x86_64-linux" ];
@@ -79,10 +86,14 @@
 
       # patche modules
       patchModule = system: {
-        disabledModules = [ "system/boot/loader/grub/grub.nix" ];
+        disabledModules = [
+          "system/boot/loader/grub/grub.nix"
+          "services/games/minecraft-server.nix"
+        ];
         imports = [
           "${nixpkgs-lopsided}/nixos/modules/system/boot/loader/grub/grub.nix"
           "${nixpkgs-es}/nixos/modules/services/web-apps/engelsystem.nix"
+          "${nixpkgs-mc}/nixos/modules/services/games/minecraft-server.nix"
         ];
         nixpkgs.overlays = [ (overlays system) ];
       };

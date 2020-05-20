@@ -112,6 +112,24 @@
         "type": "github"
       }
     },
+    "nixpkgs-mc": {
+      "info": {
+        "lastModified": 1589981753,
+        "narHash": "sha256-MKPcpKs9M6i371Jj1Jar1tJyMRyKAHu/zwDAW5hopkY="
+      },
+      "locked": {
+        "owner": "kloenk",
+        "repo": "nixpkgs",
+        "rev": "49552b82a7ae62bd82e0b224fde7b4dcad51e22e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kloenk",
+        "ref": "feature/mc-fifo",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-qutebrowser": {
       "info": {
         "lastModified": 1588768574,
@@ -158,6 +176,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-es": "nixpkgs-es",
         "nixpkgs-lopsided": "nixpkgs-lopsided",
+        "nixpkgs-mc": "nixpkgs-mc",
         "nixpkgs-qutebrowser": "nixpkgs-qutebrowser",
         "secrets": "secrets",
         "website": "website"
