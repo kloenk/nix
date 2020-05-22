@@ -125,6 +125,8 @@
             nixpkgs.nixosModules.notDetected
             (import (nixpkgs + "/nixos/modules/installer/cd-dvd/channel.nix"))
             home-manager.nixosModules.home-manager
+            (patchModule system)
+            (makeSourcesModule system)
           ];
         }).config.system.build.isoImage;
 
