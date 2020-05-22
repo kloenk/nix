@@ -54,8 +54,9 @@ in {
     src = final.fetchFromGitHub {
       owner = "NixOS";
       repo = "hydra";
-      rev = "c4104fe1fa7f1326b959c0c38ed8a3fbfd65e339";
-      sha256 = "1bw5mq5a6ym4prxzd705xk8wwfb5z9a4m6014i2w5yrqxgclnr6v";
+      rev = "3c6b724f921132b06a16d933d5f215788f88d0e1";
+      sha256 =
+        "210075c0a20bd4ba586c6175cf3c4a805304aaf557442638739a1e485137ede7";
     };
   });
 }
