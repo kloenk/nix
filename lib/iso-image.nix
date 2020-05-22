@@ -9,7 +9,7 @@
   systemd.services.sshd.wantedBy = lib.mkForce [ "multi-user.target" ];
   networking.hostName = "kexec";
 
-  environment.systemPackages = with pkgs; [ chntpw ntfs3g ];
+  #environment.systemPackages = with pkgs; [ chntpw ntfs3g ];
 
   system.activationScripts = {
     base-dirs = {
