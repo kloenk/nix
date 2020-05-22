@@ -3,9 +3,11 @@
 let
   pbbAS = { as = 207921; };
 
-  makeHost = { host, port ? 62954, user ? "kloenk"
-    , prometheusExporters ? [ "node-exporter" "nginx-exporter" ]
-    , hostname ? "${user}@${host}:${toString port}", ... }@extraArgs:
+  makeHost = { host, port ? 62954, user ? "kloenk", prometheusExporters ? [
+    "node-exporter"
+    "nginx-exporter"
+    "nixos-exporter"
+  ], hostname ? "${user}@${host}:${toString port}", ... }@extraArgs:
     ({
       nixos = true;
       system = "x86_64-linux";
@@ -55,7 +57,8 @@ in {
   hubble = makeHost {
     host = "hubble.kloenk.de";
     #prometheusExporters = [ 9100 3001 9090 9154 9187 7980 9586 9119 9166 9113 ];
-    prometheusExporters = [ "node-exporter" "nginx-exporter" "wireguard" ];
+    prometheusExporters =
+      [ "node-exporter" "nginx-exporter" "nixos-exporter" "wireguard" ];
     vm = true;
     mail = true;
     wireguard.publicKey = "2z1soTjkt74lFfEi010JcfOCERhwIgvlqSacOvPYbyI=";

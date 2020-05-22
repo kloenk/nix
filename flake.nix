@@ -68,9 +68,16 @@
     repo = "nixpkgs-qutebrowser";
   };
 
+  inputs.nixos-org = {
+    type = "github";
+    owner = "nixos";
+    repo = "nixos-org-configurations";
+    flake = false;
+  };
+
   outputs = inputs@{ self, nixpkgs, nix, home-manager, mail-server, website
     , secrets, nixpkgs-qutebrowser, nixpkgs-lopsided # grub patch
-    , nixpkgs-es, nixpkgs-mc }:
+    , nixpkgs-es, nixpkgs-mc, nixos-org }:
     let
 
       systems = [ "x86_64-linux" ];
@@ -187,9 +194,9 @@
 
       # hydra jobs
       hydraJobs = {
-        #isoImage.x86_64-linux = (iso "x86_64-linux");
+        isoImage.x86_64-linux = (iso "x86_64-linux");
         #configurations = { inherit (self) nixosConfigurations; };
-        configurations.iluvatar = self.nixosConfigurations.iluvatar;
+        #configurations.iluvatar = self.nixosConfigurations.iluvatar;
       };
     };
 }
