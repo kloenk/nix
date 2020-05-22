@@ -196,9 +196,9 @@
 
       # hydra jobs
       hydraJobs = {
-        isoImage.x86_64-linux = (iso "x86_64-linux");
+        #isoImage.x86_64-linux = (iso "x86_64-linux");
         #configurations = { inherit (self) nixosConfigurations; };
-        #configurations.iluvatar = self.nixosConfigurations.iluvatar;
+        configurations.iluvatar = self.nixosConfigurations.hubble;
       };
     };
 }
