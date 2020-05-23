@@ -59,6 +59,10 @@ in {
         "210075c0a20bd4ba586c6175cf3c4a805304aaf557442638739a1e485137ede7";
     };
   });
+
+  nix-serve = prev.nix-serve.overrideAttrs (oldAttrs: rec {
+    meta = oldAttrs.meta // { platforms = final.lib.platforms.linux; };
+  });
 }
 
 /* let

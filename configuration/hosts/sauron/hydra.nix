@@ -42,4 +42,17 @@
     supportedFeatures = [ "kvm" "nixos-test" "benchmark" "big-parallel" ];
   }];
   krops.secrets.files."buildkey".owner = "root";
+
+  services.nix-serve = {
+    enable = true;
+    secretKeyFile = config.krops.secrets.files."signignkey".path;
+  };
+  krops.secrets.files."signignkey".owner = "nix-serve";
+  users.users.nix-serve.extraGroups = [ "keys" ];
+
+  services.nginx.virtualHosts."cache.kloenk.de" = {
+    enableACME = true;
+    forceSSL = true;
+    locations."/".proxyPass = "http://127.0.0.1:5000";
+  };
 }

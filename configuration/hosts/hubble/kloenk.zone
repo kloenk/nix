@@ -121,12 +121,7 @@ survey		A 51.254.249.180
 survey		CAA 0 issue letsencrypt.org
 
 hydra	CNAME	sauron.kloenk.de.
-gurke   CNAME   gurke.pbb.lc.
-
-cache CNAME gurke.pbb.lc.
-
-polyus	A	195.39.247.10
-polyus  AAAA	2a0f:4ac0::10
+cache	CNAME sauron.kloenk.de.
 
 yougen  A  195.39.247.9
 
