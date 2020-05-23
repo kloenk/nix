@@ -14,6 +14,9 @@
     port = 3015;
     listenHost = "0.0.0.0";
     notificationSender = "hydra@kloenk.de";
+    extraConfig = ''
+      allow-import-from-derivation = true
+    '';
 
     hydraURL = "hydra.kloenk.de";
   };
@@ -24,6 +27,10 @@
     forceSSL = true;
     locations."/".proxyPass = "http://127.0.0.1:3015";
   };
+
+  nix.extraOptions = ''
+    allow-import-from-derivation = true
+  '';
 
   nix.buildMachines = [{
     hostName = "lycus.yougen.de";

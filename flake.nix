@@ -196,10 +196,12 @@
 
       # hydra jobs
       hydraJobs = {
-        #isoImage.x86_64-linux = (iso "x86_64-linux");
-        #configurations = { inherit (self) nixosConfigurations; };
-        configurations.x86_64-linux.iluvatar =
-          self.nixosConfigurations.hubble.config.system.build.toplevel;
+        isoImage.x86_64-linux = (iso "x86_64-linux");
+        configurations = let lib = nixpkgs.lib;
+        in lib.mapAttrs' (name: config:
+          lib.nameValuePair name config.config.system.build.toplevel)
+        self.nixosConfigurations;
+        packages = self.packages;
       };
     };
 }
