@@ -1,6 +1,6 @@
 $TTL 1M
 @		SOA	ns1.kloenk.de. hostmaster.kloenk.de. (
-    2020051901  	; serial (yyyymmdd##)
+    2020052301  	; serial (yyyymmdd##)
     3600            ; refresh
     1000            ; retry
     604800          ; expiry

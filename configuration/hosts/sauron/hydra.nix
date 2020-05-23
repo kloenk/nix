@@ -50,6 +50,11 @@
     }
   ];
   krops.secrets.files."buildkey".owner = "root";
+  programs.ssh.knownHosts.lycus = {
+    hostNames = [ "[lycus.yougen.de]:62954" "[10.0.0.5]:62954" ];
+    publicKey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOiB0F1JwztcIQHXcJ4/+U1IL/qF9WBAW3P9yeEV+ybd";
+  };
   programs.ssh.extraConfig = ''
     Host lycus.yougen.de
       Port 62954
