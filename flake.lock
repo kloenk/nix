@@ -2,8 +2,8 @@
   "nodes": {
     "home-manager": {
       "info": {
-        "lastModified": 1587202986,
-        "narHash": "sha256-7wh7dqvIHmKXnJhaDlmXkfxcFWqk45sGKHUONif21S8="
+        "lastModified": 1590240710,
+        "narHash": "sha256-YGYRJstseo6aVWz4vcLzZukS7uIFteE8njM6oMonNCw="
       },
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -11,11 +11,12 @@
       "locked": {
         "owner": "kloenk",
         "repo": "home-manager",
-        "rev": "3eab3011a10dd89045ac5dc44f2ac248c8814cad",
+        "rev": "efbedded38ca00eaf11339cfefbe74494e09d6a1",
         "type": "github"
       },
       "original": {
         "owner": "kloenk",
+        "ref": "flake-overlay",
         "repo": "home-manager",
         "type": "github"
       }

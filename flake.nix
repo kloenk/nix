@@ -5,6 +5,7 @@
     type = "github";
     owner = "kloenk";
     repo = "home-manager";
+    ref = "flake-overlay";
     inputs.nixpkgs.follows = "/nixpkgs";
   };
 
@@ -129,7 +130,7 @@
             (makeSourcesModule system)
             {
               # disable home-manager manpage (breaks hydra see https://github.com/rycee/home-manager/issues/1262)
-              home-manager.manual.manpages.enable = false;
+              home-manager.users.kloenk.manual.manpages.enable = false;
             }
           ];
         }).config.system.build.isoImage;
@@ -169,6 +170,10 @@
             self.nixosModules.ferm2
             self.nixosModules.deluge2
             (makeSourcesModule name)
+            {
+              # disable home-manager manpage (breaks hydra see https://github.com/rycee/home-manager/issues/1262)
+              home-manager.users.kloenk.manual.manpages.enable = false;
+            }
             (patchModule host.system)
           ] ++ (if (if (host ? vm) then host.vm else false) then
             (nixpkgs.lib.singleton
