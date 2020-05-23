@@ -127,6 +127,10 @@
             home-manager.nixosModules.home-manager
             (patchModule system)
             (makeSourcesModule system)
+            {
+              # disable home-manager manpage (breaks hydra see https://github.com/rycee/home-manager/issues/1262)
+              home-manager.manual.manpages.enable = false;
+            }
           ];
         }).config.system.build.isoImage;
 

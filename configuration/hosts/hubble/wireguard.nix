@@ -118,7 +118,7 @@
       }
       { # sauron
         wireguardPeerConfig = {
-          AllowedIPs = [ "192.178.42.52/32" ];
+          AllowedIPs = [ "192.168.42.51/32" ];
           PublicKey = "2lAdldX+b6b+DxrvtKxeVvdIj77Z6MQv1pB5rJ/TrAM=";
           PersistentKeepalive = 21;
           Endpoint = "195.39.221.54:51820";

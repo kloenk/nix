@@ -32,16 +32,28 @@
     allow-import-from-derivation = true
   '';
 
-  nix.buildMachines = [{
-    hostName = "lycus.yougen.de";
-    sshUser = "buildfarm";
-    sskKey = config.krops.secrets.files."buildkey".path;
-    system = "x86_64-linux";
-    maxJobs = 8;
-    speedFactor = 1;
-    supportedFeatures = [ "kvm" "nixos-test" "benchmark" "big-parallel" ];
-  }];
+  nix.buildMachines = [
+    {
+      hostName = "lycus.yougen.de";
+      sshUser = "buildfarm";
+      sskKey = config.krops.secrets.files."buildkey".path;
+      system = "x86_64-linux";
+      maxJobs = 8;
+      speedFactor = 1;
+      supportedFeatures = [ "kvm" "nixos-test" "benchmark" "big-parallel" ];
+    }
+    {
+      hostName = "localhost";
+      system = "x86_64-linux";
+      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+      maxJobs = config.nix.maxJobs;
+    }
+  ];
   krops.secrets.files."buildkey".owner = "root";
+  programs.ssh.extraConfig = ''
+    Host lycus.yougen.de
+      Port 62954
+  '';
 
   services.nix-serve = {
     enable = true;
