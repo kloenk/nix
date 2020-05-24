@@ -11,6 +11,7 @@
     ../../default.nix
     ../../common
     ../../common/pbb.nix
+    ../../common/y0sh.nix
   ];
 
   services.qemuGuest.enable = true;
