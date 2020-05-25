@@ -31,13 +31,6 @@
     ref = "grub-initrd-secrets";
   };
 
-  inputs.nixpkgs-es = {
-    type = "github";
-    owner = "kloenk";
-    repo = "nixpkgs";
-    ref = "feature/engelsystem";
-  };
-
   inputs.nixpkgs-mc = {
     type = "github";
     owner = "kloenk";
@@ -78,7 +71,7 @@
 
   outputs = inputs@{ self, nixpkgs, nix, home-manager, mail-server, website
     , secrets, nixpkgs-qutebrowser, nixpkgs-lopsided # grub patch
-    , nixpkgs-es, nixpkgs-mc, nixos-org }:
+    , nixpkgs-mc, nixos-org }:
     let
 
       systems = [ "x86_64-linux" ];
@@ -100,15 +93,12 @@
         ];
         imports = [
           "${nixpkgs-lopsided}/nixos/modules/system/boot/loader/grub/grub.nix"
-          "${nixpkgs-es}/nixos/modules/services/web-apps/engelsystem.nix"
           "${nixpkgs-mc}/nixos/modules/services/games/minecraft-server.nix"
         ];
         nixpkgs.overlays = [ (overlays system) ];
       };
 
       overlays = system: final: prev: {
-        engelsystem = final.callPackage
-          "${nixpkgs-es}/pkgs/servers/web-apps/engelsystem/default.nix" { };
         qutebrowser = nixpkgs-qutebrowser.packages.${system}.qutebrowser;
         nixFlakes =
           (nix.packages.${system}.nix // { version = "2.4pre-Kloenk"; });
