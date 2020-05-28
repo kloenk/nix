@@ -15,8 +15,9 @@
   nix.trustedUsers = [ "root" "@wheel" "kloenk" ];
   # nix flakes
   nix.package = lib.mkDefault pkgs.nixFlakes;
+  nix.systemFeatures = [ "recursive-nix" "kvm" "nixos-test" ];
   nix.extraOptions = ''
-    experimental-features = nix-command flakes ca-references
+    experimental-features = nix-command flakes ca-references recursive-nix
   '';
 
   # binary cache

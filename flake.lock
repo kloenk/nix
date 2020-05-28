@@ -42,8 +42,8 @@
     },
     "nix": {
       "info": {
-        "lastModified": 1590091354,
-        "narHash": "sha256-GqTFh4wBfkKapixKyd3gA9C1tF0PSzZDD5LN+5nQEWk="
+        "lastModified": 1590660793,
+        "narHash": "sha256-5dy6fMDk7pMBe/LnTVbxB6uh6lX3rokxGzlQC69nKa0="
       },
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -51,7 +51,7 @@
       "locked": {
         "owner": "nixos",
         "repo": "nix",
-        "rev": "00b562c87ec4c3bbe514f5dc1f4d1c41f66f66bf",
+        "rev": "6286272371434dc597da793417787ecd3cb14cc9",
         "type": "github"
       },
       "original": {
@@ -81,35 +81,17 @@
     },
     "nixpkgs": {
       "info": {
-        "lastModified": 1590309766,
-        "narHash": "sha256-e7DHBaejGckyLE7G3qU44JoqjZ9zCqrTmlCK/tGE46k="
+        "lastModified": 1590661138,
+        "narHash": "sha256-Mv0K86pVz2n5tsv2FEivFwnbj8jHMnxgyjTZgI1MdWQ="
       },
       "locked": {
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a38d4d9f498e6b2d6df3842e9ac59ff99a185858",
+        "rev": "32a2a0c36169883e9d8e5969d33693221f8dfc5a",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-es": {
-      "info": {
-        "lastModified": 1590069539,
-        "narHash": "sha256-OcxxZ5lMFmXAQU9P64KwmZv9Rlnro1a4RQmtXBwMy10="
-      },
-      "locked": {
-        "owner": "kloenk",
-        "repo": "nixpkgs",
-        "rev": "da4b95c8ec6149138e4b86bf461ad434b556e90f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "kloenk",
-        "ref": "feature/engelsystem",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -212,7 +194,6 @@
         "nix": "nix",
         "nixos-org": "nixos-org",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-es": "nixpkgs-es",
         "nixpkgs-lopsided": "nixpkgs-lopsided",
         "nixpkgs-mc": "nixpkgs-mc",
         "nixpkgs-qutebrowser": "nixpkgs-qutebrowser",

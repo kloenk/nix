@@ -30,6 +30,7 @@
 
   boot.binfmt.emulatedSystems = [
     "aarch64-linux" # "x86_64-windows"
+    "mipsel-linux"
   ];
 
   boot.initrd.luks.devices."cryptLVM".device =
