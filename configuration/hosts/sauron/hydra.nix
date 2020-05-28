@@ -28,10 +28,6 @@
     locations."/".proxyPass = "http://127.0.0.1:3015";
   };
 
-  nix.extraOptions = ''
-    allow-import-from-derivation = true
-  '';
-
   nix.buildMachines = [
     {
       hostName = "lycus.yougen.de";
