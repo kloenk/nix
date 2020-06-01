@@ -139,16 +139,26 @@
           options.sources = nixpkgs.lib.mkOption { };
           config.sources = inputs;
         };
+
     in {
       overlay = import ./pkgs/overlay.nix;
 
       legacyPackages = forAllSystems
         (system: nixpkgsFor.${system} // { isoImage = (iso system); });
 
-      packages = forAllSystems (system: {
+      packages = nixpkgs.lib.recursiveUpdate (forAllSystems (system: {
         inherit (self.legacyPackages.${system})
           isoImage home-manager redshift jblock deploy_secrets wallpapers;
-      });
+      })) {
+        "x86_64-linux" = {
+          inherit (import ./lib/deploy.nix {
+            pkgs = nixpkgsFor."x86_64-linux";
+            lib = nixpkgsFor."x86_64-linux".lib;
+            configurations = self.nixosConfigurations;
+          })
+            deploy;
+        };
+      };
 
       nixosConfigurations = (nixpkgs.lib.mapAttrs (name: host:
         (nixpkgs.lib.nixosSystem rec {
