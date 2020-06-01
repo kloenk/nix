@@ -19,6 +19,7 @@
     '';
 
     hydraURL = "hydra.kloenk.de";
+    useSubstitutes = true; # nixpkgs is to broken at the moment
   };
   nix.trustedUsers = [ "hydra" ];
 

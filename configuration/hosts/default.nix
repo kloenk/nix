@@ -83,12 +83,14 @@ in {
     host = "gdv01.eventphone.de";
     user = "root";
     nixos = false;
+    port = 22;
   };
   # for monitoring only
   gdv02 = makeHost {
     host = "gdv02.eventphone.de";
     user = "root";
     nixos = false;
+    port = 22;
   };
 
   # for wireguard only

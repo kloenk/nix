@@ -14,7 +14,7 @@
   nix.gc.options = lib.mkDefault "--delete-older-than 7d";
   nix.trustedUsers = [ "root" "@wheel" "kloenk" ];
   # nix flakes
-  nix.package = lib.mkDefault pkgs.nixFlakes;
+  #nix.package = lib.mkDefault pkgs.nixFlakes;
   nix.systemFeatures = [ "recursive-nix" "kvm" "nixos-test" ];
   nix.extraOptions = ''
     experimental-features = nix-command flakes ca-references recursive-nix

@@ -82,7 +82,8 @@
       nixpkgsFor = forAllSystems (system:
         import nixpkgs {
           inherit system;
-          overlays = [ self.overlay home-manager.overlay (overlays system) ];
+          overlays =
+            [ self.overlay home-manager.overlay (overlays system) nix.overlay ];
         });
 
       # patche modules
@@ -95,14 +96,15 @@
           "${nixpkgs-lopsided}/nixos/modules/system/boot/loader/grub/grub.nix"
           "${nixpkgs-mc}/nixos/modules/services/games/minecraft-server.nix"
         ];
-        nixpkgs.overlays = [ (overlays system) ];
+        nixpkgs.overlays = [ (overlays system) nix.overlay ];
       };
 
       overlays = system: final: prev: {
         qutebrowser = nixpkgs-qutebrowser.packages.${system}.qutebrowser;
-        nixFlakes =
-          (nix.packages.${system}.nix // { version = "2.4pre-Kloenk"; });
-        nix = (nix.packages.${system}.nix // { version = "2.4pre"; });
+        #nixFlakes =
+        #  (nix.packages.${system}.nix // { version = "2.4pre-Kloenk"; });
+        #nix = (nix.packages.${system}.nix // { version = "2.4pre"; });
+        nixFlakes = final.nix;
       };
 
       # iso image

@@ -116,13 +116,13 @@
     },
     "nixpkgs-mc": {
       "info": {
-        "lastModified": 1590752215,
-        "narHash": "sha256-rzHuR5b054L3LDTEVHaIo6sBYWJLTE2epDVAvvsTPII="
+        "lastModified": 1591017108,
+        "narHash": "sha256-D4/TN5cuJhNB+W4ytxkw/smItlLOnPWbFUGHPrtl6I0="
       },
       "locked": {
         "owner": "kloenk",
         "repo": "nixpkgs",
-        "rev": "bb6f12fbdb78b736e1466366a512ac8555f67cd7",
+        "rev": "2678a7826bc3c99357d7654db38bce1086167b03",
         "type": "github"
       },
       "original": {
