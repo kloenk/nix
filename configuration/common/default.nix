@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [ ./nginx ./node-exporter ./zsh ./make-nixpkgs.nix ./kloenk.nix ];
+  imports =
+    [ ./nginx ./node-exporter ./zsh ./make-nixpkgs.nix ./kloenk.nix ./pbb.nix ];
 
   # environment.etc."src/nixpkgs".source = config.sources.nixpkgs;
   #  environment.etc."src/nixos-config".text = ''
