@@ -11,7 +11,14 @@
     eula = true;
     package = pkgs.minecraft-20w20a;
     openFirewall = true;
-    fifo = "/run/minecraft/stdin";
+    stopCommands = ''
+      echo "say This server is stopping in 3.."
+      sleep 1
+      echo "say 2.."
+      sleep 1
+      echo "say 1.."
+      sleep 1
+    '';
     serverProperties = {
       server-port = 25565;
       max-players = 20;
