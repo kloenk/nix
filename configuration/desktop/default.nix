@@ -79,7 +79,9 @@
     #vscodium
     atom
     gvfs
-    #gnome3.nautilus # Dependency for atom?
+    gnome3.nautilus # Dependency for atom?
+
+    notable
 
     # web browser
     firefox-wayland
