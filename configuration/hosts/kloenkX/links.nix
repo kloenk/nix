@@ -24,9 +24,25 @@ in {
     #  matchConfig.SSID = "TT-WLAN";
     #};
 
+    netdevs."25-vlan" = {
+      netdevConfig = {
+        Kind = "vlan";
+        Name = "vlan1337";
+      };
+      vlanConfig.Id = 1337;
+    };
+
+    networks."25-vlan" = {
+      name = config.systemd.network.netdevs."25-vlan".netdevConfig.Name;
+      DHCP = "no";
+      addresses = [ { addressConfig.Address = "6.0.2.4/24"; } ];
+    };
+
     networks."20-eno0" = {
       name = "eno0";
       DHCP = "yes";
+      vlan = lib.singleton "vlan1337";
+      dhcpConfig.RouteMetric = 512;
     };
     networks."20-wlp2s0" = {
       name = "wlp2s0";
