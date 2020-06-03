@@ -42,7 +42,7 @@ in {
       name = "eno0";
       DHCP = "yes";
       vlan = lib.singleton "vlan1337";
-      dhcpConfig.RouteMetric = 512;
+      dhcpV4Config.RouteMetric = 512;
     };
     networks."20-wlp2s0" = {
       name = "wlp2s0";
@@ -58,6 +58,19 @@ in {
         { addressConfig.Address = "127.0.0.53/32"; }
         { addressConfig.Address = "::1/128"; }
       ];
+    };
+    links."30-xiaomi" = {
+      matchConfig = { Property = "ID_SERIAL=Xiaomi_Mi_Note_2_d10974cf"; };
+      linkConfig = {
+        Description = "Xiaomi LTE Uplink";
+        Name = "xiaomi";
+      };
+    };
+    networks."30-xiaomi" = {
+      name = "xiaomi";
+      DHCP = "yes";
+      dhcpV4Config.RouteMetric = 500;
+      linkConfig.RequiredForOnline = "no";
     };
     networks."99-how_cares".linkConfig.RequiredForOnline = "no";
     networks."99-how_cares".linkConfig.Unmanaged = "yes";
