@@ -91,10 +91,12 @@
         disabledModules = [
           "system/boot/loader/grub/grub.nix"
           "services/games/minecraft-server.nix"
+          "tasks/auto-upgrade.nix"
         ];
         imports = [
           "${nixpkgs-lopsided}/nixos/modules/system/boot/loader/grub/grub.nix"
           "${nixpkgs-mc}/nixos/modules/services/games/minecraft-server.nix"
+          self.nixosModules.autoUpgrade
         ];
         nixpkgs.overlays = [ (overlays system) nix.overlay ];
       };
@@ -191,6 +193,7 @@
         secrets = import ./modules/secrets;
         ferm2 = import ./modules/ferm2;
         deluge2 = import ./modules/deluge.nix;
+        autoUpgrade = import ./modules/upgrade;
       };
 
       # apps
