@@ -74,6 +74,8 @@
     , nixpkgs-mc, nixos-org }:
     let
 
+      overlayCombined = [ nix.overlay home-manager.overlay self.overlay ];
+
       systems = [ "x86_64-linux" ];
 
       forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f system);
@@ -82,8 +84,7 @@
       nixpkgsFor = forAllSystems (system:
         import nixpkgs {
           inherit system;
-          overlays =
-            [ self.overlay home-manager.overlay (overlays system) nix.overlay ];
+          overlays = overlayCombined ++ [(overlays system)];
         });
 
       # patche modules
@@ -106,7 +107,10 @@
         #nixFlakes =
         #  (nix.packages.${system}.nix // { version = "2.4pre-Kloenk"; });
         #nix = (nix.packages.${system}.nix // { version = "2.4pre"; });
-        nixFlakes = final.nix;
+        nixFlakes = prev.nix.overrideAttrs (oldAttrs: rec {
+          version = "2.4pre-kloenk";
+        });
+
       };
 
       # iso image
@@ -166,7 +170,7 @@
         (nixpkgs.lib.nixosSystem rec {
           system = host.system;
           modules = [
-            { nixpkgs.overlays = [ self.overlay home-manager.overlay ]; }
+            { nixpkgs.overlays = [ home-manager.overlay self.overlay ]; }
             nixpkgs.nixosModules.notDetected
             home-manager.nixosModules.home-manager
             (import (./configuration + "/hosts/${name}/configuration.nix"))

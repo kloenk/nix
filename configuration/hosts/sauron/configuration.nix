@@ -75,6 +75,7 @@
 
   # beeing a cache
   nix.gc.automatic = false;
+  system.autoUpgrade.enable = true;
 
   users.users.pbb.extraGroups = [ "wheel" ];
 
