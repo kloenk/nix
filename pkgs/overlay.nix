@@ -50,15 +50,8 @@ in {
       ++ [ "-DPSQL_INCDIR=${final.postgresql}/include" ];
   });
 
-  hydra-patched = prev.hydra-unstable.overrideAttrs (oldAttrs: rec {
-    src = final.fetchFromGitHub {
-      owner = "NixOS";
-      repo = "hydra";
-      rev = "0b300e80ad579481fca3663e56356924b8a628e5";
-      sha256 =
-        "210075c0a20bd4ba586c6175cf3c4a805304aaf557442638739a1e485137ede7";
-    };
-  });
+  inherit (final.callPackage ./hydra { })
+    hydra-unstable;
 
   nix-serve = prev.nix-serve.overrideAttrs (oldAttrs: rec {
     meta = oldAttrs.meta // { platforms = final.lib.platforms.linux; };

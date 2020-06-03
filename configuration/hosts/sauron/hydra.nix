@@ -10,7 +10,7 @@
 
   services.hydra = {
     enable = true;
-    package = pkgs.hydra-patched;
+    package = pkgs.hydra-unstable;
     port = 3015;
     listenHost = "0.0.0.0";
     notificationSender = "hydra@kloenk.de";
