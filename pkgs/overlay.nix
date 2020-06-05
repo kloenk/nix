@@ -53,6 +53,8 @@ in {
   inherit (final.callPackage ./hydra { })
     hydra-unstable;
 
+  inherit (final.callPackage ./firefox {}) firefoxPolicies firefox-policies-wrapped;
+
   nix-serve = prev.nix-serve.overrideAttrs (oldAttrs: rec {
     meta = oldAttrs.meta // { platforms = final.lib.platforms.linux; };
   });

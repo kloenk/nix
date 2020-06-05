@@ -215,7 +215,7 @@ in {
   services.vnstat.enable = true;
 
   # auto update/garbage collector
-  #system.autoUpgrade.enable = true;
+  system.autoUpgrade.enable = true;
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 14d";
 

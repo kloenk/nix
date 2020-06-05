@@ -107,9 +107,9 @@
         #nixFlakes =
         #  (nix.packages.${system}.nix // { version = "2.4pre-Kloenk"; });
         #nix = (nix.packages.${system}.nix // { version = "2.4pre"; });
-        nixFlakes = final.nix.overrideAttrs (oldAttrs: rec {
-          version = "2.4pre-kloenk";
-        });
+        #nixFlakes = final.nix.overrideAttrs (oldAttrs: rec {
+        #  version = "2.4pre-kloenk";
+        #});
       };
 
       # iso image
