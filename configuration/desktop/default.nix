@@ -1,6 +1,11 @@
 { config, pkgs, lib, ... }:
 
 {
+
+  imports = [
+    ./firefox.nix
+  ];
+
   home-manager.useUserPackages = true;
 
   security.rngd.enable = lib.mkDefault false;
@@ -84,7 +89,8 @@
     notable
 
     # web browser
-    firefox-wayland
+    #firefox-wayland
+    firefox-policies-wrapped
     qutebrowser
     chromium
     #config.sources.nixpkgs-qutebrowser.packages."x86_64-linux".qutebrowser

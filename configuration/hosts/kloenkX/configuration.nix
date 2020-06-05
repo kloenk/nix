@@ -72,7 +72,6 @@ in {
   services.avahi.enable = true;
 
   nixpkgs.config.allowUnfree = true;
-  nix.package = pkgs.nixFlakes;
   nix.extraOptions = ''
     builders-use-substitutes = true
   '';

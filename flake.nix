@@ -176,6 +176,7 @@
             self.nixosModules.secrets
             self.nixosModules.ferm2
             self.nixosModules.deluge2
+            self.nixosModules.firefox
             (makeSourcesModule name)
             {
               # disable home-manager manpage (breaks hydra see https://github.com/rycee/home-manager/issues/1262)
@@ -197,6 +198,7 @@
         ferm2 = import ./modules/ferm2;
         deluge2 = import ./modules/deluge.nix;
         autoUpgrade = import ./modules/upgrade;
+        firefox = import ./modules/firefox;
       };
 
       # apps
