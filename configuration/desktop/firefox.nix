@@ -28,7 +28,8 @@
         Cryptomining = true;
         Fingerprinting = true;
       };
-      #EncryptedMediaExtensions.Enabled = true;
+      EncryptedMediaExtensions.Enabled = true;
+      EncryptedMediaExtensions.Locked = true;
       Extensions = {
         Install = [
           #"https://addons.mozilla.org/firefox/downloads/file/3475706/matte_black_red-2019.12.27-an+fx.xpi"
@@ -44,7 +45,7 @@
         ];
       };
       Homepage = {
-        URL = "moz-extension://a8b3c9a1-063e-400b-848a-88a20688a837/dashboard.html";
+        URL = "moz-extension://081d1ae0-6f51-4c23-be0f-233a3ffc3f42/dashboard.html";
         Locked = true;
         StartPage = "homepage";
       };

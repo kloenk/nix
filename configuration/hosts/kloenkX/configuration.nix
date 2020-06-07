@@ -15,6 +15,7 @@ in {
     ../../common
     ../../desktop/sway.nix
     ../../desktop
+    ../../desktop/vscode.nix
     #../desktop/spotifyd.nix
   ];
 
