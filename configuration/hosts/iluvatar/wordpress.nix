@@ -22,6 +22,8 @@
     lib.mkOverride 25 config.services.nginx.group;
   services.phpfpm.pools.wordpress-imkerverein.settings."listen.group" =
     lib.mkOverride 25 config.services.nginx.group;
+  services.phpfpm.pools.wordpress-imkerverein.group =
+    lib.mkOverride 25 config.services.nginx.group;
   /* services.nginx.virtualHosts."burscheider-imkerverein.de" = {
        enableACME = true;
        forceSSL = true;
