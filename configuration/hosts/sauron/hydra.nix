@@ -15,7 +15,7 @@
     listenHost = "0.0.0.0";
     notificationSender = "hydra@kloenk.de";
     extraConfig = ''
-      store_uri = s3://nix?endpoint=144.76.19.168%3A9000&scheme=http
+      store_uri = s3://nix?endpoint=144.76.19.168%3A9000&scheme=http&secret-key=${config.krops.secrets.files.signignkey.path}
       binary_cache_public_uri = https://cache.kloenk.de
 
       upload_logs_to_binary_cache = true
@@ -64,8 +64,8 @@
     enable = true;
     secretKeyFile = config.krops.secrets.files."signignkey".path;
   };
-  krops.secrets.files."signignkey".owner = "nix-serve";
-  users.users.nix-serve.extraGroups = [ "keys" ];
+  krops.secrets.files."signignkey".owner = "hydra";
+  users.users.hydra.extraGroups = [ "keys" ];
 
   services.nginx.virtualHosts."cache.kloenk.de" = {
     enableACME = true;
