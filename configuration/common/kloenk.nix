@@ -31,7 +31,7 @@
       file
       elinks
       bc
-      zstd
+      #zstd
       unzip
       jq
       gopass

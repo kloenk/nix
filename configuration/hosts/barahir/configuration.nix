@@ -19,7 +19,7 @@
   ];
 
   hardware.cpu.intel.updateMicrocode = true;
-  boot.loader.grub.device = "/dev/disk/by-id/wwn-0x5002538d00000000";
+  boot.loader.grub.device = "/dev/disk/by-id/ata-Patriot_Burst_F90B079B1A0400316538";
   boot.kernelModules = [
     #"vfio-pci"
     "amdgpu"
@@ -34,7 +34,7 @@
   ];
 
   boot.initrd.luks.devices."cryptLVM".device =
-    "/dev/disk/by-id/wwn-0x5002538d00000000-part2";
+    "/dev/disk/by-id/ata-Patriot_Burst_F90B079B1A0400316538-part2";
   boot.initrd.luks.devices."cryptLVM".allowDiscards = true;
 
   boot.kernelParams = [
