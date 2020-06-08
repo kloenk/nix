@@ -41,12 +41,13 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1591358952,
-        "narHash": "sha256-YpuDr7PY47NPDSb2akaXh32bf5z5xRSzUzTwn03UplU=",
-        "owner": "nixos",
-        "repo": "nix",
-        "rev": "488ff83e6b5b3120ce100b0f7b065280f2ce30c2",
-        "type": "github"
+        "lastModified": 1591468770,
+        "narHash": "sha256-Mfszhp2Hxcw3XF3HbqXiG3OT0kw9h40Wln/C3x9iq0s=",
+        "ref": "multi-progress-bar",
+        "rev": "087a3e3b5c7785a62d9ac759a6f73d20c59e2423",
+        "revCount": 8323,
+        "type": "git",
+        "url": "file:///home/kloenk/proj/nixos-nix"
       },
       "original": {
         "owner": "nixos",
@@ -73,31 +74,15 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1591001175,
-        "narHash": "sha256-y7M74YoC2e0tY06X0tOxUWT11X1rTI4HUHKsERqexTc=",
+        "lastModified": 1591591729,
+        "narHash": "sha256-MGy9p1az0LVOKkzPmK1kCEI+VVLbDnba5Nyv7GM6Sjs=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "99b5c0bcbe167690e48e0ab015cb634f9d6fc455",
+        "rev": "b668fe879621640bc60f89b3aaefce69781a2a48",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-lopsided": {
-      "locked": {
-        "lastModified": 1591309846,
-        "narHash": "sha256-Ai0/nfPMAgdtgXNxuah/E7i7tIsue0DH3uXDjS8Gf8U=",
-        "owner": "lopsided98",
-        "repo": "nixpkgs",
-        "rev": "14eceb59915d52e9bdcfa832d98b68f7c64db2f0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "lopsided98",
-        "ref": "grub-initrd-secrets",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -174,7 +159,6 @@
         "nix": "nix",
         "nixos-org": "nixos-org",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-lopsided": "nixpkgs-lopsided",
         "nixpkgs-mc": "nixpkgs-mc",
         "nixpkgs-qutebrowser": "nixpkgs-qutebrowser",
         "secrets": "secrets",

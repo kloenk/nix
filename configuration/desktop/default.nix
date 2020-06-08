@@ -45,7 +45,7 @@
     #libreoffice
     blueman
     mkpasswd
-    lxappearance-gtk3
+    lxappearance
     dino
     spotify-tui
     xonotic

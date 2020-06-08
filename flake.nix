@@ -24,13 +24,6 @@
     inputs.nixpkgs.follows = "/nixpkgs";
   };
 
-  inputs.nixpkgs-lopsided = {
-    type = "github";
-    owner = "lopsided98";
-    repo = "nixpkgs";
-    ref = "grub-initrd-secrets";
-  };
-
   inputs.nixpkgs-mc = {
     type = "github";
     owner = "kloenk";
@@ -70,8 +63,7 @@
   };
 
   outputs = inputs@{ self, nixpkgs, nix, home-manager, mail-server, website
-    , secrets, nixpkgs-qutebrowser, nixpkgs-lopsided # grub patch
-    , nixpkgs-mc, nixos-org }:
+    , secrets, nixpkgs-qutebrowser, nixpkgs-mc, nixos-org }:
     let
 
       overlayCombined = [ nix.overlay home-manager.overlay self.overlay ];
@@ -84,18 +76,14 @@
       nixpkgsFor = forAllSystems (system:
         import nixpkgs {
           inherit system;
-          overlays = overlayCombined ++ [(overlays system)];
+          overlays = overlayCombined ++ [ (overlays system) ];
         });
 
       # patche modules
       patchModule = system: {
-        disabledModules = [
-          "system/boot/loader/grub/grub.nix"
-          "services/games/minecraft-server.nix"
-          "tasks/auto-upgrade.nix"
-        ];
+        disabledModules =
+          [ "services/games/minecraft-server.nix" "tasks/auto-upgrade.nix" ];
         imports = [
-          "${nixpkgs-lopsided}/nixos/modules/system/boot/loader/grub/grub.nix"
           "${nixpkgs-mc}/nixos/modules/services/games/minecraft-server.nix"
           self.nixosModules.autoUpgrade
         ];

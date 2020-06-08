@@ -26,10 +26,10 @@
   # binary cache
   nix.binaryCachePublicKeys =
     [ "cache.kloenk.de:ea1cL0mwRMABkALTC/cYV84V0eoL1UWkj3e2TvS4Y6o=" ];
-  nix.binaryCaches = if config.networking.hostName != "sauron" then
-    [ "https://cache.kloenk.de" ]
-  else
-    [ ];
+  #nix.binaryCaches = if config.networking.hostName != "sauron" then
+  #  [ "https://cache.kloenk.de" ]
+  #else
+  #  [ ];
 
   networking.domain = lib.mkDefault "kloenk.de";
   networking.useNetworkd = lib.mkDefault true;
