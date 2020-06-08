@@ -49,7 +49,7 @@
       #     Metric = 512;
       #   };
       # }];
-      dhcpConfig.RouteMetric = 512;
+      dhcpV4Config.RouteMetric = 512;
       linkConfig.RequiredForOnline = "no";
     };
 

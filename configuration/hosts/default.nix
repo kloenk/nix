@@ -79,6 +79,32 @@ in {
   };
 
   # for monitoring only
+  pve-usee = makeHost {
+    host = "pve-usee.kloenk.de";
+    nixos = false;
+    user = "root";
+    prometheusExporters = [
+      "node-exporter"
+      "pve-exporter"
+    ]; # https://github.com/znerol/prometheus-pve-exporter
+  };
+
+  # for monitoring only
+  bbb-usee = makeHost {
+    host = "bbb-usee.kloenk.de";
+    nixos = false;
+    user = "root";
+    prometheusExporters = [ "node-exporter" "bbb-exporter" ];
+  };
+
+  # for monitoring only
+  moodle-usee = makeHost {
+    host = "moodle-usee.kloenk.de";
+    nixos = false;
+    prometheusExporters = [ "node-exporter" ];
+  };
+
+  # for monitoring only
   gdv01 = makeHost {
     host = "gdv01.eventphone.de";
     user = "root";

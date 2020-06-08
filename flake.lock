@@ -41,13 +41,12 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1591468770,
-        "narHash": "sha256-Mfszhp2Hxcw3XF3HbqXiG3OT0kw9h40Wln/C3x9iq0s=",
-        "ref": "multi-progress-bar",
-        "rev": "087a3e3b5c7785a62d9ac759a6f73d20c59e2423",
-        "revCount": 8323,
-        "type": "git",
-        "url": "file:///home/kloenk/proj/nixos-nix"
+        "lastModified": 1591383143,
+        "narHash": "sha256-xKyAzlNapAAjhS2cTWKxuTarz4Exa0YnVoWtm3E3Bk0=",
+        "owner": "nixos",
+        "repo": "nix",
+        "rev": "9ef6048d784a298f384affdec941b5b38c61346c",
+        "type": "github"
       },
       "original": {
         "owner": "nixos",
