@@ -15,7 +15,10 @@
     listenHost = "0.0.0.0";
     notificationSender = "hydra@kloenk.de";
     extraConfig = ''
-      allow-import-from-derivation = true
+      store_uri = s3://nix?endpoint=144.76.19.168%3A9000&scheme=http
+      binary_cache_public_uri = https://cache.kloenk.de
+
+      upload_logs_to_binary_cache = true
     '';
 
     hydraURL = "hydra.kloenk.de";

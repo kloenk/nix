@@ -105,16 +105,15 @@ in {
       '';
     }];
 
-    system.autoUpgrade.flags = [ "--no-build-output" ]
-      ++ (if cfg.flake == null then
-        (if cfg.channel == null then
-          [ "--upgrade" ]
-        else [
-          "-I"
-          "nixpkgs=${cfg.channel}/nixexprs.tar.xz"
-        ])
-      else
-        [ "--flake ${cfg.flake}" ]);
+    system.autoUpgrade.flags = (if cfg.flake == null then
+      (if cfg.channel == null then
+        [ "--upgrade" ]
+      else [
+        "-I"
+        "nixpkgs=${cfg.channel}/nixexprs.tar.xz"
+      ]) ++ [ "--no-build-output" ]
+    else
+      [ "--flake ${cfg.flake}" ]);
 
     systemd.services.nixos-upgrade = {
       description = "NixOS Upgrade";
