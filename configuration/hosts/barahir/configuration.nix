@@ -19,7 +19,8 @@
   ];
 
   hardware.cpu.intel.updateMicrocode = true;
-  boot.loader.grub.device = "/dev/disk/by-id/ata-Patriot_Burst_F90B079B1A0400316538";
+  boot.loader.grub.device =
+    "/dev/disk/by-id/ata-Patriot_Burst_F90B079B1A0400316538";
   boot.kernelModules = [
     #"vfio-pci"
     "amdgpu"
@@ -97,6 +98,7 @@
     virtmanager
     gnumake
     postgresql_12
+    elvish
   ];
 
   users.users.kloenk.packages = with pkgs; [
@@ -156,6 +158,9 @@
 
   # fix home-manager
   systemd.services.home-manager-kloenk.after = [ "home-kloenk.mount" ];
+
+  # use elvish
+  #users.users.kloenk.shell = pkgs.elvish;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

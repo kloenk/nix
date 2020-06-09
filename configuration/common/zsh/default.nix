@@ -1,6 +1,7 @@
 { lib, pkgs, config, ... }:
 
 {
+  environment.pathsToLink = [ "/share/zsh" ];
   home-manager.users.kloenk.programs.zsh = {
     initExtra = ''
       function use {

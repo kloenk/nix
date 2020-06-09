@@ -16,7 +16,7 @@
   nix.trustedUsers = [ "root" "@wheel" "kloenk" ];
   # nix flakes
   #nix.package = lib.mkDefault pkgs.nixFlakes;
-  nix.systemFeatures = [ "recursive-nix" "kvm" "nixos-test" "big-paralell" ];
+  nix.systemFeatures = [ "recursive-nix" "kvm" "nixos-test" "big-parallel" ];
   nix.extraOptions = ''
     experimental-features = nix-command flakes ca-references recursive-nix
   '';
@@ -98,7 +98,7 @@
 
   environment.variables.EDITOR = "vim";
 
-  users.users.kloenk.shell = pkgs.zsh;
+  users.users.kloenk.shell = lib.mkOverride 75 pkgs.zsh;
 
   home-manager.users.kloenk = import ./home.nix {
     pkgs = pkgs;
