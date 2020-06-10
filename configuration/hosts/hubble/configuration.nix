@@ -164,6 +164,7 @@ in {
   services.nginx.virtualHosts."cache.kloenk.de" = {
     enableACME = true;
     forceSSL = true;
+    locations."= /".proxyPass = "http://144.76.19.168:9000/nix/index.html";
     locations."/".proxyPass = "http://144.76.19.168:9000/nix/";
   };
 

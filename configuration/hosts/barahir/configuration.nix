@@ -15,6 +15,7 @@
     ../../common/pbb.nix
     ../../desktop
     ../../desktop/sway.nix
+    ../../desktop/vscode.nix
     #    ../../desktop/plasma.nix
   ];
 
@@ -86,6 +87,7 @@
 
   nixpkgs.config.allowUnfree = true;
   nix.gc.automatic = false;
+  nix.binaryCaches = [ "https://cache.kloenk.de" ];
 
   services.printing.browsing = true;
   services.printing.enable = true;
@@ -99,6 +101,8 @@
     gnumake
     postgresql_12
     elvish
+    cquery
+    ccls
   ];
 
   users.users.kloenk.packages = with pkgs; [

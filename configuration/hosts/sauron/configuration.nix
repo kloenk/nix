@@ -73,8 +73,8 @@
     }];
   };
 
-  # beeing a cache
-  nix.gc.automatic = false;
+  # beeing a cache but on s3 (miniio)
+  nix.gc.automatic = true;
   system.autoUpgrade.enable = true;
 
   users.users.pbb.extraGroups = [ "wheel" ];

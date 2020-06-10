@@ -1,6 +1,6 @@
 $TTL 1M
 @		SOA	ns1.kloenk.de. hostmaster.kloenk.de. (
-    2020061002  	; serial (yyyymmdd##)
+    2020061003  	; serial (yyyymmdd##)
     3600            ; refresh
     1000            ; retry
     604800          ; expiry
@@ -95,8 +95,8 @@ git	A			195.39.247.6
 
 bbb-wass	CNAME bbb.wass-er.com.
 
-moodle-usee CNAME segelschule.unterbachersee.de
-bbb-usee CNAME schulungsraum.unterbachersee.de
+moodle-usee CNAME segelschule.unterbachersee.de.
+bbb-usee CNAME schulungsraum.unterbachersee.de.
 pve-usee A	5.9.118.73
 pve-usee AAAA 2a01:4f8:162:6343::2
 
