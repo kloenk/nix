@@ -161,6 +161,12 @@ in {
   };
   environment.etc."key.wass-er.com/key".text = lib.fileContents ./key.wass-er;
 
+  services.nginx.virtualHosts."cache.kloenk.de" = {
+    enableACME = true;
+    forceSSL = true;
+    locations."/".proxyPass = "http://144.76.19.168:9000/nix/";
+  };
+
   services.nginx.virtualHosts."llgcompanion.kloenk.de" = {
     enableACME = true;
     forceSSL = true;

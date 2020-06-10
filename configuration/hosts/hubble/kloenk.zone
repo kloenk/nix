@@ -1,6 +1,6 @@
 $TTL 1M
 @		SOA	ns1.kloenk.de. hostmaster.kloenk.de. (
-    2020060801  	; serial (yyyymmdd##)
+    2020061001  	; serial (yyyymmdd##)
     3600            ; refresh
     1000            ; retry
     604800          ; expiry
@@ -126,7 +126,7 @@ survey		A 51.254.249.180
 survey		CAA 0 issue letsencrypt.org
 
 hydra	CNAME	sauron.kloenk.de.
-cache	CNAME sauron.kloenk.de.
+cache	CNAME hubble.kloenk.de.
 
 yougen  A  195.39.247.9
 
