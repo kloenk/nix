@@ -19,12 +19,11 @@ in {
   });
 
   minecraft-20w20a = prev.minecraft-server.overrideAttrs (oldAttrs: rec {
-    version = "1.16-pre20w20a";
+    version = "1.16-pre3";
     src = final.fetchurl {
       url =
-        "https://launcher.mojang.com/v1/objects/0393774fb1f9db8288a56dbbcf45022b71f7939f/server.jar";
-      sha256 =
-        "933a424ad1e82d33b0d782b54158e877969dd0893329f190495ca3ba287e8358";
+        "https://launcher.mojang.com/v1/objects/0b5653b65bc494fa55349682cebf50abf0d72ad9/server.jar";
+      sha1 = "0b5653b65bc494fa55349682cebf50abf0d72ad9";
     };
   });
 
@@ -50,10 +49,10 @@ in {
       ++ [ "-DPSQL_INCDIR=${final.postgresql}/include" ];
   });
 
-  inherit (final.callPackage ./hydra { })
-    hydra-unstable;
+  inherit (final.callPackage ./hydra { }) hydra-unstable;
 
-  inherit (final.callPackage ./firefox {}) firefoxPolicies firefox-policies-wrapped;
+  inherit (final.callPackage ./firefox { })
+    firefoxPolicies firefox-policies-wrapped;
 
   nix-serve = prev.nix-serve.overrideAttrs (oldAttrs: rec {
     meta = oldAttrs.meta // { platforms = final.lib.platforms.linux; };
