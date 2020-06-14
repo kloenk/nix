@@ -16,23 +16,14 @@
 
   services.qemuGuest.enable = true;
 
-  boot.loader.grub.device = "/dev/vda";
+  boot.loader.grub.device = "/dev/disk/by-path/virtio-pci-0000:00:0b.0";
 
-  boot.initrd.luks.reusePassphrases = true;
-  boot.initrd.luks.devices.cryptHDD.device =
-    "/dev/disk/by-partuuid/df6e878d-02";
-  boot.initrd.network.enable = true;
-  boot.initrd.availableKernelModules = [ "virtio-pci" ];
-  boot.initrd.network.ssh = {
-    enable = true;
-    hostKeys = [ "/var/src/secrets/initrd/host_key" ];
-  };
-  boot.initrd.preLVMCommands = lib.mkBefore (''
-    ip li set ens18 up
-    ip addr add 195.39.221.54/32 dev ens18
-    ip route add default via 195.39.221.1 onlink dev ens18
-    hasNetwork=1
-  '');
+  #boot.initrd.preLVMCommands = lib.mkBefore (''
+  #  ip li set ens18 up
+  #  ip addr add 195.39.221.54/32 dev ens18
+  #  ip route add default via 195.39.221.1 onlink dev ens18
+  #  hasNetwork=1
+  #'');
 
   boot.initrd.postMountCommands = ''
     cd /mnt-root

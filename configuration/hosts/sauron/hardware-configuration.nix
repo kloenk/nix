@@ -11,8 +11,19 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/636a5919-d0f9-44c9-904f-262e24d16161";
+    device = "/dev/disk/by-uuid/a820fcb0-79b6-43f1-94a9-3436067b0db2";
     fsType = "xfs";
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/8b9c723e-aeac-4b7b-9346-3ef7eca6a630";
+    fsType = "ext2";
+  };
+
+  fileSystems."/tmp" = {
+    device = "/dev/disk/by-uuid/043e3a8b-711e-4d4e-8340-edc39d8748ac";
+    fsType = "xfs";
+    neededForBoot = true; # to make sure it gets deleted
   };
 
   fileSystems."/persist/logs" = {
@@ -34,13 +45,8 @@
     neededForBoot = true;
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/a77c5a4b-6600-47fa-a001-00a1f5592f2e";
-    fsType = "ext3";
-  };
-
   swapDevices =
-    [{ device = "/dev/disk/by-uuid/0b9285af-f4a8-462e-99fd-b20a9d8951d4"; }];
+    [{ device = "/dev/disk/by-uuid/5931263d-d896-4c98-9b0e-fcef0362941a"; }];
 
   nix.maxJobs = lib.mkDefault 16;
 }

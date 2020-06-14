@@ -18,7 +18,7 @@
   #nix.package = lib.mkDefault pkgs.nixFlakes;
   nix.systemFeatures = [ "recursive-nix" "kvm" "nixos-test" "big-parallel" ];
   nix.extraOptions = ''
-    experimental-features = nix-command flakes ca-references recursive-nix
+    experimental-features = nix-command flakes ca-references recursive-nix progress-bar
   '';
 
   system.autoUpgrade.flake = "github:kloenk/nix";
