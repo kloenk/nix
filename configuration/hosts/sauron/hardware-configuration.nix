@@ -26,11 +26,6 @@
     neededForBoot = true; # to make sure it gets deleted
   };
 
-  fileSystems."/persist/logs" = {
-    device = "/dev/disk/by-uuid/9b94dd6b-6dc3-41c4-beaa-969f523be8f7";
-    fsType = "xfs";
-  };
-
   fileSystems."/var/log" = {
     device = "/persist/logs";
     fsType = "none";
