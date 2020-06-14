@@ -52,6 +52,12 @@
 
   systemd.network.networks."30-ens18" = {
     name = "ens18";
+    networkConfig.DNS = [
+      "2001:470:20::2"
+      "2001:4860:4860::8888"
+      "2001:4860:4860::8844"
+      "1.1.1.1"
+    ];
     addresses = [
       { addressConfig.Address = "195.39.221.54/32"; }
       { addressConfig.Address = "2a0f:4ac4:42:0:f199::1/64"; }
