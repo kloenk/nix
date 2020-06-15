@@ -1,6 +1,6 @@
 $TTL 1M
 @		SOA	ns1.kloenk.de. hostmaster.kloenk.de. (
-    2020061003  	; serial (yyyymmdd##)
+    2020061501  	; serial (yyyymmdd##)
     3600            ; refresh
     1000            ; retry
     604800          ; expiry
@@ -112,14 +112,14 @@ netbox		AAAA	2001:41d0:1004:16ad:c0ff:ee:0:180
 netbox		CAA	0	issue letsencrypt.org
 
 
-; ftb server
-_minecraft._tcp.ftb	SRV	1	1	25565	144.76.19.168
-_minercaft._tcp		SRV	1	1	25565	144.76.19.168
+; minecraft server
+_minercaft._tcp		SRV	1	1	20023 game.00y.de.
+_minercaft._tcp.mc	SRV	1	1	20023 game.00y.de.
+;_minercaft._tcp.mc	SRV	1	1	20023 game.00y.de.
 
 ; lennart ts entrys
 _ts3._udp.ts	SRV	1	1	790	web.xorit.de.
 _ts3._udp.ts3	SRV	1	1	790	web.xorit.de.
-_ts3._udp.ftb	SRV	1	1	790	web.xorit.de.
 
 ; facharbeit survey system
 survey		A 51.254.249.180
