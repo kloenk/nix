@@ -101,7 +101,6 @@
     gnumake
     postgresql_12
     elvish
-    cquery
     ccls
   ];
 
