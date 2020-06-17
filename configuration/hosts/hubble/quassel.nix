@@ -8,6 +8,12 @@
     options = [ "bind" ];
   };
 
+  fileSystems."/home/quassel" = {
+    device = "/persist/data/quassel-home";
+    fsType = "none";
+    options = [ "bind" ];
+  };
+
   services.postgresql = {
     ensureDatabases = [ "quassel" ];
     ensureUsers = [{
