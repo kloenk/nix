@@ -41,6 +41,11 @@ in {
     #wireguard.endpoint = ""; # FIXME: port forwarding??
   };
 
+  nixos = makeHost {
+    host = "";
+    prometheusExporters = [ ];
+  };
+
   sauron = makeHost {
     host = "sauron.kloenk.de";
     vm = true;
