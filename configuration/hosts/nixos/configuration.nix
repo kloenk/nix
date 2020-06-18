@@ -16,10 +16,11 @@
 
   networking.hostName = "nixos";
   networking.useDHCP = false;
-  networking.interfaces.enp2s0f0.useDHCP = true;
-  networking.interfaces.enp2s0f1.useDHCP = true;
-  networking.interfaces.enp3s0f0.useDHCP = true;
-  networking.interfaces.enp3s0f1.useDHCP = true;
+  /* networking.interfaces.enp2s0f0.useDHCP = true;
+     networking.interfaces.enp2s0f1.useDHCP = true;
+     networking.interfaces.enp3s0f0.useDHCP = true;
+     networking.interfaces.enp3s0f1.useDHCP = true;
+  */
 
   networking.hosts = {
     "192.168.178.1" = [ "fritz.box" ];
@@ -43,8 +44,31 @@
   nix.gc.automatic = true;
   nix.binaryCaches = [ "https://cache.kloenk.de" ];
 
-  networking.bridges.br0.interfaces =
-    [ "enp2s0f0" "enp2s0f1" "enp3s0f0" "enp3s0f1" ];
+  boot.kernel.sysctl = {
+    "net.ipv4.conf.all.forwarding" = true;
+    "net.ipv6.conf.all.forwarding" = true;
+  };
+
+  systemd.network = {
+    networks."20-enp" = {
+      name = "enp?s0f?";
+      DHCP = "yes";
+      bridge = [ "br0" ];
+    };
+
+    netdevs."30-br0" = {
+      netdevConfig = {
+        Kind = "bridge";
+        Name = "br0";
+      };
+    };
+
+    networks."30-br0" = {
+      name = "br0";
+      DHCP = "yes";
+      networkConfig = { ConfigureWithoutCarrier = true; };
+    };
+  };
 
   environment.systemPackages = with pkgs; [ lm_sensors docker virtmanager ];
 
