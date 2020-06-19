@@ -2,7 +2,9 @@
   "nodes": {
     "home-manager": {
       "inputs": {
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
         "nmt": "nmt"
       },
       "locked": {
@@ -38,7 +40,9 @@
     },
     "nix": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1591915976,
@@ -198,5 +202,5 @@
     }
   },
   "root": "root",
-  "version": 6
+  "version": 7
 }
