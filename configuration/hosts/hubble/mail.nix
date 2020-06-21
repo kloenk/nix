@@ -136,6 +136,9 @@
           "tjaard@drachensegler.kloenk.de"
           "tjaard@kloenk.de"
           "schule@drachensegler.kloenk.de"
+          "iandmi@drachensegler.kloenk.de"
+          "iandme@drachensegler.kloenk.de"
+          "autodesk@drachensegler.kloenk.de"
         ];
 
         catchAll = [ "drachensegler.kloenk.de" ];
