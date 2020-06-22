@@ -120,7 +120,7 @@
   # auto update/garbage collector
   system.autoUpgrade.enable = true;
   nix.gc.automatic = true;
-  nix.gc.options = "--delete-older-than 14d";
+  nix.gc.options = "--delete-older-than 4d";
   #systemd.services.nixos-upgrade.path = with pkgs; [  gnutar xz.bin gzip config.];
 
   # This value determines the NixOS release with which your system is to be

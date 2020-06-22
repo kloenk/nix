@@ -224,7 +224,7 @@ in {
   # auto update/garbage collector
   system.autoUpgrade.enable = true;
   nix.gc.automatic = true;
-  nix.gc.options = "--delete-older-than 14d";
+  nix.gc.options = "--delete-older-than 2d";
 
   # fix tar gz error in autoupdate
   systemd.services.nixos-upgrade.path = with pkgs; [
