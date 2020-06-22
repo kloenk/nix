@@ -169,6 +169,7 @@
             {
               # disable home-manager manpage (breaks hydra see https://github.com/rycee/home-manager/issues/1262)
               home-manager.users.kloenk.manual.manpages.enable = false;
+              #home-manager.users.pbb.manual.manpage.enable = false;
             }
             (patchModule host.system)
           ] ++ (if (if (host ? vm) then host.vm else false) then

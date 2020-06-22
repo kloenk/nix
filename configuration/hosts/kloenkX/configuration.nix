@@ -19,6 +19,8 @@ in {
     #../desktop/spotifyd.nix
   ];
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" "mipsel-linux" ];
+
   systemd.services.systemd-networkd.environment.SYSTEMD_LOG_LEVEL = "debug";
 
   environment.variables.NIX_PATH = lib.mkForce "/var/src";
