@@ -30,10 +30,10 @@
   # FIXME: needed?
   #services.openssh.passwordAuthentication = true;
 
-  boot.binfmt.emulatedSystems = [
-    "aarch64-linux" # "x86_64-windows"
-    "mipsel-linux"
-  ];
+  #boot.binfmt.emulatedSystems = [
+  #  "aarch64-linux" # "x86_64-windows"
+  #  "mipsel-linux"
+  #];
 
   boot.initrd.luks.devices."cryptLVM".device =
     "/dev/disk/by-id/ata-Patriot_Burst_F90B079B1A0400316538-part2";

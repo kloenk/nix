@@ -42,7 +42,7 @@ in {
   };
 
   nixos = makeHost {
-    host = "";
+    host = "192.168.178.0";
     prometheusExporters = [ ];
   };
 
