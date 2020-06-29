@@ -187,11 +187,11 @@
     "website": {
       "flake": false,
       "locked": {
-        "lastModified": 1588193270,
-        "narHash": "sha256-t3im3Do7CECZQJfJPEgKc7gOH7sC0ZyblkeLnNUHd1Q=",
+        "lastModified": 1593426968,
+        "narHash": "sha256-idIhPN+Gbd+rPZL/jp1F2YOhJpO+JG2s1USIKPYtWvM=",
         "ref": "master",
-        "rev": "6cbdea74fd1176cafafd4f88e959744b65383b87",
-        "revCount": 15,
+        "rev": "2d16df22b5d98854b7c51b8fce324f2cab286205",
+        "revCount": 16,
         "type": "git",
         "url": "https://git.pbb.lc/kloenk/website.git"
       },
