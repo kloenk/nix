@@ -32,8 +32,12 @@
   };
 
   inputs.mail-server = {
-    type = "git";
-    url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git";
+    #type = "git";
+    #url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git";
+    type = "gitlab";
+    owner = "simple-nixos-mailserver";
+    repo = "nixos-mailserver";
+    ref = "master";
     flake = false;
   };
 
