@@ -48,7 +48,7 @@
       };
       wireguardPeers = [{
         wireguardPeerConfig = {
-          AllowedIPs = [ "0.0.0.0" "::/0" ];
+          AllowedIPs = [ "0.0.0.0/0" "::/0" ];
           PublicKey = "MUsPCkTKHBGvCI62CevFs6Wve+cXBLQIl/C3rW3PbVM=";
           PersistentKeepalive = 21;
           Endpoint = "51.254.249.187:51820";

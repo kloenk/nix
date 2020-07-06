@@ -22,6 +22,27 @@
         "type": "github"
       }
     },
+    "hydra": {
+      "inputs": {
+        "nix": "nix",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1593509723,
+        "narHash": "sha256-ESv86LNnQQy5cYqeC1S4otpvkA8ABgs/zbge8xp35aE=",
+        "owner": "nixos",
+        "repo": "hydra",
+        "rev": "d0deebc4fc95dbeb0249f7b774b03d366596fbed",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "hydra",
+        "type": "github"
+      }
+    },
     "mail-server": {
       "flake": false,
       "locked": {
@@ -40,6 +61,25 @@
       }
     },
     "nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1593628299,
+        "narHash": "sha256-TG05BV4fbJdDW4RzoYBYaGdFtOq6NNet1JHjP1Au/VE=",
+        "owner": "NixOS",
+        "repo": "nix",
+        "rev": "6ff9aa8df7ce8266147f74c65e2cc529a1e72ce0",
+        "type": "github"
+      },
+      "original": {
+        "id": "nix",
+        "type": "indirect"
+      }
+    },
+    "nix_2": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
@@ -78,11 +118,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1594026991,
-        "narHash": "sha256-ssrn4j/v1vENFMwayOCJqmR9r3ucyUgRBcJbCeKodhg=",
+        "lastModified": 1594036103,
+        "narHash": "sha256-2mVdG0Awmmz+3vlleFp5O0/1QW51dpS8Dxj5RtrXZpM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "d56c5bdc415efd686147717634f3348c75ed4d95",
+        "rev": "e1b05720652d7675c36a78dac6d5b3c531fe1028",
         "type": "github"
       },
       "original": {
@@ -159,8 +199,9 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "hydra": "hydra",
         "mail-server": "mail-server",
-        "nix": "nix",
+        "nix": "nix_2",
         "nixos-org": "nixos-org",
         "nixpkgs": "nixpkgs",
         "nixpkgs-mc": "nixpkgs-mc",
@@ -172,11 +213,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1592828179,
-        "narHash": "sha256-nfmFLkBJivOc8b2MYEO4B3F8MSo5hXJT6h0MPGzdyAI=",
+        "lastModified": 1594029533,
+        "narHash": "sha256-CkMt6b7/O8ciqdOac1kY9tZlqjnTZvQwHLjr/qTasSs=",
         "ref": "master",
-        "rev": "31ca6cb60a0247bc4d44fdf58626097a450269bb",
-        "revCount": 938,
+        "rev": "03e2c22567e2704d841800c0e7bf1c88e399fb69",
+        "revCount": 948,
         "type": "git",
         "url": "git+ssh://git@git.kloenk.de/kloenk/pass.git"
       },

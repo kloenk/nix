@@ -51,6 +51,8 @@ in {
 
   inherit (final.callPackage ./hydra { }) hydra-unstable;
 
+  bazaar = final.breezy;
+
   inherit (final.callPackage ./firefox { })
     firefoxPolicies firefox-policies-wrapped;
 

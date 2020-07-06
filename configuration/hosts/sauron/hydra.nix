@@ -11,7 +11,7 @@ in {
 
   services.hydra = {
     enable = true;
-    package = pkgs.hydra-unstable;
+    package = pkgs.hydra; # pkgs.hydra-unstable;
     port = 3015;
     listenHost = "0.0.0.0";
     notificationSender = "hydra@kloenk.de";
@@ -52,7 +52,7 @@ in {
     {
       hostName = "lycus.yougen.de";
       sshUser = "buildfarm";
-      sskKey = config.krops.secrets.files."buildkey".path;
+      sshKey = config.krops.secrets.files."buildkey".path;
       system = "x86_64-linux";
       maxJobs = 8;
       speedFactor = 1;
