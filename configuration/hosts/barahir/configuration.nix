@@ -17,6 +17,7 @@
     ../../desktop/sway.nix
     ../../desktop/vscode.nix
     #    ../../desktop/plasma.nix
+    #../../desktop/gnome.nix
   ];
 
   hardware.cpu.intel.updateMicrocode = true;
