@@ -25,11 +25,11 @@
     "mail-server": {
       "flake": false,
       "locked": {
-        "lastModified": 1590567059,
-        "narHash": "sha256-VUk0jGW+aHd9shcPPBFcsCpzgKYCl9fq4UNTsfaTybE=",
+        "lastModified": 1594067599,
+        "narHash": "sha256-gK1mGMJ1J63YrZR1YpV+hVb8v9woW4lV6H0Js+33X/g=",
         "ref": "master",
-        "rev": "fb8886547b569be3e6b72b526cea64c02424a5c4",
-        "revCount": 430,
+        "rev": "31cf3818dfce1f6694daac833928157fee62ebac",
+        "revCount": 434,
         "type": "git",
         "url": "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git"
       },
@@ -45,11 +45,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1593154006,
-        "narHash": "sha256-St+rD/EKS7FTC3RXmOqCpBYVIYKRjIEnL43RKvgK8xU=",
+        "lastModified": 1594125537,
+        "narHash": "sha256-M801IExREv1T9F+K6YcCFERBFZ3+6ShwzAR2K7xvExA=",
         "owner": "nixos",
         "repo": "nix",
-        "rev": "adf2fbbdc2c94644b0d1023d844c7dc0e485a20f",
+        "rev": "1ab9da915422405452118ebb17b88cdfc90b1e10",
         "type": "github"
       },
       "original": {
@@ -77,11 +77,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1593332670,
-        "narHash": "sha256-pvJ6C6NZrgh3JzkagYSzLMAZ8QjJFHyzNgo7SJzj0uw=",
+        "lastModified": 1594145336,
+        "narHash": "sha256-SKdmsTU7fCf7YldtaTMPhlEcqKD7SKNiBH6jo1sVBiY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "408fd634372a639565f7b2dd9750913c4dacb880",
+        "rev": "6560b608866e8baedd8ff21131e7dfbee8805299",
         "type": "github"
       },
       "original": {
@@ -171,11 +171,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1592828179,
-        "narHash": "sha256-nfmFLkBJivOc8b2MYEO4B3F8MSo5hXJT6h0MPGzdyAI=",
+        "lastModified": 1594029533,
+        "narHash": "sha256-CkMt6b7/O8ciqdOac1kY9tZlqjnTZvQwHLjr/qTasSs=",
         "ref": "master",
-        "rev": "31ca6cb60a0247bc4d44fdf58626097a450269bb",
-        "revCount": 938,
+        "rev": "03e2c22567e2704d841800c0e7bf1c88e399fb69",
+        "revCount": 948,
         "type": "git",
         "url": "git+ssh://git@git.kloenk.de/kloenk/pass.git"
       },
