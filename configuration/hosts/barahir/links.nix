@@ -53,6 +53,29 @@
       linkConfig.RequiredForOnline = "no";
     };
 
+    links."30-m1" = {
+      matchConfig = {
+        Property = "ID_SERIAL=NETGEAR__Inc._MR1100_0123456789ABCDEF";
+      };
+      linkConfig = {
+        Description = "m1 nighthawk router";
+        Name = "m1";
+      };
+    };
+
+    networks."30-mi" = {
+      name = "m1";
+      DHCP = "yes";
+      # routes = [{
+      #   routeConfig = {
+      #     Gateway = "_dhcp";
+      #     Metric = 512;
+      #   };
+      # }];
+      dhcpV4Config.RouteMetric = 512;
+      linkConfig.RequiredForOnline = "no";
+    };
+
     networks."99-how_cares".linkConfig.RequiredForOnline = "no";
     networks."99-how_cares".linkConfig.Unmanaged = "yes";
   };

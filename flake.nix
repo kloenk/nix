@@ -24,6 +24,15 @@
     inputs.nixpkgs.follows = "/nixpkgs";
   };
 
+  inputs.hydra = {
+    type = "github";
+    owner = "nixos";
+    repo = "hydra";
+    inputs.nixpkgs.follows = "/nixpkgs";
+    inputs.nix.inputs.nixpkgs.follows = "/nixpkgs";
+    #inputs.nix.follows = "/nix";
+  };
+
   inputs.nixpkgs-mc = {
     type = "github";
     owner = "kloenk";
@@ -32,8 +41,12 @@
   };
 
   inputs.mail-server = {
-    type = "git";
-    url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git";
+    #type = "git";
+    #url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git";
+    type = "gitlab";
+    owner = "simple-nixos-mailserver";
+    repo = "nixos-mailserver";
+    ref = "master";
     flake = false;
   };
 
@@ -62,11 +75,12 @@
     flake = false;
   };
 
-  outputs = inputs@{ self, nixpkgs, nix, home-manager, mail-server, website
-    , secrets, nixpkgs-qutebrowser, nixpkgs-mc, nixos-org }:
+  outputs = inputs@{ self, nixpkgs, nix, hydra, home-manager, mail-server
+    , website, secrets, nixpkgs-qutebrowser, nixpkgs-mc, nixos-org }:
     let
 
-      overlayCombined = [ nix.overlay home-manager.overlay self.overlay ];
+      overlayCombined =
+        [ nix.overlay home-manager.overlay self.overlay hydra.overlay ];
 
       systems = [ "x86_64-linux" ];
 
@@ -87,7 +101,7 @@
           "${nixpkgs-mc}/nixos/modules/services/games/minecraft-server.nix"
           self.nixosModules.autoUpgrade
         ];
-        nixpkgs.overlays = [ (overlays system) nix.overlay ];
+        nixpkgs.overlays = [ (overlays system) nix.overlay hydra.overlay ];
       };
 
       overlays = system: final: prev: {

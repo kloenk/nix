@@ -22,23 +22,64 @@
         "type": "github"
       }
     },
+    "hydra": {
+      "inputs": {
+        "nix": "nix",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1593509723,
+        "narHash": "sha256-ESv86LNnQQy5cYqeC1S4otpvkA8ABgs/zbge8xp35aE=",
+        "owner": "nixos",
+        "repo": "hydra",
+        "rev": "d0deebc4fc95dbeb0249f7b774b03d366596fbed",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "hydra",
+        "type": "github"
+      }
+    },
     "mail-server": {
       "flake": false,
       "locked": {
         "lastModified": 1594067599,
         "narHash": "sha256-gK1mGMJ1J63YrZR1YpV+hVb8v9woW4lV6H0Js+33X/g=",
-        "ref": "master",
+        "owner": "simple-nixos-mailserver",
+        "repo": "nixos-mailserver",
         "rev": "31cf3818dfce1f6694daac833928157fee62ebac",
-        "revCount": 434,
-        "type": "git",
-        "url": "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git"
+        "type": "gitlab"
       },
       "original": {
-        "type": "git",
-        "url": "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git"
+        "owner": "simple-nixos-mailserver",
+        "ref": "master",
+        "repo": "nixos-mailserver",
+        "type": "gitlab"
       }
     },
     "nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1594125537,
+        "narHash": "sha256-M801IExREv1T9F+K6YcCFERBFZ3+6ShwzAR2K7xvExA=",
+        "owner": "NixOS",
+        "repo": "nix",
+        "rev": "1ab9da915422405452118ebb17b88cdfc90b1e10",
+        "type": "github"
+      },
+      "original": {
+        "id": "nix",
+        "type": "indirect"
+      }
+    },
+    "nix_2": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
@@ -77,11 +118,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1594145336,
-        "narHash": "sha256-SKdmsTU7fCf7YldtaTMPhlEcqKD7SKNiBH6jo1sVBiY=",
+        "lastModified": 1594146020,
+        "narHash": "sha256-UY+POSLDYpFKk4Pn/7S4pf1uDEeNydepnDzPEoR4QPw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "6560b608866e8baedd8ff21131e7dfbee8805299",
+        "rev": "4a9dac0081a3fd2f1be3a1af86046bd27a51c8f9",
         "type": "github"
       },
       "original": {
@@ -158,8 +199,9 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "hydra": "hydra",
         "mail-server": "mail-server",
-        "nix": "nix",
+        "nix": "nix_2",
         "nixos-org": "nixos-org",
         "nixpkgs": "nixpkgs",
         "nixpkgs-mc": "nixpkgs-mc",

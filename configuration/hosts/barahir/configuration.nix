@@ -17,6 +17,7 @@
     ../../desktop/sway.nix
     ../../desktop/vscode.nix
     #    ../../desktop/plasma.nix
+    #../../desktop/gnome.nix
   ];
 
   hardware.cpu.intel.updateMicrocode = true;
@@ -87,7 +88,7 @@
 
   nixpkgs.config.allowUnfree = true;
   nix.gc.automatic = false;
-  nix.binaryCaches = [ "https://cache.kloenk.de" ];
+  nix.binaryCaches = [ "https://cache.kloenk.de/" ];
 
   services.printing.browsing = true;
   services.printing.enable = true;

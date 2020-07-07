@@ -124,6 +124,13 @@
           Endpoint = "195.39.221.54:51820";
         };
       }
+      { # thrain
+        wireguardPeerConfig = {
+          AllowedIPs = [ "192.168.42.52/32" "192.168.178.0/24" ];
+          PublicKey = "RiRB/fiZ/x88f78kRQasSwWYBuBjc5DxW2OFaa67zjg=";
+          PersistentKeepalive = 21;
+        };
+      }
       #{
       #  wireguardPeerConfig = {
       #    AllowedIPs = [ "192.168.42.137/32" ];
