@@ -40,6 +40,24 @@
     "/dev/disk/by-id/ata-Patriot_Burst_F90B079B1A0400316538-part2";
   boot.initrd.luks.devices."cryptLVM".allowDiscards = true;
 
+  boot.initrd.network.enable = true;
+  #boot.initrd.a
+  boot.initrd.network.ssh = {
+    enable = true;
+    authorizedKeys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBps9Mp/xZax8/y9fW1Gt73SkskcBux1jDAB8rv0EYUt cardno:000612029874"
+    ];
+    port = 62954;
+    hostKeys = [ "/var/src/secrets/initrd/ed25519_host_key" ];
+  };
+  boot.initrd.preLVMCommands = lib.mkBefore (''
+    ip li set dev enp4s0 up
+    ip li add link enp4s0 name crypt type vlan id 1337
+    ip addr add 6.0.2.3/24 dev crypt
+    ip li set dev crypt up
+    hasNetwork=1
+  '');
+
   boot.kernelParams = [
     #  "intel_iommu=on"
     #  "vfio-pci.ids=1002:699f,1002:aae0"
