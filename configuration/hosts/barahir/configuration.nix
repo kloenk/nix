@@ -41,7 +41,7 @@
   boot.initrd.luks.devices."cryptLVM".allowDiscards = true;
 
   boot.initrd.network.enable = true;
-  #boot.initrd.a
+  boot.initrd.availableKernelModules = [ "r8169" ];
   boot.initrd.network.ssh = {
     enable = true;
     authorizedKeys = [
@@ -52,9 +52,7 @@
   };
   boot.initrd.preLVMCommands = lib.mkBefore (''
     ip li set dev enp4s0 up
-    ip li add link enp4s0 name crypt type vlan id 1337
-    ip addr add 6.0.2.3/24 dev crypt
-    ip li set dev crypt up
+    ip addr add 192.168.178.247/24 dev enp4s0
     hasNetwork=1
   '');
 
