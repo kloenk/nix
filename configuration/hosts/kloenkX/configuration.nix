@@ -96,7 +96,7 @@ in {
     spice_gtk
     ebtables
     davfs2
-    geogebra
+    #geogebra
     gtk-engine-murrine
     tango-icon-theme
     breeze-icons

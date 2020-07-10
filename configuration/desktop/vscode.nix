@@ -65,6 +65,12 @@ let
         sha256 =
           "df8bcba3f01ac5efc8aebe870eeb46c059f75f627d98940d7d0039e906ede562";
       }
+      {
+        name = "sourcegraph";
+        publisher = "sourcegraph";
+        version = "1.1.0";
+        sha256 = "sha256-LD2UBQReZ9LonXHaQfjrPRFgI+6clmPsRPCNLC117rI=";
+      }
     ]);
   vscode-with-extensions =
     pkgs.vscode-with-extensions.override { vscodeExtensions = extensions; };
