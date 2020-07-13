@@ -6,6 +6,11 @@ in {
   deploy_secrets = callPackage ./deploy_secrets { };
   wallpapers = callPackage ./wallpapers { };
   fabric-server = callPackage ./fabric-server { };
+  pam_nfc = callPackage ./pam_nfc {
+    #libnfc = final.libnfc0;
+  };
+
+  libnfc0 = callPackage ./libnfc {};
 
   # broken packages
   waybar = prev.waybar.overrideAttrs (oldAttrs: rec {
