@@ -17,8 +17,6 @@ stdenv.mkDerivation rec {
   preBuild = "make $makeFlags libnfcauth.la";
 
   preConfigure = ''
-    pkg-config --modversion libnfc
-
     autoreconf -fvi
   '';
 
