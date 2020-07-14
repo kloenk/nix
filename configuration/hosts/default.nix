@@ -70,10 +70,13 @@ in {
     wireguard.endpoint = "2001:41d0:1004:1629:1337:187::";
     magicNumber = 249;
   };
-  #gurke = {
-  #  hostname = "gurke.pbb.lc:62954";
-  #  prometheusExporters = [ "node-exporter" "nginx-exporter" ];
-  #};
+
+  # https://lotr.fandom.com/wiki/V%C3%ABantur
+  veantur = makeHost {
+    system = "aarch64-linux";
+    host = "192.168.42.101";
+    prometheusExporters = [ ];
+  };
 
   # for monitoring only
   bbb-wass = makeHost {
