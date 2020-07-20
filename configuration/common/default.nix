@@ -63,6 +63,7 @@
 
   # monitoring
   services.vnstat.enable = lib.mkDefault true;
+  programs.sysdig.enable = lib.mkDefault true;
   security.sudo.wheelNeedsPassword = false;
 
   services.ferm2.enable = true;
