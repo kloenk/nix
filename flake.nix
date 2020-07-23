@@ -30,7 +30,7 @@
     repo = "hydra";
     inputs.nixpkgs.follows = "/nixpkgs";
     inputs.nix.inputs.nixpkgs.follows = "/nixpkgs";
-    #inputs.nix.follows = "/nix";
+    inputs.nix.follows = "/nix";
   };
 
   inputs.nixpkgs-mc = {

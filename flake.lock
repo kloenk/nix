@@ -24,7 +24,9 @@
     },
     "hydra": {
       "inputs": {
-        "nix": "nix",
+        "nix": [
+          "nix"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -61,25 +63,6 @@
       }
     },
     "nix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1595342371,
-        "narHash": "sha256-qEzdY79o9Ei5yTEntyQolthGIDaeNH1shJYsSO2Kjhg=",
-        "owner": "NixOS",
-        "repo": "nix",
-        "rev": "1346da4669b2c1b9d73bb4b77eef03d8aecdc447",
-        "type": "github"
-      },
-      "original": {
-        "id": "nix",
-        "type": "indirect"
-      }
-    },
-    "nix_2": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
@@ -201,7 +184,7 @@
         "home-manager": "home-manager",
         "hydra": "hydra",
         "mail-server": "mail-server",
-        "nix": "nix_2",
+        "nix": "nix",
         "nixos-org": "nixos-org",
         "nixpkgs": "nixpkgs",
         "nixpkgs-mc": "nixpkgs-mc",
