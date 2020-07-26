@@ -1,6 +1,6 @@
 $TTL 1M
 @		SOA	ns1.kloenk.de. hostmaster.kloenk.de. (
-    2020061501  	; serial (yyyymmdd##)
+    2020071001  	; serial (yyyymmdd##)
     3600            ; refresh
     1000            ; retry
     604800          ; expiry
@@ -106,6 +106,8 @@ atom		AAAA 2001:41d0:1004:1629:1337:187:1:7
 fallback.planets	AAAA 2001:678:bbc:3e7:f199::1
 planets	A	195.39.246.51
 planets AAAA 2a0f:4ac0:f199::3
+
+source	A	195.39.221.186
 
 netbox		A	51.254.249.180
 netbox		AAAA	2001:41d0:1004:16ad:c0ff:ee:0:180

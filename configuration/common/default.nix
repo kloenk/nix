@@ -52,19 +52,18 @@
       type = "ed25519";
     }] else
       [ ];
-    extraConfig = if (config.networking.hostName != "kexec") then
+    extraConfig = if (config.networking.hostName == "kexec" || config.networking.hostName == "veantur") then "" else 
       let
         hostCertificate = pkgs.writeText "host_cert_ed25519" (builtins.readFile
           (toString ../ca
             + "/ssh_host_ed25519_key_${config.networking.hostName}-cert.pub"));
-      in "HostCertificate ${hostCertificate}"
-    else
-      "";
+      in "HostCertificate ${hostCertificate}";
   };
   krops.secrets.files."ssh_host_ed25519_key".owner = "root";
 
   # monitoring
   services.vnstat.enable = lib.mkDefault true;
+  programs.sysdig.enable = lib.mkDefault true;
   security.sudo.wheelNeedsPassword = false;
 
   services.ferm2.enable = true;
@@ -72,8 +71,8 @@
 
   services.journald.extraConfig = "SystemMaxUse=2G";
 
-  i18n.defaultLocale = "en_US.UTF-8";
-  console.keyMap = "neo";
+  i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
+  console.keyMap = lib.mkDefault "neo";
   console.font = "Lat2-Terminus16";
 
   time.timeZone = "Europe/Berlin";

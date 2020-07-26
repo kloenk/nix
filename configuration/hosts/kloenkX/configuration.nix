@@ -13,6 +13,7 @@ in {
 
     ../../default.nix
     ../../common
+    ../../common/aarch64-builder.nix
     ../../desktop/sway.nix
     ../../desktop
     ../../desktop/vscode.nix
@@ -192,7 +193,7 @@ in {
 
   # build server
   nix.buildMachines = [
-    {
+    /*{
       hostName = "io";
       sshUser = "kloenk";
       sshKey = "/root/.ssh/id_buildfarm";
@@ -209,7 +210,7 @@ in {
       supportedFeatures = [ "kvm" "big-parallel" ];
       maxJobs = 8;
       speedFactor = 2;
-    }
+    }*/
   ];
   nix.gc.automatic = false;
 
