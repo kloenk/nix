@@ -45,7 +45,7 @@
   };
 
   programs.gnupg.agent = {
-    enable = true;
+    enable = lib.mkDefault true;
     enableSSHSupport = true;
   };
 

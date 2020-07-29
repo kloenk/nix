@@ -57,7 +57,10 @@
         hostCertificate = pkgs.writeText "host_cert_ed25519" (builtins.readFile
           (toString ../ca
             + "/ssh_host_ed25519_key_${config.networking.hostName}-cert.pub"));
-      in "HostCertificate ${hostCertificate}";
+      in ''
+        HostCertificate ${hostCertificate}
+        StreamLocalBindUnlink yes
+      '';
   };
   krops.secrets.files."ssh_host_ed25519_key".owner = "root";
 

@@ -21,7 +21,6 @@
     nodejs-10_x
     python3
 
-    gnupg
     powertop
     qemu
     imagemagick
@@ -97,10 +96,13 @@
   ];
 
   users.users.kloenk.extraGroups = [ "wireshark" "adbusers" "nitrokey" ];
+
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark-qt;
   nixpkgs.config.android_sdk.accept_license = true;
   programs.adb.enable = true;
+
+  programs.gnupg.agent.enable = true;
 
   programs.browserpass.enable = true;
   programs.chromium = {
@@ -135,6 +137,7 @@
     key = "0x8609A7B519E5E342";
     signByDefault = true;
   };
+  home-manager.users.kloenk.services.gpg-agent.enable = true;
 
   home-manager.users.kloenk.home.file.".config/VSCodium/User/settings.json".source =
     ./code-settings.json;
