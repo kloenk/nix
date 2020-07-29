@@ -20,7 +20,7 @@
     type = "github";
     owner = "nixos";
     repo = "nix";
-    ref = "flakes";
+    #ref = "flakes";
     inputs.nixpkgs.follows = "/nixpkgs";
   };
 

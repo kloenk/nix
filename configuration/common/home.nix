@@ -10,8 +10,9 @@ let
       port = host.host.port;
       forwardAgent =
         (if host ? noForwardAgent then !host.noForwardAgent else true);
-        user = host.host.user;
-        extraConfig = (if host.host ? sshConfig then host.host.sshConfig else "");
+      user = host.host.user;
+      extraOptions =
+        (if host.host ? sshConfig then host.host.sshConfig else { });
     }) sshHosts);
 
 in {
