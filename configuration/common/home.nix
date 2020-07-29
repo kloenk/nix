@@ -10,7 +10,8 @@ let
       port = host.host.port;
       forwardAgent =
         (if host ? noForwardAgent then !host.noForwardAgent else true);
-      user = host.host.user;
+        user = host.host.user;
+        extraConfig = (if host.host ? sshConfig then host.host.sshConfig else "");
     }) sshHosts);
 
 in {
@@ -166,7 +167,7 @@ in {
 
   services = {
     gpg-agent = {
-      enable = true;
+      enable = lib.mkDefault true;
       defaultCacheTtl = 300; # 5 min
       defaultCacheTtlSsh = 600; # 10 min
       maxCacheTtl = 7200; # 2h
