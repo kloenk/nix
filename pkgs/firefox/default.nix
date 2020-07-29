@@ -1,7 +1,4 @@
-{ firefox-unwrapped
-, wrapFirefox
-, stdenvNoCC
-}:
+{ firefox-unwrapped, wrapFirefox, stdenvNoCC }:
 
 let
   firefoxPolicies = stdenvNoCC.mkDerivation {
@@ -18,14 +15,13 @@ let
       chmod +rwx -R $out/bin/
       sed -i 's/exec.*$//' $out/bin/firefox
       echo "exec -a \"$out/bin/.firefox-wrapped\" \"$out/bin/.firefox-wrapped\" \"\$@\"" >> $out/bin/firefox
-      
+
       chmod +rw $out/lib/firefox
       ln -sfT /etc/firefox $out/lib/firefox/distribution
     '';
 
     meta = firefox-unwrapped.meta;
   };
-  firefox-policies-wrapped = wrapFirefox firefoxPolicies { gdkWayland = true; browserName = "firefox"; };
-in {
-  inherit firefoxPolicies firefox-policies-wrapped;
-}
+  firefox-policies-wrapped =
+    wrapFirefox firefoxPolicies { browserName = "firefox"; };
+in { inherit firefoxPolicies firefox-policies-wrapped; }
