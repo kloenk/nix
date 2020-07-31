@@ -17,6 +17,7 @@
 
     ./dns.nix
     ./mail.nix
+    ./quassel.nix
 
     ../../default.nix
     ../../common
