@@ -15,6 +15,9 @@
     ./wordpress.nix
     ./mysql.nix
 
+    ./dns.nix
+    ./mail.nix
+
     ../../default.nix
     ../../common
   ];

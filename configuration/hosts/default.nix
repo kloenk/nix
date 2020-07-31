@@ -22,7 +22,7 @@ in {
   iluvatar = makeHost {
     host = "iluvatar.kloenk.de";
     vm = true;
-    mail = false;
+    mail = true;
     #wireguard.publicKey = "";
     #wireguard.endpoint = "";
     magicNumber = 252;

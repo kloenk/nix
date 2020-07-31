@@ -18,7 +18,7 @@ in {
     enable = true;
     forwarders = [ "8.8.8.8" ];
     extraOptions = ''
-      response-policy { zone "rpz"; };
+      #response-policy { zone "rpz"; };
     '';
     #  also-notify { 159.69.179.160; 51.254.249.185; 192.168.42.4; 51.254.249.182; 192.168.42.7; 216.218.133.2; 2001:470:600::2; 5.45.100.14; 164.132.31.112; };
     #'';
@@ -84,15 +84,15 @@ in {
       }
       {
         name = "calli0pa.de";
-        file = "/var/named/db.de.calli0pa.zone";
+        file = "/persist/data/bind";
         master = false;
         masters = [ "87.79.92.36" ];
       }
-      {
-        name = "rpz";
-        master = true;
-        file = "/etc/nixos/secrets/rpz.zone";
-      }
+      #{
+      #  name = "rpz";
+      #  master = true;
+      #  file = "/etc/nixos/secrets/rpz.zone";
+      #}
     ];
   };
 }

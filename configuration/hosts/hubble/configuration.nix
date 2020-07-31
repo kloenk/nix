@@ -16,7 +16,6 @@ in {
     ./mysql.nix
 
     #./sshguard.nix
-    ./dns.nix
     ./mail.nix
     ./monitoring
     ./quassel.nix
