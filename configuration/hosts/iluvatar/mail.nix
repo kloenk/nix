@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 {
   fileSystems."/var/vmail" = {
@@ -12,6 +12,13 @@
   };
 
   networking.firewall.allowedTCPPorts = [ 143 587 25 465 993 ];
+
+  services.postfix.config = {
+    #relay_domains = [ "kloenk.de" ];
+    mydestination =
+      lib.mkOverride 25 [ "$myhostname" "hubble.kloenk.de" "localhost" ];
+    maximal_queue_lifetime = "10d";
+  };
 
   mailserver = {
     enable = true;

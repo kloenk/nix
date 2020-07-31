@@ -55,6 +55,7 @@ in {
   networking.wireless.interfaces = [ "wlp2s0" ];
   environment.etc."wpa_supplicant.conf".source =
     "/var/src/secrets/wpa_supplicant.conf";
+  networking.supplicant.wlp2s0.configFile.path = "/etc/wpa_supplicant.conf";
   networking.wireless.userControlled.enable = true;
   networking.extraHosts = ''
     172.16.0.1 airlink.local unit.local
@@ -193,24 +194,25 @@ in {
 
   # build server
   nix.buildMachines = [
-    /*{
-      hostName = "io";
-      sshUser = "kloenk";
-      sshKey = "/root/.ssh/id_buildfarm";
-      system = "x86_64-linux";
-      supportedFeatures = [ "kvm" "big-parallel" ];
-      maxJobs = 8;
-      speedFactor = 2;
-    }
-    {
-      hostName = "gurke";
-      sshUser = "kloenk";
-      #sshKey = krops.secrets.files."id_rsa".path;
-      system = "x86_64-linux";
-      supportedFeatures = [ "kvm" "big-parallel" ];
-      maxJobs = 8;
-      speedFactor = 2;
-    }*/
+    /* {
+         hostName = "io";
+         sshUser = "kloenk";
+         sshKey = "/root/.ssh/id_buildfarm";
+         system = "x86_64-linux";
+         supportedFeatures = [ "kvm" "big-parallel" ];
+         maxJobs = 8;
+         speedFactor = 2;
+       }
+       {
+         hostName = "gurke";
+         sshUser = "kloenk";
+         #sshKey = krops.secrets.files."id_rsa".path;
+         system = "x86_64-linux";
+         supportedFeatures = [ "kvm" "big-parallel" ];
+         maxJobs = 8;
+         speedFactor = 2;
+       }
+    */
   ];
   nix.gc.automatic = false;
 
