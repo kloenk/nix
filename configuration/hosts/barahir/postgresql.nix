@@ -19,11 +19,14 @@
       "gitlex"
       "gitlex_test"
       "gitlex_prod"
+      "dlmanager"
     ];
     ensureUsers = [{
       name = "kloenk";
       ensurePermissions."DATABASE ve_collector" = "ALL PRIVILEGES";
       ensurePermissions."DATABASE ve_collector_test" = "ALL PRIVILEGES";
+
+      ensurePermissions."DATABASE dlmanager" = "ALL PRIVILEGES";
 
       ensurePermissions."DATABASE gitlex" = "ALL PRIVILEGES";
       ensurePermissions."DATABASE gitlex_prod" = "ALL PRIVILEGES";

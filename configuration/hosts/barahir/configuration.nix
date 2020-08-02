@@ -8,6 +8,7 @@
 
     #    ./mysql.nix
     ./postgresql.nix
+    ./redis.nix
 
     ../../default.nix
 
@@ -26,7 +27,9 @@
   boot.kernelModules = [
     #"vfio-pci"
     "amdgpu"
+    "v4l2loopback"
   ];
+
 
   # FIXME: needed?
   #services.openssh.passwordAuthentication = true;

@@ -52,7 +52,7 @@ in {
   };
 
   kloenkX = makeHost {
-    host = "192.168.178.69";
+    host = "6.0.2.4";
     #hostname = "kloenk@127.0.0.1:62954";
     #hostname = "kloenk@kloenkX.kloenk.de:62954";
     prometheusExporters = [ "node-exporter" "nginx-exporter" "wireguard" ];

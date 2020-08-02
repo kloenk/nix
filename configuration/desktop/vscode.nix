@@ -71,6 +71,24 @@ let
         version = "1.1.0";
         sha256 = "sha256-LD2UBQReZ9LonXHaQfjrPRFgI+6clmPsRPCNLC117rI=";
       }
+      {
+        name = "licenser";
+        publisher = "ymotongpoo";
+        version = "1.5.0";
+        sha256 = "sha256-WmWS6bi1xgug9MxGQDuhqg7vJMAbd7hpTLlqEDzOSrs=";
+      }
+      {
+        name = "vscode-elixir";
+        publisher = "mjmcloug";
+        version = "1.1.0";
+        sha256 = "sha256-EE4x75ljGu212gqu1cADs8bsXLaToVaDnXHOqyDlR04=";
+      }
+      {
+        name = "swdc-vscode";
+        publisher = "softwaredotcom";
+        version = "2.2.42";
+        sha256 = "sha256-BmKfYHTVnUfcJzR6vy4SJANQ98u99x2pCinliUb/bm8=";
+      }
     ]);
   vscode-with-extensions =
     pkgs.vscode-with-extensions.override { vscodeExtensions = extensions; };
