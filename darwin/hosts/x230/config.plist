@@ -200,6 +200,11 @@
 	<dict>
 		<key>Add</key>
 		<dict>
+			<key>PciRoot(0x0)/Pci(0x1B,0x0)</key>
+			<dict>
+				<key>layout-id</key>
+				<integer>7</integer>
+			</dict>
 			<key>PciRoot(0x0)/Pci(0x19,0x0) - 2</key>
 			<dict>
 				<key>built-in</key>
@@ -799,7 +804,7 @@
 				<key>SystemAudioVolume</key>
 				<data>Rg==</data>
 				<key>boot-args</key>
-				<string>-v debug=0x100 keepsyms=1 alcid=1 -wegnoegpu</string>
+				<string>-v debug=0x100 keepsyms=1 -wegnoegpu</string>
 				<key>csr-active-config</key>
 				<data>AAAAAA==</data>
 				<key>prev-lang:kbd</key>
