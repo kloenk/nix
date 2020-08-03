@@ -9,11 +9,9 @@
       },
       "locked": {
         "lastModified": 1590269472,
-        "narHash": "sha256-wiHqSIYJ65/rjTNc8P4UIaU78hKhxdxDo/83n5I+6WU=",
-        "owner": "kloenk",
-        "repo": "home-manager",
-        "rev": "fef8561af7fe842e81b38966fa5b2f7228396d14",
-        "type": "github"
+        "narHash": "sha256-RPWnP5FElZH7dmW9PiEgZwmYoZDWmCXdqOAmQrTXegI=",
+        "type": "git",
+        "url": "file:///Users/kloenk/Documents/proj/home-manager"
       },
       "original": {
         "owner": "kloenk",
@@ -89,13 +87,13 @@
         ]
       },
       "locked": {
-        "lastModified": 1596468800,
-        "narHash": "sha256-lx8CLBq0C2w5LD+DLib/zi5Y0RAAaPQNVehQqs1KvRI=",
+        "lastModified": 1596472486,
+        "narHash": "sha256-TPafELqIZu/L2E57at7Uq7KH5JIapOpxZKXxBIEE3ak=",
         "ref": "flakes",
-        "rev": "94bee2a47be20c4c52ced5bb93cbc018d111b300",
+        "rev": "887c4a43b528493da945fe88de02932c16a5181c",
         "revCount": 906,
         "type": "git",
-        "url": "file:///home/kloenk/proj/nix-darwin"
+        "url": "file:///Users/kloenk/Documents/proj/nix-darwin"
       },
       "original": {
         "owner": "LnL7",

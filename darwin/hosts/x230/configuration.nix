@@ -3,6 +3,10 @@
 let
   #lib = pkgs.lib;
 in {
+  imports = [
+    ../../common
+  ];
+
   _file = ./configuration.nix;
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -21,11 +25,11 @@ in {
       userEmai = "me@kloenk.de";
       aliases.ls = "status";
     };
-  };*/
+  };
   home-manager.users.kloenk = { pkgs, ... }: {
     home.packages = [ pkgs.atool pkgs.httpie ];
     programs.bash.enable = true;
-  };
+  };*/
 
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
