@@ -200,6 +200,11 @@
 	<dict>
 		<key>Add</key>
 		<dict>
+			<key>PciRoot(0x0)/Pci(0x19,0x0) - 2</key>
+			<dict>
+				<key>built-in</key>
+				<data>AQ==</data>
+			</dict>
 			<key>PciRoot(0x0)/Pci(0x2,0x0)</key>
 			<dict>
 				<key>AAPL,ig-platform-id</key>
@@ -859,17 +864,17 @@
 			<key>AdviseWindows</key>
 			<false/>
 			<key>MLB</key>
-			<string>C02306500QXF16P8C</string>
+			<string>C022473104NF16PJC</string>
 			<key>ROM</key>
-			<data>ESIzRFVm</data>
+			<data>VO51A24Q</data>
 			<key>SpoofVendor</key>
 			<true/>
 			<key>SystemProductName</key>
 			<string>MacBookPro10,2</string>
 			<key>SystemSerialNumber</key>
-			<string>C02K7EZMDR53</string>
+			<string>C02JQ0YCDR53</string>
 			<key>SystemUUID</key>
-			<string>5FB9F313-F692-4CE5-93FA-750C155A3E4B</string>
+			<string>3AA35B63-8403-4F71-991A-E6EC13716C70</string>
 		</dict>
 		<key>UpdateDataHub</key>
 		<true/>
