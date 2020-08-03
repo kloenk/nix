@@ -82,6 +82,25 @@
         "type": "github"
       }
     },
+    "nix-darwin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1592415638,
+        "narHash": "sha256-lx8CLBq0C2w5LD+DLib/zi5Y0RAAaPQNVehQqs1KvRI=",
+        "type": "git",
+        "url": "file:///Users/kloenk/Documents/proj/nix-darwin"
+      },
+      "original": {
+        "owner": "LnL7",
+        "ref": "flakes",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
     "nixos-org": {
       "flake": false,
       "locked": {
@@ -184,6 +203,7 @@
         "hydra": "hydra",
         "mail-server": "mail-server",
         "nix": "nix",
+        "nix-darwin": "nix-darwin",
         "nixos-org": "nixos-org",
         "nixpkgs": "nixpkgs",
         "nixpkgs-mc": "nixpkgs-mc",

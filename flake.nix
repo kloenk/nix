@@ -9,6 +9,14 @@
     inputs.nixpkgs.follows = "/nixpkgs";
   };
 
+  inputs.nix-darwin = {
+    type = "github";
+    owner = "LnL7";
+    repo = "nix-darwin";
+    ref = "flakes";
+    inputs.nixpkgs.follows = "/nixpkgs";
+  };
+
   inputs.nixpkgs = {
     type = "github";
     owner = "nixos";
@@ -75,14 +83,14 @@
     flake = false;
   };
 
-  outputs = inputs@{ self, nixpkgs, nix, hydra, home-manager, mail-server
+  outputs = inputs@{ self, nixpkgs, nix, hydra, home-manager, nix-darwin, mail-server
     , website, secrets, nixpkgs-qutebrowser, nixpkgs-mc, nixos-org }:
     let
 
       overlayCombined =
         [ nix.overlay home-manager.overlay self.overlay hydra.overlay ];
 
-      systems = [ "x86_64-linux" ];
+      systems = [ "x86_64-linux" "x64_64-darwin" ];
 
       forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f system);
 
@@ -136,6 +144,7 @@
 
       # evals
       hosts = import ./configuration/hosts { };
+      darwins = import ./darwin;
       nixosHosts = nixpkgs.lib.filterAttrs
         (name: host: if host ? nixos then host.nixos else false) hosts;
       makeSourcesModule = hostName:
@@ -195,6 +204,17 @@
             else
               [ ]);
         })) nixosHosts);
+   
+      darwinConfigurations = (nixpkgs.lib.mapAttrs (name: host: 
+	nix-darwin.lib.evalConfig {
+          inputs.nixpkgs = nixpkgs;
+          #inputs.home-manager = home-manager;
+          modules = [
+          #  ({ config, ... }: { config._module.args.home-manager = home-manager; }) 
+            (import (home-manager + "/nix-darwin"))
+	  ];
+          configuration = import (./darwin + "/hosts/${name}/configuration.nix");
+        }) darwins);
 
       nixosModules = {
         secrets = import ./modules/secrets;
