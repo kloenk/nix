@@ -30,7 +30,6 @@
     "v4l2loopback"
   ];
 
-
   # FIXME: needed?
   #services.openssh.passwordAuthentication = true;
 

@@ -103,6 +103,7 @@
 
       # patche modules
       patchModule = system: {
+        _file = ./flake.nix
         disabledModules =
           [ "services/games/minecraft-server.nix" "tasks/auto-upgrade.nix" ];
         imports = [
@@ -136,6 +137,7 @@
             (patchModule system)
             (makeSourcesModule system)
             {
+              _file = ./flake.nix;
               # disable home-manager manpage (breaks hydra see https://github.com/rycee/home-manager/issues/1262)
               home-manager.users.kloenk.manual.manpages.enable = false;
             }
@@ -152,6 +154,7 @@
           inherit (nixpkgs) lib;
           inherit (lib) mkIf;
         in { lib, ... }: {
+          _file = ./flake.nix;
           options.sources = nixpkgs.lib.mkOption { };
           config.sources = inputs;
         };
@@ -190,6 +193,7 @@
             self.nixosModules.firefox
             (makeSourcesModule name)
             {
+              _file = ./flake.nix;
               # disable home-manager manpage (breaks hydra see https://github.com/rycee/home-manager/issues/1262)
               home-manager.users.kloenk.manual.manpages.enable = false;
               #home-manager.users.pbb.manual.manpage.enable = false;
