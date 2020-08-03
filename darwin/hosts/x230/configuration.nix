@@ -3,6 +3,7 @@
 let
   #lib = pkgs.lib;
 in {
+  _file = ./configuration.nix;
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs;
@@ -13,13 +14,17 @@ in {
   #  pkgs = pkgs;
   #  lib = lib;
   #};
-  home-manager.users.kloenk = { ... }: {
+  /*home-manager.users.kloenk = { ... }: {
     programs.git = {
       enable = true;
       userName = "Finn Behrens";
       userEmai = "me@kloenk.de";
       aliases.ls = "status";
     };
+  };*/
+  home-manager.users.kloenk = { pkgs, ... }: {
+    home.packages = [ pkgs.atool pkgs.httpie ];
+    programs.bash.enable = true;
   };
 
   # Use a custom configuration.nix location.

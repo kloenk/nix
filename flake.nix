@@ -90,7 +90,7 @@
       overlayCombined =
         [ nix.overlay home-manager.overlay self.overlay hydra.overlay ];
 
-      systems = [ "x86_64-linux" "x64_64-darwin" ];
+      systems = [ "x86_64-linux" "x86_64-darwin" ];
 
       forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f system);
 
@@ -103,7 +103,7 @@
 
       # patche modules
       patchModule = system: {
-        _file = ./flake.nix
+        _file = ./flake.nix;
         disabledModules =
           [ "services/games/minecraft-server.nix" "tasks/auto-upgrade.nix" ];
         imports = [
@@ -211,13 +211,16 @@
    
       darwinConfigurations = (nixpkgs.lib.mapAttrs (name: host: 
 	nix-darwin.lib.evalConfig {
-          inputs.nixpkgs = nixpkgs;
+          pkgs = nixpkgsFor."x86_64-darwin";
+          #inputs.nixpkgs = nixpkgs;
           #inputs.home-manager = home-manager;
           modules = [
           #  ({ config, ... }: { config._module.args.home-manager = home-manager; }) 
             (import (home-manager + "/nix-darwin"))
+            (import (./darwin + "/hosts/${name}/configuration.nix"))
 	  ];
-          configuration = import (./darwin + "/hosts/${name}/configuration.nix");
+          #configuration = import (./darwin + "/hosts/${name}/configuration.nix");
+          configuration = {};
         }) darwins);
 
       nixosModules = {
