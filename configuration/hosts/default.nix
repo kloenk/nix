@@ -28,6 +28,12 @@ in {
     magicNumber = 252;
   };
 
+  manwe = makeHost {
+    host = "manwe.kloenk.de";
+    wm = true;
+    #mail = true;
+  };
+
   barahir = makeHost {
     host = "192.168.178.95";
     # FIXME: bgp
@@ -59,17 +65,18 @@ in {
     wireguard.publicKey = "crMsdERA3xeV8tLpT817R78d4/hGMKS/6LWNyMlsFRQ=";
     magicNumber = 250;
   };
-  hubble = makeHost {
-    host = "hubble.kloenk.de";
-    #prometheusExporters = [ 9100 3001 9090 9154 9187 7980 9586 9119 9166 9113 ];
-    prometheusExporters =
-      [ "node-exporter" "nginx-exporter" "nixos-exporter" "wireguard" ];
-    vm = true;
-    mail = true;
-    wireguard.publicKey = "2z1soTjkt74lFfEi010JcfOCERhwIgvlqSacOvPYbyI=";
-    wireguard.endpoint = "2001:41d0:1004:1629:1337:187::";
-    magicNumber = 249;
-  };
+  /* hubble = makeHost {
+       host = "hubble.kloenk.de";
+       #prometheusExporters = [ 9100 3001 9090 9154 9187 7980 9586 9119 9166 9113 ];
+       prometheusExporters =
+         [ "node-exporter" "nginx-exporter" "nixos-exporter" "wireguard" ];
+       vm = true;
+       mail = true;
+       wireguard.publicKey = "2z1soTjkt74lFfEi010JcfOCERhwIgvlqSacOvPYbyI=";
+       wireguard.endpoint = "2001:41d0:1004:1629:1337:187::";
+       magicNumber = 249;
+     };
+  */
 
   # https://lotr.fandom.com/wiki/V%C3%ABantur
   veantur = makeHost {

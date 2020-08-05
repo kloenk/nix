@@ -30,8 +30,8 @@ ns2	AAAA	2001:41d0:1004:1629:1337:0187::
 		IN	MX	10 iluvatar.kloenk.de.
 @		IN	MX	10 iluvatar.kloenk.de.
 
-		IN	MX	20 hubble.kloenk.de.
-@		IN	MX	20 hubble.kloenk.de.
+;		IN	MX	20 hubble.kloenk.de.
+;@		IN	MX	20 hubble.kloenk.de.
 
 	TXT	"v=spf1 +a +mx -all"
 _dmarc		TXT	"v=DMARC1;p=reject;pct=100;rua=mailto:postmaster@kloenk.de"
@@ -39,12 +39,12 @@ _dmarc		TXT	"v=DMARC1;p=reject;pct=100;rua=mailto:postmaster@kloenk.de"
 ;drachensegler	AAAA	2001:41d0:1004:1629:1337:0187::
 ;drachensegler	A	51.254.249.187
 drachensegler	IN	MX	10	iluvatar.kloenk.de.
-drachensegler	IN	MX	20	hubble.kloenk.de.
+;drachensegler	IN	MX	20	hubble.kloenk.de.
 drachensegler	TXT	"v=spf1 +a +mx -all"
 _dmarc.drachensegler	TXT	"v=DMARC1;p=reject;pct=100;rua=mailto:postmaster@kloenk.de"
 
 ad		IN	MX	10	iluvatar.kloenk.de.
-ad		IN	MX	20  hubble.kloenk.de.
+;ad		IN	MX	20  hubble.kloenk.de.
 ad		TXT	"v=spf1 +a +mx -all"
 _dmarc.ad	TXT	"v=DMARC1;p=reject;pct=100;rua=mailto:postmaster@kloenk.de"
 
@@ -72,8 +72,11 @@ gdv02		CNAME	gdv02.eventphone.de.
 gdvstats CNAME gdvstats.eventphone.de.
 gdvalerts CNAME gdvalerts.eventphone.de.
 
-hubble			A 	51.254.249.187
-hubble			AAAA  2001:41d0:1004:1629:1337:0187::
+hubble			A 	51.254.249.187 ; TODO: remove
+hubble			AAAA  2001:41d0:1004:1629:1337:0187:: ; TODO: remove
+
+manwe	A	195.39.221.187
+;manwe AAAA 
 
 ;kloenkX			A 195.39.246.50
 ;kloenkX			AAAA 2a0f:4ac0:f199::6
