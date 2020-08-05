@@ -40,11 +40,11 @@
   # delete files in /
   boot.initrd.postMountCommands = ''
     cd /mnt-root
-    chattr -i var/lib/empty
+    chattr -i var/empty
     rm -rf $(ls -A /mnt-root | grep -v 'nix' | grep -v 'boot' | grep -v 'var')
 
-    cd /mnt-root var
-    rm -rf $(ls -A /mnt-root | grep -v 'src')
+    cd /mnt-root/var
+    rm -rf $(ls -A /mnt-root/var | grep -v 'src')
   '';
 
   networking.hostName = "manwe";
