@@ -1,6 +1,6 @@
 $TTL 1M
 @		SOA	ns1.bbb.wass-er.com. hostmaster.bbb.wass-er.com. (
-    2020040503  	; serial (yyyymmdd##)
+    2020080501  	; serial (yyyymmdd##)
     3600            ; refresh
     1000            ; retry
     604800          ; expiry
