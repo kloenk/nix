@@ -7,7 +7,8 @@ let
     "node-exporter"
     "nginx-exporter"
     "nixos-exporter"
-  ], hostname ? "${user}@${host}:${toString port}", ... }@extraArgs:
+  ], hostname ? "${user}@${host}:${toString port}", server ? false, ...
+    }@extraArgs:
     ({
       nixos = true;
       system = "x86_64-linux";
@@ -15,7 +16,7 @@ let
       host.ip = host;
       host.port = port;
       host.user = user;
-      inherit hostname prometheusExporters;
+      inherit hostname prometheusExporters server;
     });
 
 in {
@@ -26,12 +27,14 @@ in {
     #wireguard.publicKey = "";
     #wireguard.endpoint = "";
     magicNumber = 252;
+    server = true;
   };
 
   manwe = makeHost {
     host = "manwe.kloenk.de";
     wm = true;
     #mail = true;
+    server = true;
   };
 
   barahir = makeHost {
@@ -39,7 +42,10 @@ in {
     # FIXME: bgp
   };
 
-  thrain = makeHost { host = "192.168.178.248"; };
+  thrain = makeHost {
+    host = "192.168.178.248";
+    # server = true;
+  };
   eradan = makeHost {
     host = "192.168.178.249";
     vm = true;
@@ -55,6 +61,7 @@ in {
   sauron = makeHost {
     host = "sauron.kloenk.de";
     vm = true;
+    server = true;
   };
 
   kloenkX = makeHost {
@@ -91,6 +98,7 @@ in {
     nixos = false;
     user = "root";
     prometheusExporters = [ "node-exporter" "bbb-exporter" ];
+    #server = true;
   };
 
   # for monitoring only
@@ -102,6 +110,7 @@ in {
       "node-exporter"
       "pve-exporter"
     ]; # https://github.com/znerol/prometheus-pve-exporter
+    server = true;
   };
 
   # for monitoring only
@@ -110,6 +119,7 @@ in {
     nixos = false;
     user = "root";
     prometheusExporters = [ "node-exporter" "bbb-exporter" ];
+    server = true;
   };
 
   # for monitoring only
@@ -117,6 +127,7 @@ in {
     host = "moodle-usee.kloenk.de";
     nixos = false;
     prometheusExporters = [ "node-exporter" ];
+    server = true;
   };
 
   # for monitoring only
@@ -135,32 +146,33 @@ in {
   };
 
   # for wireguard only
-  combahton = {
-    wireguard.publicKey = "9azKCE2ZgWYo0kWD8ezsWDWD3YMlFrxXia23q5ENLm8=";
-    wireguard.endpoint = "notcombahton.pbb.lc";
-    magicNumber = 5;
-    bgp = pbbAS;
-  };
-  # for wireguard only
-  vultr = {
-    wireguard.publicKey = "SD8bQrbrr3TlyaUrqZMvlXsrP9GUTYH3wRjAGWVDoTA=";
-    wireguard.endpoint = "notvultr.pbb.lc";
-    magicNumber = 1;
-    bgp = pbbAS;
-  };
-  # for wireguard only
-  tomate = {
-    wireguard.publicKey = "bBkntnpzbkN8W0cbJ+yd5MMnPZu7gctQNPGMGMUU23g=";
-    magicNumber = 201;
-    bgp = pbbAS;
-  };
-  # for wireguard only
-  schinken = {
-    wireguard.publicKey = "VT4wAsdBJuFzDhsTgcpdWLMkZJYbfeXa2yAvuGh1/iA=";
-    wireguard.endpoint = "2a01:4f8:162:1900::20";
-    magicNumber = 4;
-    bgp = pbbAS;
-  };
+  /* combahton = {
+       wireguard.publicKey = "9azKCE2ZgWYo0kWD8ezsWDWD3YMlFrxXia23q5ENLm8=";
+       wireguard.endpoint = "notcombahton.pbb.lc";
+       magicNumber = 5;
+       bgp = pbbAS;
+     };
+     # for wireguard only
+     vultr = {
+       wireguard.publicKey = "SD8bQrbrr3TlyaUrqZMvlXsrP9GUTYH3wRjAGWVDoTA=";
+       wireguard.endpoint = "notvultr.pbb.lc";
+       magicNumber = 1;
+       bgp = pbbAS;
+     };
+     # for wireguard only
+     tomate = {
+       wireguard.publicKey = "bBkntnpzbkN8W0cbJ+yd5MMnPZu7gctQNPGMGMUU23g=";
+       magicNumber = 201;
+       bgp = pbbAS;
+     };
+     # for wireguard only
+     schinken = {
+       wireguard.publicKey = "VT4wAsdBJuFzDhsTgcpdWLMkZJYbfeXa2yAvuGh1/iA=";
+       wireguard.endpoint = "2a01:4f8:162:1900::20";
+       magicNumber = 4;
+       bgp = pbbAS;
+     };
+  */
 
   # for dotfiles only
   adminpc = makeHost {

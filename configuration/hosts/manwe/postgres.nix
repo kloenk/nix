@@ -6,6 +6,8 @@
     fsType = "none";
     options = [ "bind" ];
   };
+  systemd.services.postgresql.unitConfig.RequireMountsFor =
+    [ "/var/lib/postgresql" ];
 
   services.postgresql = {
     enable = true;

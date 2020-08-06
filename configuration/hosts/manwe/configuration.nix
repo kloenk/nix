@@ -4,6 +4,12 @@
   imports = [
     ./hardware-configuration.nix
 
+    ./monitoring
+
+    ./engelsystem.nix
+    ./postgres.nix
+    ./mysql.nix
+
     ../../default.nix
     ../../common
     ../../common/pbb.nix

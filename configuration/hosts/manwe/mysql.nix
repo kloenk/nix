@@ -6,6 +6,7 @@
     device = "/persist/data/mysql";
     options = [ "bind" ];
   };
+  systemd.services.mysql.unitConfig.RequiresMountFor = [ "/var/lib/mysql" ];
 
   services.mysql = {
     enable = true;

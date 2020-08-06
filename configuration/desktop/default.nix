@@ -2,9 +2,7 @@
 
 {
 
-  imports = [
-    ./firefox.nix
-  ];
+  imports = [ ./firefox.nix ];
 
   home-manager.useUserPackages = true;
 
@@ -32,7 +30,7 @@
     pavucontrol
     gnupg
     mpv
-    tdesktop
+    #tdesktop
     evince
     youtubeDL
     calcurse
@@ -73,7 +71,7 @@
     xorg.xmodmap
 
     # audio
-    audacity
+    #audacity
 
     # KiCad pcb layout tool
     #kicad

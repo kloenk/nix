@@ -16,12 +16,12 @@
     locations."/node-exporter/".proxyPass = "http://127.0.0.1:9100/";
     locations."/node-exporter/".extraConfig = ''
       allow ::1/128;
-      allow 51.254.249.187/32;
-      allow 2001:41d0:1004:1629:1337:187::/64;
       allow 195.39.246.48/28;
       allow 2a0f:4ac0:f199::/48;
       allow 192.168.42.0/24;
       allow 127.0.0.0/8;
+      allow 195.39.221.187/32;
+      allow 2a01:4ac0:42::f144:1/128;
       deny all;
     '';
     locations."/wireguard/".proxyPass = "http://127.0.0.1:9586/";

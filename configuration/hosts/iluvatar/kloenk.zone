@@ -1,6 +1,6 @@
 $TTL 1M
 @		SOA	ns1.kloenk.de. kloenk.de. (
-    2020080501  	; serial (yyyymmdd##)
+    2020080601  	; serial (yyyymmdd##)
     3600            ; refresh
     1000            ; retry
     604800          ; expiry
@@ -55,8 +55,9 @@ _dmarc.ad	TXT	"v=DMARC1;p=reject;pct=100;rua=mailto:postmaster@kloenk.de"
 
 mail CNAME iluvatar
 
-grafana	A	51.254.249.187
-grafana	AAAA	2001:41d0:1004:1629:1337:0187::
+grafana				CNAME	manwe
+prometheus		CNAME	manwe
+alertmanager	CNAME	manwe
 
 fwd		A	51.254.249.187
 fwd		AAAA	2001:41d0:1004:1629:1337:0187::

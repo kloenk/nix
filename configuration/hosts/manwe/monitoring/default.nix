@@ -1,14 +1,24 @@
 { lib, config, pkgs, ... }:
 
-let hosts = import ../.. { };
+let
+  hosts = import ../.. { };
 
+  nginxExtraConfig = ''
+    allow 2a01:598:90a2:3090::/64;
+    allow 80.187.100.208/32;
+
+    ${config.services.nginx.virtualHosts."${config.networking.hostName}.kloenk.de".locations."/node-exporter/".extraConfig}
+  '';
 in {
 
   fileSystems."/var/lib/prometheus" = {
-    device = "persist/data/prometheus";
+    device = "/persist/data/prometheus";
     fsType = "none";
     options = [ "bind" ];
   };
+  systemd.services.prometheus.unitConfig.RequiresMountsFor =
+    [ "/var/lib/prometheus" ];
+  systemd.services.grafana.after = [ "prometheus.service" ];
 
   services.nginx.virtualHosts."grafana.kloenk.de" = {
     locations."/".proxyPass = "http://127.0.0.1:3001/";
@@ -17,15 +27,13 @@ in {
   };
   services.nginx.virtualHosts."prometheus.kloenk.de" = {
     locations."/".proxyPass = "http://127.0.0.1:9090/";
-    extraConfig =
-      config.services.nginx.virtualHosts."${config.networking.hostName}.kloenk.de".locations."/node-exporter/".extraConfig;
+    extraConfig = nginxExtraConfig;
     enableACME = true;
     forceSSL = true;
   };
   services.nginx.virtualHosts."alertmanager.kloenk.de" = {
     locations."/".proxyPass = "http://127.0.0.1:9093/";
-    extraConfig =
-      config.services.nginx.virtualHosts."${config.networking.hostName}.kloenk.de".locations."/node-exporter/".extraConfig;
+    extraConfig = nginxExtraConfig;
     enableACME = true;
     forceSSL = true;
   };
@@ -66,6 +74,20 @@ in {
         {
           name = "critical";
           email_configs = [{ to = "me@kloenk.de"; }];
+        }
+        {
+          name = "warning-usee";
+          email_configs = [
+            { to = "h.behrens@me.com"; }
+            { to = "holger.behrens@unterbachersee.de"; }
+          ];
+        }
+        {
+          name = "critical-usee";
+          email_configs = [
+            { to = "h.behrens@me.com"; }
+            { to = "holger.behrens@unterbachersee.de"; }
+          ];
         }
       ];
     };
@@ -129,12 +151,42 @@ in {
     rules = map (r: builtins.toJSON r) [{
       groups = [{
         name = "infra";
-        rules = [
+        rules = let
+          serverHosts = lib.filterAttrs (name: host: host.server)
+            (lib.filterAttrs (name: host: host ? prometheusExporters) hosts);
+          onlineHosts = lib.concatStringsSep "|"
+            (lib.mapAttrsToList (name: host: name) serverHosts);
+          makeOnlineHost = [
+            {
+              alert = "InstanceDown";
+              expr = ''min(up{job=~"${onlineHosts}"}) by (job) == 0'';
+              for = "5m";
+              labels = { severity = "warning"; };
+              annotations = {
+                summary = "{{ $labels.job }} down";
+                description =
+                  "{{ $labels.job }} has been down for more than 5 minutes.";
+              };
+            }
+            {
+              alert = "InstanceDown";
+              expr = ''min(up{job=~"${onlineHosts}"}) by (job) == 0'';
+              for = "10m";
+              labels = { severity = "critical"; };
+              annotations = {
+                summary = "{{ $labels.job }} down";
+                description =
+                  "{{ $labels.job }} has been down for more than 10 minutes.";
+              };
+            }
+          ];
+        in [
           {
-            alert = "InstanceDown";
-            expr = "min(up) by (job) == 0";
+            alert = "InstanceDown-usee";
+            expr =
+              ''min(up{job=~"bbb-usee|moodle-usee|pve-usee"}) by (job) == 0'';
             for = "5m";
-            labels = { severity = "warning"; };
+            labels = { severity = "warning-usee"; };
             annotations = {
               summary = "{{ $labels.job }} down";
               description =
@@ -142,10 +194,11 @@ in {
             };
           }
           {
-            alert = "InstanceDown";
-            expr = "min(up) by (job) == 0";
+            alert = "InstanceDown-usee";
+            expr =
+              ''min(up{job=~"bbb-usee|moodle-usee|pve-usee"}) by (job) == 0'';
             for = "10m";
-            labels = { severity = "critical"; };
+            labels = { severity = "critical-usee"; };
             annotations = {
               summary = "{{ $labels.job }} down";
               description =
@@ -200,7 +253,7 @@ in {
                 "{{ $labels.job }} is very low on system memory (current value: {{ $value }})";
             };
           }
-        ];
+        ] ++ makeOnlineHost;
       }];
     }];
   };
