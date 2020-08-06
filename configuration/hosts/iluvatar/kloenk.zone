@@ -122,8 +122,7 @@ _ts3._udp.ts3	SRV	1	1	790	web.xorit.de.
 hydra	CNAME	sauron.kloenk.de.
 cache	CNAME hubble.kloenk.de.
 
-punkte		AAAA	2001:41d0:1004:1629:1337:0187::
-punkte		A			51.254.249.187
+punkte	CNAME	manwe
 
 ; yougen foo
 yougen  A  195.39.247.9
