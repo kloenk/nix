@@ -48,6 +48,8 @@ in {
   krops.secrets.files."signignkey".owner = "hydra";
   users.users.hydra.extraGroups = [ "keys" ];
 
+  nix.distributedBuilds =
+    builtins.trace "Warning: distribudet build is on on hydra" true;
   nix.buildMachines = [
     {
       hostName = "lycus.yougen.de";
