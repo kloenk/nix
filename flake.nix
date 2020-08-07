@@ -28,9 +28,9 @@
     type = "github";
     owner = "nixos";
     repo = "hydra";
-    inputs.nixpkgs.follows = "/nixpkgs";
-    inputs.nix.inputs.nixpkgs.follows = "/nixpkgs";
-    inputs.nix.follows = "/nix";
+    #inputs.nixpkgs.follows = "/nixpkgs";
+    #inputs.nix.inputs.nixpkgs.follows = "/nixpkgs";
+    #inputs.nix.follows = "/nix";
   };
 
   inputs.nixpkgs-mc = {
@@ -79,8 +79,12 @@
     , website, secrets, nixpkgs-qutebrowser, nixpkgs-mc, nixos-org }:
     let
 
-      overlayCombined =
-        [ nix.overlay home-manager.overlay self.overlay hydra.overlay ];
+      overlayCombined = system: [
+        nix.overlay
+        home-manager.overlay
+        self.overlay
+        (overlays system)
+      ];
 
       systems = [ "x86_64-linux" ];
 
@@ -90,7 +94,7 @@
       nixpkgsFor = forAllSystems (system:
         import nixpkgs {
           inherit system;
-          overlays = overlayCombined ++ [ (overlays system) ];
+          overlays = (overlayCombined system);
         });
 
       # patche modules
@@ -101,11 +105,12 @@
           "${nixpkgs-mc}/nixos/modules/services/games/minecraft-server.nix"
           self.nixosModules.autoUpgrade
         ];
-        nixpkgs.overlays = [ (overlays system) nix.overlay hydra.overlay ];
+        nixpkgs.overlays = [ (overlays system) nix.overlay ];
       };
 
       overlays = system: final: prev: {
         qutebrowser = nixpkgs-qutebrowser.packages.${system}.qutebrowser;
+        hydra = builtins.trace "eval hydra" hydra.packages.${system}.hydra;
         #nixFlakes =
         #  (nix.packages.${system}.nix // { version = "2.4pre-Kloenk"; });
         #nix = (nix.packages.${system}.nix // { version = "2.4pre"; });

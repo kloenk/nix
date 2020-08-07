@@ -10,7 +10,7 @@ in {
     #libnfc = final.libnfc0;
   };
 
-  libnfc0 = callPackage ./libnfc {};
+  libnfc0 = callPackage ./libnfc { };
 
   # broken packages
   waybar = prev.waybar.overrideAttrs (oldAttrs: rec {
@@ -54,9 +54,7 @@ in {
       ++ [ "-DPSQL_INCDIR=${final.postgresql}/include" ];
   });
 
-  inherit (final.callPackage ./hydra { }) hydra-unstable;
-
-  bazaar = final.breezy;
+  #inherit (final.callPackage ./hydra { }) hydra-unstable;
 
   inherit (final.callPackage ./firefox { })
     firefoxPolicies firefox-policies-wrapped;
