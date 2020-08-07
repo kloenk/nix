@@ -64,26 +64,7 @@ in {
     server = true;
   };
 
-  kloenkX = makeHost {
-    host = "6.0.2.4";
-    #hostname = "kloenk@127.0.0.1:62954";
-    #hostname = "kloenk@kloenkX.kloenk.de:62954";
-    prometheusExporters = [ "node-exporter" "nginx-exporter" "wireguard" ];
-    wireguard.publicKey = "crMsdERA3xeV8tLpT817R78d4/hGMKS/6LWNyMlsFRQ=";
-    magicNumber = 250;
-  };
-  /* hubble = makeHost {
-       host = "hubble.kloenk.de";
-       #prometheusExporters = [ 9100 3001 9090 9154 9187 7980 9586 9119 9166 9113 ];
-       prometheusExporters =
-         [ "node-exporter" "nginx-exporter" "nixos-exporter" "wireguard" ];
-       vm = true;
-       mail = true;
-       wireguard.publicKey = "2z1soTjkt74lFfEi010JcfOCERhwIgvlqSacOvPYbyI=";
-       wireguard.endpoint = "2001:41d0:1004:1629:1337:187::";
-       magicNumber = 249;
-     };
-  */
+  samwise = makeHost { host = "6.0.2.4"; };
 
   # https://lotr.fandom.com/wiki/V%C3%ABantur
   veantur = makeHost {

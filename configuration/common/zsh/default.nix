@@ -2,6 +2,9 @@
 
 {
   environment.pathsToLink = [ "/share/zsh" ];
+
+  environment.systemPackages = with pkgs; [ fzf ];
+
   home-manager.users.kloenk.programs.zsh = {
     initExtra = ''
       function use {
@@ -16,6 +19,13 @@
         env prompt_sub="%F{blue}($packages_fmt) %F{white}$PROMPT" nix shell $packages
       }
       PROMPT=''${prompt_sub:=$PROMPT}
+
+      source ${pkgs.fzf}/share/fzf/completion.zsh
+      source ${pkgs.fzf}/share/fzf/key-bindings.zsh
+
+      fzf-store() {
+        find /nix/store -maxdepth 1 -mindepth 1 -type d  | fzf -m --preview-window right:50% --preview 'nix-store -q --tree {}'
+      }
     '';
     enable = true;
     autocd = true;
