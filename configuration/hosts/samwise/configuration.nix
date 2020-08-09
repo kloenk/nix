@@ -46,7 +46,11 @@
   boot.initrd.postMountCommands = ''
     cd /mnt-root
     chattr -i var/empty
-    rm -rf $(ls -A /mnt-root | grep -v 'nix' | grep -v 'boot' | grep -v 'var')
+    rm -rf $(ls -A /mnt-root | grep -v 'nix' | grep -v 'boot' | grep -v 'var' | grep -v 'home')
+
+    cd /mnt-root/home
+    rm -rf $(ls -A /mnt-root/home | grep -v 'kloenk' | grep -v 'pbb')
+    mkdir /mnt-root/{home/public,mnt} -p
 
     cd /mnt-root/var
     rm -rf $(ls -A /mnt-root/var | grep -v 'src')
@@ -59,7 +63,7 @@
   environment.etc."wpa_supplicant.conf".source =
     "/var/src/secrets/wpa_supplicant.conf";
   networking.supplicant.wlp2s0.configFile.path = "/etc/wpa_supplicant.conf";
-  networking.wireless.userControlled.enable = true;
+  #networking.wireless.userControlled.enable = true;
   networking.nameservers = [ "1.1.1.1" "10.0.0.2" ];
 
   services.fprintd.enable = true;
