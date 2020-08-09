@@ -32,8 +32,13 @@ in {
 
   manwe = makeHost {
     host = "manwe.kloenk.de";
-    wm = true;
+    vm = true;
     #mail = true;
+    server = true;
+  };
+
+  aule = makeHost {
+    host = "91.240.92.6";
     server = true;
   };
 
