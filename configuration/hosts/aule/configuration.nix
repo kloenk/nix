@@ -9,13 +9,11 @@
   ];
 
   boot.loader.grub.device = "/dev/disk/by-path/pci-0000:05:00.0-scsi-0:1:0:0";
-  
+
   #boot.initrd.postMountC
   networking.hostName = "aule";
   networking.domain = "kloenk.de";
-  networking.nameservers = [
-    "1.1.1.1"
-  ];
+  networking.nameservers = [ "1.1.1.1" ];
 
   networking.dhcpcd.enable = false;
   networking.useDHCP = false;
@@ -26,13 +24,48 @@
 
   # default gateway
   systemd.network.networks."40-enp3s0f0" = {
+    networkConfig.Description = "Network from Kevin";
     name = "enp3s0f0";
-    routes = [
-      {
-        routeConfig.Gateway = "91.240.92.1";
-        routeConfig.GatewayOnLink = "yes";
-      }
-    ];
+    routes = [{
+      routeConfig.Gateway = "91.240.92.1";
+      routeConfig.GatewayOnLink = "yes";
+      routeConfig.Metric = 1024;
+    }];
+  };
+
+  # y0sh
+  /* networking.interfaces.enp9s0.ipv4.address = [{
+     address = "192.168.1.98";
+     prefixLength = 24;
+     }];
+  */
+  systemd.network.networks."40-enp9s0" = {
+    networkConfig.Description = "Glas link to Y0sh";
+    name = "enp9s0";
+    DHCP = "no";
+    addresses = [{ addressConfig.Address = "192.168.1.98/24"; }];
+    vlan = [ "as207671" ];
+  };
+
+  systemd.network.netdevs."40-as207671" = {
+    netdevConfig = {
+      Kind = "vlan";
+      Name = "as207671";
+    };
+    vlanConfig.Id = 200;
+  };
+  systemd.network.networks."40-as207671" = {
+    networkConfig.Description = "Y0sh's AS207671";
+    name = config.systemd.network.netdevs."40-as207671".netdevConfig.Name;
+    DHCP = "no";
+    addresses = [{
+      addressConfig.Address = "195.39.221.50/32"; # 50-53; 55-60
+    }];
+    routes = [{
+      routeConfig.Gateway = "195.39.221.1";
+      routeConfig.GatewayOnLink = "yes";
+      routeConfig.Metric = "512";
+    }];
   };
 
   services.vnstat.enable = true;
