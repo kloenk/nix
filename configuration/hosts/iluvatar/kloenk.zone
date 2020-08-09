@@ -1,6 +1,6 @@
 $TTL 1M
 @		SOA	ns1.kloenk.de. kloenk.de. (
-    2020080601  	; serial (yyyymmdd##)
+    2020080901  	; serial (yyyymmdd##)
     3600            ; refresh
     1000            ; retry
     604800          ; expiry
@@ -77,6 +77,8 @@ hubble			A 	51.254.249.187 ; TODO: remove
 hubble			AAAA  2001:41d0:1004:1629:1337:0187:: ; TODO: remove
 
 manwe	A	195.39.221.187
+
+aule	A	195.39.221.50
 ;manwe AAAA 
 
 ;kloenkX			A 195.39.246.50
