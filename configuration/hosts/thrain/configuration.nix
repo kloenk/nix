@@ -6,6 +6,8 @@
     ./links.nix
     ./nfs.nix
 
+    ./syncthing.nix
+
     ../../default.nix
 
     ../../common

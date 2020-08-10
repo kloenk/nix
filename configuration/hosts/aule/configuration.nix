@@ -22,6 +22,8 @@
     prefixLength = 32;
   }];
 
+  networking.bridges.br0.interfaces = [ "enp9s0" ];
+
   # default gateway
   systemd.network.networks."40-enp3s0f0" = {
     networkConfig.Description = "Network from Kevin";
@@ -58,15 +60,32 @@
     networkConfig.Description = "Y0sh's AS207671";
     name = config.systemd.network.netdevs."40-as207671".netdevConfig.Name;
     DHCP = "no";
+    bridge = [ "br0" ];
+    /* addresses = [{
+         addressConfig.Address = "195.39.221.50/32"; # 50-53; 55-60
+       }];
+       routes = [{
+         routeConfig.Gateway = "195.39.221.1";
+         routeConfig.GatewayOnLink = "yes";
+         #routeConfig.Metric = "512";
+       }];
+    */
+  };
+
+  systemd.network.networks."40-br0" = {
+    name = "br0";
     addresses = [{
       addressConfig.Address = "195.39.221.50/32"; # 50-53; 55-60
     }];
     routes = [{
       routeConfig.Gateway = "195.39.221.1";
       routeConfig.GatewayOnLink = "yes";
-      routeConfig.Metric = "512";
+      #routeConfig.Metric = "512";
     }];
   };
+
+  virtualisation.libvirtd.enable = true;
+  users.users.kloenk.extraGroups = [ "libvirtd" ];
 
   services.vnstat.enable = true;
 
