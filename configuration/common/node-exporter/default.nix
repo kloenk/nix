@@ -30,34 +30,36 @@
     locations."/nginx-exporter/".proxyPass = "http://127.0.0.1:9113/";
     locations."/nginx-exporter/".extraConfig =
       config.services.nginx.virtualHosts."${config.networking.hostName}.kloenk.de".locations."/node-exporter/".extraConfig;
-    locations."/nixos-exporter/".proxyPass = "http://127.0.0.1:9300/";
-    locations."/nixos-exporter/".extraConfig =
-      config.services.nginx.virtualHosts."${config.networking.hostName}.kloenk.de".locations."/node-exporter/".extraConfig;
+    /* locations."/nixos-exporter/".proxyPass = "http://127.0.0.1:9300/";
+       locations."/nixos-exporter/".extraConfig =
+         config.services.nginx.virtualHosts."${config.networking.hostName}.kloenk.de".locations."/node-exporter/".extraConfig;
+    */
   };
 
-  system.activationScripts.node-exporter-system-version = ''
-    mkdir -pm 0775 /var/lib/prometheus-node-exporter-text-files
-    cd /var/lib/prometheus-node-exporter-text-files
-    ${
-      config.sources.nixos-org
-      + "/modules/prometheus/system-version-exporter.sh"
-    } | ${pkgs.moreutils}/bin/sponge system-version.prom
-  '';
+  /* system.activationScripts.node-exporter-system-version = ''
+       mkdir -pm 0775 /var/lib/prometheus-node-exporter-text-files
+       cd /var/lib/prometheus-node-exporter-text-files
+       ${
+         config.sources.nixos-org
+         + "/modules/prometheus/system-version-exporter.sh"
+       } | ${pkgs.moreutils}/bin/sponge system-version.prom
+     '';
 
-  systemd.services.prometheus-nixos-exporter = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
-    path = [ pkgs.nix pkgs.bash ];
-    serviceConfig = {
-      Restart = "always";
-      RestartSec = "60s";
-      ExecStart =
-        let python = pkgs.python3.withPackages (p: [ p.prometheus_client ]);
-        in ''
-          ${python}/bin/python ${
-            (config.sources.nixos-org + "/modules/prometheus/nixos-exporter.py")
-          }
-        '';
-    };
-  };
+     systemd.services.prometheus-nixos-exporter = {
+       wantedBy = [ "multi-user.target" ];
+       after = [ "network.target" ];
+       path = [ pkgs.nix pkgs.bash ];
+       serviceConfig = {
+         Restart = "always";
+         RestartSec = "60s";
+         ExecStart =
+           let python = pkgs.python3.withPackages (p: [ p.prometheus_client ]);
+           in ''
+             ${python}/bin/python ${
+               (config.sources.nixos-org + "/modules/prometheus/nixos-exporter.py")
+             }
+           '';
+       };
+     };
+  */
 }
