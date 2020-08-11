@@ -6,6 +6,7 @@
 
     ../../default.nix
     ../../common
+    ../../common/y0sh.nix
   ];
 
   boot.loader.grub.device = "/dev/disk/by-path/pci-0000:05:00.0-scsi-0:1:0:0";

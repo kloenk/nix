@@ -8,6 +8,7 @@
 
     ./engelsystem.nix
     ./postgres.nix
+    ./redis.nix
     ./mysql.nix
 
     ../../default.nix
