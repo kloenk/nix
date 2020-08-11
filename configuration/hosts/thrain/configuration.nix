@@ -115,7 +115,7 @@
 
   services.calibre-server.enable = true;
   services.calibre-server.libraryDir = "/persist/data/syncthing/data/Library";
-  users.users.calibre.extraGroups = [ "syncthing" ];
+  users.users.calibre-server.extraGroups = [ "syncthing" ];
 
   system.stateVersion = "20.09";
 }
