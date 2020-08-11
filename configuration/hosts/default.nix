@@ -69,6 +69,12 @@ in {
     server = true;
   };
 
+  melkor = makeHost {
+    host = "melkor.kloenk.de";
+    vm = true;
+    server = true;
+  };
+
   samwise = makeHost { host = "6.0.2.4"; };
 
   # https://lotr.fandom.com/wiki/V%C3%ABantur

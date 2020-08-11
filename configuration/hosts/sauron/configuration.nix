@@ -5,13 +5,10 @@
     ./hardware-configuration.nix
     ./wireguard.nix
 
-    ./hydra.nix
-    ./postgres.nix
-
     ../../default.nix
     ../../common
     ../../common/pbb.nix
-    ../../common/y0sh.nix
+    #../../common/y0sh.nix
   ];
 
   services.qemuGuest.enable = true;
@@ -75,6 +72,16 @@
   system.autoUpgrade.enable = true;
 
   users.users.pbb.extraGroups = [ "wheel" ];
+
+  users.users.buildfarm = {
+    isNormalUser = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIISCKsWIhN2UBenk0kJ1Hnc+fCZC/94l6bX9C4KFyKZN cardno:FFFE43212945"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAEDZjcKdYViw9cPrLNkO37+1NgUj8Ul1PTlbXMMwlMR kloenk@kloenkX"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMb5eOUnkfwBsCerZbsDk1xerQM+P6NU0b87pTStjq6h buildfarm@yougen"
+    ];
+  };
+  nix.trustedUsers = [ "buildfarm" ];
 
   system.stateVersion = "20.09";
 }

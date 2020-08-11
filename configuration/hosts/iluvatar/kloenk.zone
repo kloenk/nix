@@ -1,6 +1,6 @@
 $TTL 1M
 @		SOA	ns1.kloenk.de. kloenk.de. (
-    2020080901  	; serial (yyyymmdd##)
+    2020081101  	; serial (yyyymmdd##)
     3600            ; refresh
     1000            ; retry
     604800          ; expiry
@@ -92,6 +92,8 @@ iluvatar	A			195.39.247.6
 suaron    AAAA  2a0f:4ac4:42:0:f199::1
 sauron    A     195.39.221.54
 
+melkor		A			195.39.221.51
+
 bitwarden	AAAA	2a0f:4ac0::6
 bitwarden	A			195.39.247.6
 
@@ -121,7 +123,7 @@ _minercaft._tcp.mc	SRV	1	1	20023 game.00y.de.
 _ts3._udp.ts	SRV	1	1	790	web.xorit.de.
 _ts3._udp.ts3	SRV	1	1	790	web.xorit.de.
 
-hydra	CNAME	sauron.kloenk.de.
+hydra	CNAME melkor.kloenk.de.
 cache	CNAME hubble.kloenk.de.
 
 punkte	CNAME	manwe
