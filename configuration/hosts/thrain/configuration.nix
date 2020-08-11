@@ -113,7 +113,7 @@
 
   system.autoUpgrade.enable = true;
 
-  services.calibre-server.enable = true;
+  #services.calibre-server.enable = true;
   services.calibre-server.libraryDir = "/persist/data/syncthing/data/Library";
   users.users.calibre-server.extraGroups = [ "syncthing" ];
 
