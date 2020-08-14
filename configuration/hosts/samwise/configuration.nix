@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
 
     ./links.nix
+    ./mysql.nix
 
     ../../default.nix
     ../../common
