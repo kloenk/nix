@@ -9,6 +9,7 @@
     ../../default.nix
     ../../common
     ../../common/pbb.nix
+    ../../common/syncthing.nix
     ../../desktop
     ../../desktop/sway.nix
     ../../desktop/vscode.nix
@@ -46,7 +47,7 @@
   boot.initrd.postMountCommands = ''
     cd /mnt-root
     chattr -i var/empty
-    rm -rf $(ls -A /mnt-root | grep -v 'nix' | grep -v 'boot' | grep -v 'var' | grep -v 'home')
+    rm -rf $(ls -A /mnt-root | grep -v 'nix' | grep -v 'boot' | grep -v 'var' | grep -v 'home' | grep -v 'persist')
 
     cd /mnt-root/home
     rm -rf $(ls -A /mnt-root/home | grep -v 'kloenk' | grep -v 'pbb')
@@ -161,6 +162,8 @@
   nix.gc.automatic = false;
 
   services.prometheus.exporters.node.enabledCollectors = [ "tcpstat" "wifi" ];
+
+  services.syncthing.dataDir = "/persist/syncthing/";
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

@@ -6,12 +6,11 @@
     ./links.nix
     ./nfs.nix
 
-    ./syncthing.nix
-
     ../../default.nix
 
     ../../common
     ../../common/pbb.nix
+    ../../common/syncthing.nix
   ];
 
   # FIME: remove
@@ -116,6 +115,12 @@
   #services.calibre-server.enable = true;
   services.calibre-server.libraryDir = "/persist/data/syncthing/data/Library";
   users.users.calibre-server.extraGroups = [ "syncthing" ];
+
+  # syncthing
+  networking.firewall.allowedTCPPorts = [ 8384 ];
+  services.syncthing.dataDir = "/persist/data/syncthing/data";
+  services.syncthing.configDir = "/persist/data/syncthing/config";
+  services.syncthing.guiAddress = "6.0.2.2:8384";
 
   system.stateVersion = "20.09";
 }
