@@ -68,7 +68,11 @@ in {
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOiB0F1JwztcIQHXcJ4/+U1IL/qF9WBAW3P9yeEV+ybd";
     };
     sauron = {
-      hostNames = [ "[sauron,sauron.kloenk.de]:62954" "[195.39.221.54]:62954" "[sauron]:62954" ];
+      hostNames = [
+        "[sauron,sauron.kloenk.de]:62954"
+        "[195.39.221.54]:62954"
+        "[sauron]:62954"
+      ];
       publicKey =
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINLBu3X7A6i+aMApEJz3h66MAvRTRJmbTbauXPkDUeCd";
     };
