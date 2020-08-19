@@ -10,15 +10,11 @@
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
-    initialDatabases = [ { name = "if_flug"; } ];
-    ensureUsers = [
-      {
-        name = "kloenk";
-        ensurePermissions = {
-          "if_flug.*" = "ALL PRIVILEGES";
-        };
-      }
-    ];
+    initialDatabases = [{ name = "if_flug"; }];
+    ensureUsers = [{
+      name = "kloenk";
+      ensurePermissions = { "if_flug.*" = "ALL PRIVILEGES"; };
+    }];
   };
 
   environment.systemPackages = with pkgs; [ mariadb ];

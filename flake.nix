@@ -75,8 +75,15 @@
     flake = false;
   };
 
+  inputs.dns = {
+    type = "github";
+    owner = "kloenk";
+    #owner = "kirelagin";
+    repo = "nix-dns";
+  };
+
   outputs = inputs@{ self, nixpkgs, nix, hydra, home-manager, mail-server
-    , website, secrets, nixpkgs-qutebrowser, nixpkgs-mc, nixos-org }:
+    , website, secrets, nixpkgs-qutebrowser, nixpkgs-mc, nixos-org, dns }:
     let
 
       overlayCombined = system: [
@@ -131,7 +138,7 @@
             (import (nixpkgs + "/nixos/modules/installer/cd-dvd/channel.nix"))
             home-manager.nixosModules.home-manager
             (patchModule system)
-            (makeSourcesModule system)
+            sourcesModule
             {
               # disable home-manager manpage (breaks hydra see https://github.com/rycee/home-manager/issues/1262)
               home-manager.users.kloenk.manual.manpages.enable = false;
@@ -143,14 +150,10 @@
       hosts = import ./configuration/hosts { };
       nixosHosts = nixpkgs.lib.filterAttrs
         (name: host: if host ? nixos then host.nixos else false) hosts;
-      makeSourcesModule = hostName:
-        let
-          inherit (nixpkgs) lib;
-          inherit (lib) mkIf;
-        in { lib, ... }: {
-          options.sources = nixpkgs.lib.mkOption { };
-          config.sources = inputs;
-        };
+      sourcesModule = {
+          _file = ./flake.nix;
+          _module.args.inputs = inputs;
+      };
 
     in {
       overlay = import ./pkgs/overlay.nix;
@@ -184,7 +187,7 @@
             self.nixosModules.ferm2
             self.nixosModules.deluge2
             self.nixosModules.firefox
-            (makeSourcesModule name)
+            sourcesModule
             {
               # disable home-manager manpage (breaks hydra see https://github.com/rycee/home-manager/issues/1262)
               home-manager.users.kloenk.manual.manpages.enable = false;

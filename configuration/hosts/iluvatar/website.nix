@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, inputs, ... }:
 
 let
   commonHeaders = lib.concatStringsSep "\n"
@@ -9,7 +9,7 @@ in {
     "kloenk.de" = {
       enableACME = true;
       forceSSL = true;
-      root = config.sources.website;
+      root = inputs.website;
       locations."/public/".alias = "/persist/data/public/";
       extraConfig = ''
         ${commonHeaders}

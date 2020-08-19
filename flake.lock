@@ -1,5 +1,23 @@
 {
   "nodes": {
+    "dns": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1597480140,
+        "narHash": "sha256-Zz0McVTWaTr73rjj4CZAqDdniY+iTyN/nTrAdabbpZY=",
+        "owner": "kloenk",
+        "repo": "nix-dns",
+        "rev": "f1b6c25b308538358642a0578ac8bde40e54e998",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kloenk",
+        "repo": "nix-dns",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -25,7 +43,7 @@
     "hydra": {
       "inputs": {
         "nix": "nix",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "lastModified": 1596829329,
@@ -115,16 +133,15 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1594117931,
-        "narHash": "sha256-x7nZvITCLJiK7miPXU6yl2zdq+MlhjHicggfvjLguFg=",
+        "lastModified": 1597478494,
+        "narHash": "sha256-N7HoUxnrgnD1IfhPqAYJ4LoQHRQ/3+aXs1xC3FpSrxY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "c9d124e39dbeefc53c7b3e09fbfc2c26bcbd4845",
+        "rev": "3e988dfb33247ba2b28a55e4bba70d4d86daaf43",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "nixos-20.03",
         "type": "indirect"
       }
     },
@@ -146,7 +163,7 @@
     },
     "nixpkgs-qutebrowser": {
       "inputs": {
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_4"
       },
       "locked": {
         "lastModified": 1588768574,
@@ -164,6 +181,21 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1594117931,
+        "narHash": "sha256-x7nZvITCLJiK7miPXU6yl2zdq+MlhjHicggfvjLguFg=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "c9d124e39dbeefc53c7b3e09fbfc2c26bcbd4845",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-20.03",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1596699385,
         "narHash": "sha256-mKPBFrHuumg1fnup81XGJ98eXWGcoSsByxhNFg0RLbg=",
         "owner": "nixos",
@@ -177,7 +209,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1587961704,
         "narHash": "sha256-/aqrj8zYfwz8Wd0qu7jgNvddXj7Bro3QHz2YKJOJO5M=",
@@ -210,12 +242,13 @@
     },
     "root": {
       "inputs": {
+        "dns": "dns",
         "home-manager": "home-manager",
         "hydra": "hydra",
         "mail-server": "mail-server",
         "nix": "nix_2",
         "nixos-org": "nixos-org",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "nixpkgs-mc": "nixpkgs-mc",
         "nixpkgs-qutebrowser": "nixpkgs-qutebrowser",
         "secrets": "secrets",
