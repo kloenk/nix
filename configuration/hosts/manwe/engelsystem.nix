@@ -26,4 +26,9 @@
 
   krops.secrets.files."es_mail_password".owner = "engelsystem";
   users.users.engelsystem.extraGroups = [ "keys" ];
+
+  services.nginx.virtualHosts."punkte.kloenk.de" = {
+    enableACME = true;
+    forceSSL = true;
+  };
 }
