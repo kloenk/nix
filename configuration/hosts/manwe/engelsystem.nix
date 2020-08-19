@@ -6,6 +6,7 @@
     domain = "punkte.kloenk.de";
     config = {
       maintenance = false;
+      database.username = "engelsystem";
       email = {
         driver = "smtp";
         from.address = "noreply-punkte@kloenk.de";
