@@ -2,7 +2,7 @@
 
 {
 
-  imports = [ ./firefox.nix ];
+  imports = [ ./firefox.nix ./emacs.nix ];
 
   home-manager.useUserPackages = true;
 
@@ -56,6 +56,9 @@
 
     # elixir
     elixir
+
+    # rust repl
+    evcxr
 
     # Archives (e.g., tar.gz and zip)
     ark

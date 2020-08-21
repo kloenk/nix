@@ -82,8 +82,13 @@
     repo = "nix-dns";
   };
 
+  inputs.qyliss.url =
+    "https://git.qyliss.net/nixlib/snapshot/nixlib-53f8a96f89bb08765aedc7671c9d93572acc4d5e.tar.gz";
+  inputs.qyliss.flake = false;
+
   outputs = inputs@{ self, nixpkgs, nix, hydra, home-manager, mail-server
-    , website, secrets, nixpkgs-qutebrowser, nixpkgs-mc, nixos-org, dns }:
+    , website, secrets, nixpkgs-qutebrowser, nixpkgs-mc, nixos-org, dns, qyliss
+    }:
     let
 
       overlayCombined = system: [
@@ -115,9 +120,17 @@
         nixpkgs.overlays = [ (overlays system) nix.overlay ];
       };
 
+      qylissNixpkgsFor = forAllSystems (system:
+        import nixpkgs {
+          inherit system;
+          overlays =
+            [ (import (qyliss + "/overlays/patches/nixpkgs-wayland")) ];
+        });
+
       overlays = system: final: prev: {
         qutebrowser = nixpkgs-qutebrowser.packages.${system}.qutebrowser;
         hydra = builtins.trace "eval hydra" hydra.packages.${system}.hydra;
+        emacs-pgtk = qylissNixpkgsFor.${system}.emacs-pgtk;
         #nixFlakes =
         #  (nix.packages.${system}.nix // { version = "2.4pre-Kloenk"; });
         #nix = (nix.packages.${system}.nix // { version = "2.4pre"; });
@@ -151,12 +164,15 @@
       nixosHosts = nixpkgs.lib.filterAttrs
         (name: host: if host ? nixos then host.nixos else false) hosts;
       sourcesModule = {
-          _file = ./flake.nix;
-          _module.args.inputs = inputs;
+        _file = ./flake.nix;
+        _module.args.inputs = inputs;
       };
 
     in {
-      overlay = import ./pkgs/overlay.nix;
+      overlay = final: prev:
+        ((import ./pkgs/overlay.nix final prev)
+        #// (import (qyliss + "/overlays/patches/nixpkgs-wayland") final prev)
+          // { });
 
       legacyPackages = forAllSystems
         (system: nixpkgsFor.${system} // { isoImage = (iso system); });
@@ -235,3 +251,4 @@
       };
     };
 }
+

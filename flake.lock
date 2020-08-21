@@ -240,6 +240,18 @@
         "type": "github"
       }
     },
+    "qyliss": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-hTyEAzeMW0DS3Pf5fnJ2d4OaKjoHesyZmYMrwH1T75U=",
+        "type": "tarball",
+        "url": "https://git.qyliss.net/nixlib/snapshot/nixlib-53f8a96f89bb08765aedc7671c9d93572acc4d5e.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://git.qyliss.net/nixlib/snapshot/nixlib-53f8a96f89bb08765aedc7671c9d93572acc4d5e.tar.gz"
+      }
+    },
     "root": {
       "inputs": {
         "dns": "dns",
@@ -251,6 +263,7 @@
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-mc": "nixpkgs-mc",
         "nixpkgs-qutebrowser": "nixpkgs-qutebrowser",
+        "qyliss": "qyliss",
         "secrets": "secrets",
         "website": "website"
       }
