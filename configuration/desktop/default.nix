@@ -2,7 +2,7 @@
 
 {
 
-  imports = [ ./firefox.nix ./emacs.nix ];
+  imports = [ ./firefox.nix ./emacs ];
 
   home-manager.useUserPackages = true;
 

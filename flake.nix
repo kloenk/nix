@@ -85,9 +85,14 @@
   inputs.qyliss.url =
     "https://git.qyliss.net/nixlib/snapshot/nixlib-53f8a96f89bb08765aedc7671c9d93572acc4d5e.tar.gz";
   inputs.qyliss.flake = false;
+   
+  inputs.doom-emacs = {
+    url = "github:vlaci/nix-doom-emacs";
+    flake = false;
+  };
 
   outputs = inputs@{ self, nixpkgs, nix, hydra, home-manager, mail-server
-    , website, secrets, nixpkgs-qutebrowser, nixpkgs-mc, nixos-org, dns, qyliss
+    , website, secrets, nixpkgs-qutebrowser, nixpkgs-mc, nixos-org, dns, qyliss, ...
     }:
     let
 

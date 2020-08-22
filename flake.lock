@@ -18,6 +18,22 @@
         "type": "github"
       }
     },
+    "doom-emacs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1598020882,
+        "narHash": "sha256-i8Cug00eDBloJxqt8t1VQNlat+YhUcj/LJinOysV4bI=",
+        "owner": "vlaci",
+        "repo": "nix-doom-emacs",
+        "rev": "8e120b430bbaf473305cdf9ee2aed9b01a3f8398",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vlaci",
+        "repo": "nix-doom-emacs",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -255,6 +271,7 @@
     "root": {
       "inputs": {
         "dns": "dns",
+        "doom-emacs": "doom-emacs",
         "home-manager": "home-manager",
         "hydra": "hydra",
         "mail-server": "mail-server",
