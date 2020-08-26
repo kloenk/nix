@@ -23,7 +23,7 @@
     prefixLength = 32;
   }];
 
-  networking.bridges.br0.interfaces = [ "enp9s0" ];
+  #networking.bridges.br0.interfaces = [ "enp9s0" ];
 
   # default gateway
   systemd.network.networks."40-enp3s0f0" = {
@@ -37,6 +37,7 @@
   };
 
   # y0sh
+  users.users.y0sh.extraGroups = [ "libvirtd" "wheel" ];
   /* networking.interfaces.enp9s0.ipv4.address = [{
      address = "192.168.1.98";
      prefixLength = 24;
