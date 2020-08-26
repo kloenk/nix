@@ -126,4 +126,13 @@
     ];
     port = lib.mkDefault 62954;
   };
+
+  systemd.tmpfiles.rules = [
+    "Q /persist 755 root - - -"
+    "Q /persist/data 755 root - - -"
+
+    "Q /persist/data/acme 750 nginx - - -"
+    "L /var/lib/acme - - - - /persist/data/acme"
+    "L+ /etc/shadow - - - - /persist/data/shadow"
+  ];
 }

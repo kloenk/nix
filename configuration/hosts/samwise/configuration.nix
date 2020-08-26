@@ -59,6 +59,11 @@
     rm -rf $(ls -A /mnt-root/var | grep -v 'src')
   '';
 
+  systemd.tmpfiles.rules = [
+    "Q /persist/data/bluetooth 750 - - - -"
+    "L /var/lib/bluetooth - - - - /persist/data/bluetooht"
+  ];
+
   networking.hostName = "samwise";
   networking.useDHCP = false;
   networking.wireless.enable = true;
