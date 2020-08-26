@@ -42,7 +42,7 @@ let
     SOA = ((ttl 600) {
       nameServer = "ns1.kloenk.de.";
       adminEmail = "hostmaster@kloenk.de";
-      serial = 2020081501;
+      serial = 2020082501;
       refresh = 3600;
       expire = 604800;
       minimum = 600;
