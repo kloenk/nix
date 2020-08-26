@@ -156,12 +156,15 @@ in {
           silent! call mkdir(expand(&g:undodir), 'p', 0700)
         endif
       '';
-      plugins = with pkgs; [
-        vimPlugins.rust-vim
-        vimPlugins.tabular
-        vimPlugins.vim-nix
-        vimPlugins.vim-table-mode
-        vimPlugins.vim-elixir
+      plugins = with pkgs.vimPlugins; [
+        rust-vim
+        tabular
+        vim-nix
+        vim-table-mode
+        vim-elixir
+
+        #nerdtree
+        #nerdtree-git-plugin
       ];
     };
   };

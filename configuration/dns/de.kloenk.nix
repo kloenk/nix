@@ -9,7 +9,7 @@ let
 
   mxKloenk = with dns.combinators.mx;
     map (dns.combinators.ttl 3600) [
-      (mx 10 "iluvatar.kloenk.de.")
+      (mx 10 "mail.kloenk.de.")
       #secondary (20)
     ];
   dmarc = with dns.combinators;

@@ -22,3 +22,19 @@
 
 ;; company enable
 (add-hook 'after-init-hook 'global-company-mode)
+
+;; Disable some GUI distractions.
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(menu-bar-mode -1)
+(blink-cursor-mode 0)
+
+;; Stop creating backup and autosave files.
+(setq make-backup-files nil
+    auto-save-default nil)
+
+;; Always show line and column number in the mode line.
+(line-number-mode)
+(column-number-mode)
+
+
