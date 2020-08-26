@@ -23,7 +23,7 @@
     prefixLength = 32;
   }];
 
-  #networking.bridges.br0.interfaces = [ "enp9s0" ];
+  networking.bridges.br0.interfaces = [ "as207671" ];
 
   # default gateway
   systemd.network.networks."40-enp3s0f0" = {
