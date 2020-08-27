@@ -11,7 +11,7 @@
       Name = "wg0";
     };
     wireguardConfig = {
-      FwMark = 51820;
+      FirewallMark = 51820;
       ListenPort = 51820;
       PrivateKeyFile = config.krops.secrets.files."wg0.key".path;
     };

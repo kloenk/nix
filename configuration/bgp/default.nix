@@ -33,7 +33,7 @@ in {
           Name = "wg-${name}";
         };
         wireguardConfig = {
-          FwMark = 51820;
+          FirewallMark = 51820;
           ListenPort = port;
           PrivateKeyFile = config.krops.secrets.files."wg-pbb.key".path;
         };

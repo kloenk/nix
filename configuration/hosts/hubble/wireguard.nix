@@ -34,7 +34,7 @@
       Name = "y0sh0";
     };
     wireguardConfig = {
-      FwMark = 51820;
+      FirewallMark = 51820;
       ListenPort = 51819;
       PrivateKeyFile = config.krops.secrets.files."y0sh0.key".path;
     };
@@ -67,7 +67,7 @@
       Name = "wg0";
     };
     wireguardConfig = {
-      FwMark = 51820;
+      FirewallMark = 51820;
       ListenPort = 51820;
       PrivateKeyFile = config.krops.secrets.files."wg0.key".path;
     };
@@ -177,7 +177,7 @@
       Name = "wgFam";
     };
     wireguardConfig = {
-      FwMark = 51820;
+      FirewallMark = 51820;
       ListenPort = 51821;
       PrivateKeyFile = config.krops.secrets.files."wgFam.key".path;
     };
@@ -242,7 +242,7 @@
       Name = "llg0";
     };
     wireguardConfig = {
-      FwMark = 51820;
+      FirewallMark = 51820;
       ListenPort = 51822;
       PrivateKeyFile = config.krops.secrets.files."llg0.key".path;
     };

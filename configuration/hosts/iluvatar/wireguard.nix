@@ -12,7 +12,7 @@
       Name = "wg0";
     };
     wireguardConfig = {
-      FwMark = 51820;
+      FirewallMark = 51820;
       ListenPort = 51820;
       PrivateKeyFile = config.krops.secrets.files."wg0.key".path;
     };
@@ -38,6 +38,7 @@
   networking.hosts = {
     "10.0.0.2" = [ "io.yougen.de" "git.yougen.de" ];
     "10.0.0.5" = [ "grafana.yougen.de" "hydra.yougen.de" "lycus.yougen.de" ];
+    "172.16.16.3" = [ "core.josefstrasse.yougen.de" ];
   };
 
   systemd.network.netdevs."30-yougen" = {
@@ -46,11 +47,11 @@
       Name = "yougen";
     };
     wireguardConfig = {
-      FwMark = 51820;
+      FirewallMark = 51820;
       ListenPort = 51830;
       PrivateKeyFile = config.krops.secrets.files."yougen.key".path;
     };
-    wireguardPeers [{
+    wireguardPeers = [{
       wireguardPeerConfig = {
         AllowedIPs = [ "172.16.16.3/32" ];
         PublicKey = "UDdUoBRXy+3skbUuh7gLNmHnnbtJPncbCPPeZNX/rBU=";

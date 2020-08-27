@@ -23,7 +23,7 @@ in {
       };
       netdevConfig = { MTUBytes = "1402"; };
       wireguardConfig = {
-        FwMark = 51820;
+        FirewallMark = 51820;
         ListenPort = port;
         PrivateKeyFile = config.krops.secrets.files."wg-pbb.key".path;
       };
