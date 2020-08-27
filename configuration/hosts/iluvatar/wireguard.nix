@@ -3,6 +3,7 @@
 {
   networking.firewall.allowedUDPPorts = [
     51820 # wg0
+    51830 # yougen
   ];
 
   systemd.network.netdevs."30-wg0" = {
@@ -39,6 +40,34 @@
     "10.0.0.5" = [ "grafana.yougen.de" "hydra.yougen.de" "lycus.yougen.de" ];
   };
 
+  systemd.network.netdevs."30-yougen" = {
+    netdevConfig = {
+      Kind = "wireguard";
+      Name = "yougen";
+    };
+    wireguardConfig = {
+      FwMark = 51820;
+      ListenPort = 51830;
+      PrivateKeyFile = config.krops.secrets.files."yougen.key".path;
+    };
+    wireguardPeers [{
+      wireguardPeerConfig = {
+        AllowedIPs = [ "172.16.16.3/32" ];
+        PublicKey = "UDdUoBRXy+3skbUuh7gLNmHnnbtJPncbCPPeZNX/rBU=";
+        PersistentKeepalive = 21;
+      };
+    }];
+  };
+  systemd.network.networks."30-yougen" = {
+    name = "yougen";
+    linkConfig.RequiredForOnline = "no";
+    addresses = [{ addressConfig.Address = "172.16.16.1/24"; }];
+    routes = [
+      { routeConfig.Destination = "172.16.16.0/24"; }
+    ];
+  };
+
   users.users.systemd-network.extraGroups = [ "keys" ];
   krops.secrets.files."wg0.key".owner = "systemd-network";
+  krops.secrets.files."yougen.key".owner = "systemd-network";
 }
