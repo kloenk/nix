@@ -40,19 +40,20 @@ in {
       sha256 = "0rs9bxxrw4wscf4a8yl776a8g880m5gcm75q06yx2cn3lw2b7v22";
     };
   });
-  quassel = prev.quassel.overrideAttrs (oldAttrs: rec {
-    name = "quassel-${version}";
-    version = "0.14-pre";
-    buildInputs = oldAttrs.buildInputs ++ [ final.boost ];
-    src = final.fetchFromGitHub {
-      owner = "quassel";
-      repo = "quassel";
-      rev = "b134e777b822b929a78455fd92146bf7443e9aa1";
-      sha256 = "0yzbyjycsff1cw0py9nagd2j1il3sw8ihal4bpv80hlvwi9f07rr";
-    };
-    cmakeFlags = oldAttrs.cmakeFlags
-      ++ [ "-DPSQL_INCDIR=${final.postgresql}/include" ];
-  });
+  /* quassel = prev.quassel.overrideAttrs (oldAttrs: rec {
+       name = "quassel-${version}";
+       version = "0.14-pre";
+       buildInputs = oldAttrs.buildInputs ++ [ final.boost ];
+       src = final.fetchFromGitHub {
+         owner = "quassel";
+         repo = "quassel";
+         rev = "b134e777b822b929a78455fd92146bf7443e9aa1";
+         sha256 = "0yzbyjycsff1cw0py9nagd2j1il3sw8ihal4bpv80hlvwi9f07rr";
+       };
+       cmakeFlags = oldAttrs.cmakeFlags
+         ++ [ "-DPSQL_INCDIR=${final.postgresql}/include" ];
+     });
+  */
 
   #inherit (final.callPackage ./hydra { }) hydra-unstable;
 
