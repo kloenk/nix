@@ -6,7 +6,7 @@ let
   makeHost = { host, port ? 62954, user ? "kloenk", prometheusExporters ? [
     "node-exporter"
     "nginx-exporter"
-    "nixos-exporter"
+    #"nixos-exporter"
   ], hostname ? "${user}@${host}:${toString port}", server ? false, ...
     }@extraArgs:
     ({
