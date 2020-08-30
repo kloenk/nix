@@ -21,9 +21,11 @@
     #../../desktop/gnome.nix
   ];
 
+  boot.loader.grub.enable = false;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   hardware.cpu.intel.updateMicrocode = true;
-  boot.loader.grub.device =
-    "/dev/disk/by-id/ata-Patriot_Burst_F90B079B1A0400316538";
   boot.kernelModules = [
     #"vfio-pci"
     "amdgpu"
@@ -38,25 +40,25 @@
   #  "mipsel-linux"
   #];
 
-  boot.initrd.luks.devices."cryptLVM".device =
-    "/dev/disk/by-id/ata-Patriot_Burst_F90B079B1A0400316538-part2";
-  boot.initrd.luks.devices."cryptLVM".allowDiscards = true;
+  #boot.initrd.luks.devices."cryptLVM".device =
+  #  "/dev/disk/by-id/ata-Patriot_Burst_F90B079B1A0400316538-part2";
+  #boot.initrd.luks.devices."cryptLVM".allowDiscards = true;
 
-  boot.initrd.network.enable = true;
-  boot.initrd.availableKernelModules = [ "r8169" ];
-  boot.initrd.network.ssh = {
-    enable = true;
-    authorizedKeys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBps9Mp/xZax8/y9fW1Gt73SkskcBux1jDAB8rv0EYUt cardno:000612029874"
-    ];
-    port = 62954;
-    hostKeys = [ "/var/src/secrets/initrd/ed25519_host_key" ];
-  };
-  boot.initrd.preLVMCommands = lib.mkBefore (''
-    ip li set dev enp4s0 up
-    ip addr add 192.168.178.247/24 dev enp4s0
-    hasNetwork=1
-  '');
+  #boot.initrd.network.enable = true;
+  #boot.initrd.availableKernelModules = [ "r8169" ];
+  #boot.initrd.network.ssh = {
+  #  enable = true;
+  #  authorizedKeys = [
+  #    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBps9Mp/xZax8/y9fW1Gt73SkskcBux1jDAB8rv0EYUt cardno:000612029874"
+  #  ];
+  #  port = 62954;
+  #  hostKeys = [ "/var/src/secrets/initrd/ed25519_host_key" ];
+  #};
+  #boot.initrd.preLVMCommands = lib.mkBefore (''
+  #  ip li set dev enp4s0 up
+  #  ip addr add 192.168.178.247/24 dev enp4s0
+  #  hasNetwork=1
+  #'');
 
   boot.kernelParams = [
     #  "intel_iommu=on"
@@ -67,11 +69,11 @@
     "amdgpu.si_support=1"
   ];
   # OSX KVM
-  boot.extraModprobeConfig = ''
-    options kvm_intel nested=1
-    options kvm_intel emulate_invalid_guest_state=0
-    options kvm ignore_msrs=1
-  '';
+  #boot.extraModprobeConfig = ''
+  #  options kvm_intel nested=1
+  #  options kvm_intel emulate_invalid_guest_state=0
+  #  options kvm ignore_msrs=1
+  #'';
 
   networking.useDHCP = false;
   networking.hostName = "barahir";

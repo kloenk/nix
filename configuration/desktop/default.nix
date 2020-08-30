@@ -90,8 +90,8 @@
 
     # web browser
     #firefox-wayland
-    firefox-policies-wrapped
-    qutebrowser
+    #firefox-policies-wrapped
+    #qutebrowser
     chromium
     #config.sources.nixpkgs-qutebrowser.packages."x86_64-linux".qutebrowser
   ];

@@ -10,9 +10,9 @@
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_12;
-    extraConfig = ''
+    /*extraConfig = ''
       unix_socket_directories = '/run/postgresql/'
-    '';
+    '';*/
     ensureDatabases = [
       "ve_collector"
       "ve_collector_test"

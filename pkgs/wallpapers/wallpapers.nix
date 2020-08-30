@@ -164,10 +164,10 @@ in {
     sha256 = "sha256-KpBR/QUtxVuhY2rQSnkryQOBIt2uvoaXoVMeXf3NKN4=";
   };
 
-  bioshock_skycrane = fromRedditPost {
+  /*bioshock_skycrane = fromRedditPost {
     url = "https://www.reddit.com/r/gaming/comments/87hknr/some_bioshock_wallpapers/";
     sha256 = "sha256-fHJf+XCsSIGscBKTnd05yhceBjZINMJsGgWAD0xsoLs=";
-  };
+  };*/
 
   life_is_strange = fromRedditPost {
     url =
