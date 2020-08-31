@@ -118,11 +118,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1598635469,
-        "narHash": "sha256-HqM3Z4DLdMrf+0PPZL9ysctGg+K+i3S/IHA1GsJj0Ro=",
-        "owner": "nixos",
-        "repo": "nix",
-        "rev": "f15651303f8596bf34c67fc8d536b1e9e7843a87",
+        "lastModified": 1598867158,
+        "narHash": "sha256-tdrdNrAId/tkH8R/eT0/L+vpdy7PlJ6MC0zT06PXQmI=",
+        "owner": "kloenk",
+        "repo": "nixos-nix",
+        "rev": "831dffa89523527b47d55c6b2413437f7204d3d8",
         "type": "github"
       },
       "original": {
