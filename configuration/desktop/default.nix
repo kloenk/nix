@@ -2,7 +2,7 @@
 
 {
 
-  imports = [ ./firefox.nix ./emacs ];
+  #imports = [ ./firefox.nix ];
 
   home-manager.useUserPackages = true;
 
@@ -89,7 +89,7 @@
     notable
 
     # web browser
-    #firefox-wayland
+    firefox-wayland
     #firefox-policies-wrapped
     #qutebrowser
     chromium
@@ -127,6 +127,7 @@
   };
 
   nixpkgs.config.chromium = { enableWideVine = true; };
+  nixpkgs.config.firefox.enableTridactylNative = true;
 
   hardware.nitrokey.enable = true;
 

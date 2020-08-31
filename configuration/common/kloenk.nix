@@ -41,6 +41,7 @@
       tcpdump
       binutils
       nixfmt
+      perl
     ];
   };
 
