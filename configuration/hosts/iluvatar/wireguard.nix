@@ -16,14 +16,30 @@
       ListenPort = 51820;
       PrivateKeyFile = config.krops.secrets.files."wg0.key".path;
     };
-    wireguardPeers = [{
+    wireguardPeers = [
+      {
       wireguardPeerConfig = {
-        AllowedIPs = [ "0.0.0.0/0" "::/0" ];
+        AllowedIPs = [
+          "192.168.42.0/26"
+          #"0.0.0.0/0"
+          #"::/0"
+        };
         PublicKey = "MUsPCkTKHBGvCI62CevFs6Wve+cXBLQIl/C3rW3PbVM=";
         PersistentKeepalive = 21;
         Endpoint = "51.254.249.187:51820";
       };
-    }];
+    }
+    {
+      wireguardPeerConfig = {
+        AllowedIPs = [
+          "192.168.42.102/32"
+          #"195.39.246.10" # ???
+        ];
+        PublicKey = "";
+        PersistentKeepalive = 21;
+      };
+    }
+  ];
   };
   systemd.network.networks."30-wg0" = {
     name = "wg0";

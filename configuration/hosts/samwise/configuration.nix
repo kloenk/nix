@@ -104,7 +104,7 @@
     lm_sensors
     tpacpi-bat
     acpi # fixme: not in the kernel
-    wine # can we ditch it?
+    #wine # can we ditch it?
     spotifywm # spotify fixed for wms
     python # includes python2 as dependency for vscode
     platformio # pio command
