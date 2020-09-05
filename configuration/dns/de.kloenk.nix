@@ -42,7 +42,7 @@ let
     SOA = ((ttl 600) {
       nameServer = "ns1.kloenk.de.";
       adminEmail = "hostmaster@kloenk.de";
-      serial = 2020082501;
+      serial = 2020090501;
       refresh = 3600;
       expire = 604800;
       minimum = 600;
@@ -81,9 +81,6 @@ let
       melkor = hostTTL 1200 "195.39.221.51" null;
       aule = hostTTL 1200 "195.39.221.50" null;
 
-      hubble = hostTTL 600 "51.254.249.187"
-        "2001:41d0:1004:1629:1337:0187::"; # TODO: remove
-
       ns1 = iluvatar;
 
       _dmarc.TXT = dmarc;
@@ -108,7 +105,7 @@ let
       punkte = manwe;
 
       hydra = melkor;
-      cache = hubble; # TODO: somewhere else
+      cache = iluvatar; # TODO: somewhere else
 
       luna.CNAME = [ "luna.pbb.lc." ];
 

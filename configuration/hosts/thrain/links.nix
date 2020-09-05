@@ -49,17 +49,17 @@
       wireguardPeers = [{
         wireguardPeerConfig = {
           AllowedIPs = [ "0.0.0.0/0" "::/0" ];
-          PublicKey = "MUsPCkTKHBGvCI62CevFs6Wve+cXBLQIl/C3rW3PbVM=";
+          PublicKey = "UoIRXpG/EHmDNDhzFPxZS18YBlj9vBQRRQZMCFhonDA=";
           PersistentKeepalive = 21;
-          Endpoint = "51.254.249.187:51820";
+          Endpoint = "195.39.247.6:51820";
         };
       }];
     };
     networks."30-wg0" = {
       name = "wg0";
       linkConfig = { RequiredForOnline = "yes"; };
-      addresses = [{ addressConfig.Address = "192.168.42.52/24"; }];
-      routes = [{ routeConfig.Destination = "192.168.42.0/24"; }];
+      addresses = [{ addressConfig.Address = "192.168.242.101/24"; }];
+      routes = [{ routeConfig.Destination = "192.168.242.0/24"; }];
     };
 
     networks."99-how_cares".linkConfig.RequiredForOnline = "no";

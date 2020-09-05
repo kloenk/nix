@@ -6,6 +6,17 @@
     51830 # yougen
   ];
 
+  # NATING
+  boot.kernel.sysctl = { "net.ipv4.ip_forward" = 1; };
+
+  services.ferm2.extraConfig4 = ''
+    table nat {
+      chain POSTROUTING {
+        outerface enp1s0 SNAT to 195.39.247.6;
+      }
+    }
+  '';
+
   systemd.network.netdevs."30-wg0" = {
     netdevConfig = {
       Kind = "wireguard";
@@ -17,43 +28,55 @@
       PrivateKeyFile = config.krops.secrets.files."wg0.key".path;
     };
     wireguardPeers = [
-      {
-      wireguardPeerConfig = {
-        AllowedIPs = [
-          "192.168.42.0/26"
-          #"0.0.0.0/0"
-          #"::/0"
+      /* {
+           wireguardPeerConfig = {
+             AllowedIPs = [
+               "192.168.42.102/32"
+               #"195.39.246.10" # ???
+             ];
+             PublicKey = "";
+             PersistentKeepalive = 21;
+           };
+         }
+      */
+      { # thrain
+        wireguardPeerConfig = {
+          AllowedIPs = [ "192.168.242.101/32" ];
+          PublicKey = "RiRB/fiZ/x88f78kRQasSwWYBuBjc5DxW2OFaa67zjg=";
+          PersistentKeepalive = 21;
         };
-        PublicKey = "MUsPCkTKHBGvCI62CevFs6Wve+cXBLQIl/C3rW3PbVM=";
-        PersistentKeepalive = 21;
-        Endpoint = "51.254.249.187:51820";
-      };
-    }
-    {
-      wireguardPeerConfig = {
-        AllowedIPs = [
-          "192.168.42.102/32"
-          #"195.39.246.10" # ???
-        ];
-        PublicKey = "";
-        PersistentKeepalive = 21;
-      };
-    }
-  ];
+      }
+      { # barahir
+        wireguardPeerConfig = {
+          AllowedIPs = [ "192.168.242.102/32" ];
+          PublicKey = "4SUbImacuAjRwiK/G3CTmczirJQCI20EdJvPwJfCQxQ=";
+          PersistentKeepalive = 21;
+        };
+      }
+
+      { # Pocophone
+        wireguardPeerConfig = {
+          AllowedIPs = [ "192.168.242.202/32" ];
+          PublicKey = "FvBat+gZV47VgiyVRF0QL79rzpk66kQxai0cs9Zvyhw=";
+          PersistentKeepalive = 21;
+        };
+      }
+    ];
   };
   systemd.network.networks."30-wg0" = {
     name = "wg0";
     linkConfig = { RequiredForOnline = "no"; };
-    addresses = [{ addressConfig.Address = "192.168.42.50/24"; }];
-    routes = [
-      { routeConfig.Destination = "192.168.42.0/24"; }
-      { routeConfig.Destination = "10.0.0.0/24"; }
-    ];
+    addresses = [{ addressConfig.Address = "192.168.242.0/24"; }];
+    routes = [{
+      routeConfig.Destination = "192.168.242.0/24";
+    }
+    #{ routeConfig.Destination = "10.0.0.0/24"; }
+      ];
   };
 
   networking.hosts = {
-    "10.0.0.2" = [ "io.yougen.de" "git.yougen.de" ];
-    "10.0.0.5" = [ "grafana.yougen.de" "hydra.yougen.de" "lycus.yougen.de" ];
+    #"10.0.0.2" = [ "io.yougen.de" "git.yougen.de" ];
+    #"10.0.0.5" = [ "grafana.yougen.de" "hydra.yougen.de" "lycus.yougen.de" ];
     "172.16.16.3" = [ "core.josefstrasse.yougen.de" ];
   };
 
@@ -79,9 +102,7 @@
     name = "yougen";
     linkConfig.RequiredForOnline = "no";
     addresses = [{ addressConfig.Address = "172.16.16.1/24"; }];
-    routes = [
-      { routeConfig.Destination = "172.16.16.0/24"; }
-    ];
+    routes = [{ routeConfig.Destination = "172.16.16.0/24"; }];
   };
 
   users.users.systemd-network.extraGroups = [ "keys" ];

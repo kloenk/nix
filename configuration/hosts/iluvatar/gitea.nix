@@ -29,39 +29,36 @@
       createDatabase = true;
     };
 
-    extraConfig = ''
-      [repository]
-      PREFERRED_LICENSES = AGPL-3.0,GPL-3.0,GPL-2.0,LGPL-3.0,LGPL-2.1
+    settings = builtins.trace "add signingkey to gitea" {
+      repository.PREFERRED_LICENSES =
+        "AGPL-3.0,GPL-3.0,GPL-2.0,LGPL-3.0,LGPL-2.1";
+      server = {
+        START_SSH_SERVER = false;
+        BUILTIN_SSH_SERVER_USER = "git";
+        SSH_PORT = 22;
+        DISABLE_ROUTER_LOG = true;
+        SSH_CREATE_AUTHORIZED_KEYS_FILE = false;
+      };
+      mailer = {
+        ENABLE = true;
+        SUBJECT = "%(APP_NAME)s";
+        HOST = "localhost:587";
+        USER = "git@kloenk.de";
+        SEND_AS_PLAIN_TEXT = true;
+        USE_SENDMAIL = false;
+        FROM = ''"Kloenks's Gitea" <gitea@kloenk.de>'';
+      };
+      attachment.ALLOWED_TYPES = "*/*";
 
-      [server]
-      START_SSH_SERVER = false
-      BUILTIN_SSH_SERVER_USER = git
-      SSH_LISTEN_HOST = 
-      SSH_PORT = 22
-      DISABLE_ROUTER_LOG = true
-      SSH_CREATE_AUTHORIZED_KEYS_FILE = false
-
-      [mailer]
-      ENABLED = true
-      SUBJECT = %(APP_NAME)s
-      HOST = localhost:587
-      USER = git@kloenk.de
-      SEND_AS_PLAIN_TEXT = true
-      USE_SENDMAIL = false
-      FROM = "Kloenks's Gitea" <gitea@kloenk.de>
-
-
-      [attachment]
-      ALLOWED_TYPES = */*
-
-      [service]
-      SKIP_VERIFY = true
-      REGISTER_EMAIL_CONFIRM = true
-      ENABLE_NOTIFY_MAIL = true
-      ENABLE_CAPTCHA = false
-      NO_REPLY_ADDRESS = kloenk.de
-      DISABLE_REGISTRATION = true
-    ''; # mailer.PASSWD = "${secrets.gitea.mailpassword}"
+      services = {
+        SKIP_VERIFY = true;
+        REGISTER_EMAIL_CONFIRM = true;
+        ENABLE_NOTIFY_MAIL = true;
+        ENABLE_CAPTCHA = false;
+        NO_REPLY_ADDRESS = "kloenk.de";
+        DISABLE_REGISTRATION = true;
+      };
+    };
   };
 
   services.nginx.virtualHosts."git.kloenk.de" = {

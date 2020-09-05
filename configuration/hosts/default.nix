@@ -122,21 +122,6 @@ in {
     server = true;
   };
 
-  # for monitoring only
-  gdv01 = makeHost {
-    host = "gdv01.eventphone.de";
-    user = "root";
-    nixos = false;
-    port = 22;
-  };
-  # for monitoring only
-  gdv02 = makeHost {
-    host = "gdv02.eventphone.de";
-    user = "root";
-    nixos = false;
-    port = 22;
-  };
-
   # for wireguard only
   /* combahton = {
        wireguard.publicKey = "9azKCE2ZgWYo0kWD8ezsWDWD3YMlFrxXia23q5ENLm8=";
