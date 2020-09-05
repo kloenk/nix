@@ -52,7 +52,10 @@
       type = "ed25519";
     }] else
       [ ];
-    extraConfig = if (config.networking.hostName == "kexec" || config.networking.hostName == "veantur") then "" else 
+    extraConfig = if (config.networking.hostName == "kexec"
+      || config.networking.hostName == "veantur") then
+      ""
+    else
       let
         hostCertificate = pkgs.writeText "host_cert_ed25519" (builtins.readFile
           (toString ../ca
@@ -133,6 +136,6 @@
 
     "Q /persist/data/acme 750 nginx - - -"
     "L /var/lib/acme - - - - /persist/data/acme"
-    "L+ /etc/shadow - - - - /persist/data/shadow"
+    #"L+ /etc/shadow - - - - /persist/data/shadow"
   ];
 }
