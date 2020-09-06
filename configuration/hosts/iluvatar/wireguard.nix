@@ -56,7 +56,7 @@
 
       { # mi 9 t
         wireguardPeerConfig = {
-          AllowedIPs = [ "192.168.242.101/32" ];
+          AllowedIPs = [ "192.168.242.111/32" ];
           PublicKey = "3DpdBLKiw10+nnoh3Fvohdbo4NQDblfGH7WNmk7J7lA=";
           PersistentKeepalive = 21;
         };
