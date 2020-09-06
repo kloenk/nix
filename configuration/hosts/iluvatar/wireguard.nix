@@ -54,10 +54,25 @@
         };
       }
 
+      { # mi 9 t
+        wireguardPeerConfig = {
+          AllowedIPs = [ "192.168.242.101/32" ];
+          PublicKey = "3DpdBLKiw10+nnoh3Fvohdbo4NQDblfGH7WNmk7J7lA=";
+          PersistentKeepalive = 21;
+        };
+      }
+
       { # Pocophone
         wireguardPeerConfig = {
           AllowedIPs = [ "192.168.242.202/32" ];
           PublicKey = "FvBat+gZV47VgiyVRF0QL79rzpk66kQxai0cs9Zvyhw=";
+          PersistentKeepalive = 21;
+        };
+      }
+      { # laptop
+        wireguardPeerConfig = {
+          AllowedIPs = [ "192.168.242.203/32" ];
+          PublicKey = "HZ4+ZZ7OOJj7cidpUGtvzJEFr9tF3sb8zFDbELjsYjo=";
           PersistentKeepalive = 21;
         };
       }
@@ -66,7 +81,7 @@
   systemd.network.networks."30-wg0" = {
     name = "wg0";
     linkConfig = { RequiredForOnline = "no"; };
-    addresses = [{ addressConfig.Address = "192.168.242.0/24"; }];
+    addresses = [{ addressConfig.Address = "192.168.242.1/24"; }];
     routes = [{
       routeConfig.Destination = "192.168.242.0/24";
     }
