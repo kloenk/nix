@@ -90,7 +90,7 @@
       "schule@kloenk.de" = {
         hashedPasswordFile =
           config.krops.secrets.files."mail/schule@kloenk.de.sha512".path;
-        aliases = [ "moodle+llg@kloenk.de" ];
+        aliases = [ "moodle+llg@kloenk.de" "sv@kloenk.de" ];
       };
 
       "yougen@kloenk.de" = {
