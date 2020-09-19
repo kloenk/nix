@@ -108,9 +108,7 @@
     cd /
   '';
   # save password changings FIXME: replace with environment.etc.".."
-  #systemd.tmpfiles.rules = [
-  #  "L /etc/shadow - - - - /persist/secrets/shadow"
-  #];
+  systemd.tmpfiles.rules = [ "L+ /etc/shadow - - - - /persist/data/shadow" ];
 
   nixpkgs.config.allowUnfree = true;
   nix.gc.automatic = false;
