@@ -85,6 +85,103 @@ in {
     sha256 = "sha256-2LucvG3c7qR++0YmQMCp1bzTW6Ta9ezUswOkndBmGlw=";
   };
 
+  hunter_flash = fromUrl {
+    url = "https://i.imgur.com/yo0i3OR.jpg";
+    sha256 = "sha256-/nkNi3wVXpSCW4HmKRn1wNA26+Ro1T3ws4Hw15OWv8g=";
+  };
+
+  hunter_exam = fromUrl {
+    url = "https://i.imgur.com/9aTr06X.jpg";
+    sha256 = "sha256-MpScWws0joc/dqH725l/MMLkNEvbkeDgezaG1JJeIK8=";
+  };
+
+  gon_hisoka = fromUrl {
+    url = "https://i.imgur.com/QjWfkPx.jpg";
+    sha256 = "sha256-NMpXKPi4RQpZuA0ZGJP5HJQsWYKcGoxWyG2wOZYNV6I=";
+  };
+
+  kilua = fromUrl {
+    url = "https://i.imgur.com/fELOPwP.jpg";
+    sha256 = "sha256-wsK1crg5feIKCBc9HDTA0cUXTXjt+ByaexgYJgWD1m4=";
+  };
+
+  gon_kilua_stargazing = fromUrl {
+    url = "https://i.imgur.com/Niei3.jpg";
+    sha256 = "sha256-bK8bUgiH4Mza5PvuhJDEUe22OHW1SuUuZHqulAfTH1E=";
+  };
+
+  gon_kilua_hisuka = fromUrl {
+    url = "https://i.imgur.com/x3h2XBF.jpg";
+    name = "gon_kilua_hisuka";
+    sha256 = "sha256-ms4im1lRdtni9bbqp/QmU3roK7GXQ/OsHdxBtFmqhKY=";
+  };
+
+  gon_kilua_market = fromUrl {
+    url = "https://i.imgur.com/9GOPUJy.jpg";
+    name = "gon_kilua_market";
+    sha256 = "sha256-NgSKab7i9OGmWuwUPXmlras6uRwJb2dTOI/sQOGThUQ=";
+  };
+
+  killua_flashes = fromUrl {
+    url = "https://i.imgur.com/sRQOFQX.jpg";
+    name = "killua_flashes";
+    sha256 = "sha256-Pbs2e6HWTYO8dg8ibkSfeUzoaaVZLf3BQGYX7iTL4aQ=";
+  };
+
+  spider = fromUrl {
+    url = "https://images.alphacoders.com/306/306501.jpg";
+    name = "the_spider";
+    sha256 = "sha256-8vuXkNqTWbLNIQ64XVDuLWGIpiDQNB/fBsc7Q8Cdw5k=";
+  };
+
+  spider_bar = fromUrl {
+    url = "https://images.alphacoders.com/231/231253.jpg";
+    name = "spider_bar";
+    sha256 = "sha256-h/gT2tqy2Ywx5ahJggOP0V7WUYYbm0nbCCN2odklW3Y=";
+  };
+
+  /*kurapika_chains = fromUrl {
+    url = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/cb25e9b6-9a51-4021-9332-ce5ba139f5aa/d6v1bax-45f52f8c-e6e3-4a39-967a-ab7bf5a1d6f7.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwic3ViIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsImF1ZCI6WyJ1cm46c2VydmljZTpmaWxlLmRvd25sb2FkIl0sIm9iaiI6W1t7InBhdGgiOiIvZi9jYjI1ZTliNi05YTUxLTQwMjEtOTMzMi1jZTViYTEzOWY1YWEvZDZ2MWJheC00NWY1MmY4Yy1lNmUzLTRhMzktOTY3YS1hYjdiZjVhMWQ2ZjcuanBnIn1dXX0.0aPZV_qioAMFdvDlKTsqlA77XAij9W-JQUiuiE8f6WE";
+    name = "kurapika_chains";
+    sha256 = "0000000000000000000000000000000000000000000000000000";
+  };*/
+
+  hisuka_stars = fromUrl {
+    url = "https://i.imgur.com/Tas7Ebq.png";
+    name = "hisuka_stars";
+    sha256 = "sha256-aZ1+3pZg6T2Q5nEmNwIviYsLOCDohTToHeNPMDaSCys=";
+  };
+
+  hisuka_black_cards = fromUrl {
+    url = "https://i.imgur.com/lH6klTI.jpg";
+    name = "hisuka_black_cards";
+    sha256 = "sha256-kt5eDm+sU4fnFhVq9KWe5WaIqh5hRUpII/mmQo7G8Eo=";
+  };
+
+  hisuka_gon = fromUrl {
+    url = "https://i.imgur.com/DBoNUgp.jpg";
+    name = "hisuka_gon.jpg";
+    sha256 = "sha256-7lXLOBhkUo6cXhRGH8HRUogJA9BsHcAEL1mlOwHJjak=";
+  };
+
+  hisuka_cards = fromUrl {
+    url = "https://i.imgur.com/DBoNUgp.jpg";
+    name = "hisuka_cards";
+    sha256 = "sha256-lyRMtxxdJPmXzSIZYeFm1LrnAHlObnvQlMj581zIcq8=";
+  };
+
+  hunter_hisoka = fromUrl {
+    url = "https://i.imgur.com/DcQc2bi.jpg";
+    name = "hunter_hisoka";
+    sha256 = "sha256-iyM/uOvML+H2iVnJHhkT/qfUgB2ZM0YE4Cg8ZnDHM5g=";
+  };
+
+  kilua_blood = fromUrl {
+    url = "https://www3.picturepush.com/photo/a/11425511/1024/Anonymous/Hunter-x-Hunter---Killua.Zoldyck.full.837345.jpg";
+    name = "killua_blood";
+    sha256 = "sha256-C98DEVoeztkRhBTO6foKFibiTojkfzxk40AvUcSHCN4=";
+  };
+
   bioshock_cloud_city = fromUrl {
     url = "https://i.imgur.com/6lVYTNy.jpg";
     sha256 = "sha256-SQuwq0mZSKRG/1V9h4HCPyuVDOpCfrCp4UZkzajo3+U=";
