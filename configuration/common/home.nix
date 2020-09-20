@@ -32,67 +32,8 @@ in {
       controlMaster = "auto";
       controlPersist = "15m";
       matchBlocks = genMatchBlocks // {
-        hubble-encrypt = {
-          hostname = "51.254.249.187";
-          port = 62954;
-          user = "root";
-          forwardAgent = false;
-          checkHostIP = false;
-          extraOptions = { "UserKnownHostsFile" = "/dev/null"; };
-        };
         lycus = {
           hostname = "10.0.0.5";
-          port = 62954;
-          user = "kloenk";
-          forwardAgent = true;
-        };
-        lycus-pbb = {
-          hostname = "10.0.0.5";
-          port = 62954;
-          user = "kloenk";
-          forwardAgent = true;
-          proxyJump = "io-pbb";
-        };
-        admin-yougen = {
-          hostname = "10.66.6.42";
-          port = 62954;
-          user = "kloenk";
-          forwardAgent = true;
-        };
-        admin-yougen-io = {
-          hostname = "10.66.6.42";
-          port = 62954;
-          user = "kloenk";
-          forwardAgent = true;
-          proxyJump = "io-llg0";
-        };
-        pluto = {
-          hostname = "10.0.0.3";
-          port = 62954;
-          user = "kloenk";
-          forwardAgent = true;
-        };
-        pluto-io = {
-          hostname = "10.0.0.3";
-          port = 62954;
-          user = "kloenk";
-          forwardAgent = true;
-          proxyJump = "io-llg0";
-        };
-        io = {
-          hostname = "10.0.0.2";
-          port = 62954;
-          user = "kloenk";
-          forwardAgent = true;
-        };
-        io-llg0 = {
-          hostname = "192.168.43.2";
-          port = 62954;
-          user = "kloenk";
-          forwardAgent = true;
-        };
-        io-pbb = {
-          hostname = "195.39.247.9";
           port = 62954;
           user = "kloenk";
           forwardAgent = true;
@@ -103,6 +44,20 @@ in {
           port = 24;
           user = "fin";
           forwardAgent = true;
+        };
+        "*.nyantec.com" = {
+          user = "fin";
+          forwardAgent = true;
+        };
+        "airlink.one" = {
+          user = "fin";
+        };
+
+        "*.petabyte.dev" = {
+          port = 62954;
+        };
+        "*.pbb.lc" = {
+          port = 62954;
         };
 
         /* # gdv

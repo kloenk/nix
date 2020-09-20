@@ -34,7 +34,7 @@
     evince
     youtubeDL
     calcurse
-    neomutt
+    #neomutt
     bind # for dig
     screen # for usb serial
     pass-otp
