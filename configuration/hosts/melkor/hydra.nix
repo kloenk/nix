@@ -36,7 +36,7 @@ in {
   krops.secrets.files."signignkey".owner = "hydra";
   users.users.hydra.extraGroups = [ "keys" ];
 
-  nix.distributedBuilds = true;
+  nix.distributedBuilds = false;
   nix.buildMachines = [
     /* {
          hostName = "lycus.yougen.de"
