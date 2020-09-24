@@ -12,9 +12,6 @@
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_12;
-    extraConfig = ''
-      unix_socket_directories = '/run/postgresql/'
-    '';
     authentication = lib.mkForce ''
       # Generated file; do not edit!
       # TYPE  DATABASE        USER            ADDRESS                 METHOD
