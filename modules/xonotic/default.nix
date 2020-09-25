@@ -31,8 +31,12 @@ let
     options = {
       config = mkOption {
         type = types.attrsOf (types.oneOf [ types.str types.int types.bool ]);
-        description =
-          "server config. see https://github.com/xonotic/xonotic/wiki/basic-server-configuration";
+        description = ''
+          server config, see
+          <link xlink:href="https://github.com/xonotic/xonotic/wiki/basic-server-configuration">https://github.com/xonotic/xonotic/wiki/basic-server-configuration</link>
+          and
+          <link xlink:href="https://xonotic.org/tools/cacs/#0a/0/">https://xonotic.org/tools/cacs/#0a/0/</link>
+        '';
         default = {
           hostname = name;
           port = 26000;
@@ -41,7 +45,7 @@ let
 
       extraConfig = mkOption {
         type = types.lines;
-        description = "server config written in server.cfg";
+        description = "extra config written to server.cfg";
         example = ''
           duel
         '';
