@@ -29,29 +29,6 @@ let
 
   serverModule = types.submodule ({ name, ... }: {
     options = {
-      /* hostName = mkOption {
-           type = types.str;
-           description = "name of the server";
-           default = name;
-         };
-
-         port = mkOption {
-           readOnly = true;
-           type = types.port;
-           description = "server port";
-           default = config.port;
-         };
-      */
-
-      extraConfig = mkOption {
-        type = types.lines;
-        description = "server config written in server.cfg";
-        example = ''
-          duel
-        '';
-        default = "";
-      };
-
       config = mkOption {
         type = types.attrsOf (types.oneOf [ types.str types.int types.bool ]);
         description =
@@ -62,11 +39,23 @@ let
         };
       };
 
-      dataDir = mkOption {
-        type = types.str;
-        default = "/var/lib/xonotic/${name}";
-        description = "directory for xonotic state";
+      extraConfig = mkOption {
+        type = types.lines;
+        description = "server config written in server.cfg";
+        example = ''
+          duel
+        '';
+        default = "";
       };
+
+      preStart = mkOption {
+        type = types.lines;
+        description = "command to execute before starting xonotic";
+        example = "ln -s ${./warfare.pk3} ./data/maps"; # TODO: validate on how to install a map
+        default = "";
+      };
+
+      openFirewall = (mkEnableOption "open udp port for xonotic") // { default = true; };
 
       package = mkOption {
         type = types.package;
@@ -100,6 +89,14 @@ in {
       isSystemUser = true;
     };
 
+    networking.firewall.allowedUDPPorts = let
+      firewallServers = lib.filterAttrs (name: host: host.openFirewall) cfg.servers;
+    in lib.mapAttrsToList (name: host: host.config.port) cfg.servers;
+
+    systemd.tmpfiles.rules = let
+      makeRule = name: host: "Q ${cfg.dataDir}/${name} 750 xonotic - - -";
+    in lib.mapAttrsToList (name: host: makeRule name host) cfg.servers;
+
     systemd.services = (lib.mapAttrs' (name: config:
       let userDir = "${cfg.dataDir}/${name}";
       in lib.nameValuePair "xonotic-${name}" {
@@ -121,6 +118,8 @@ in {
             mkdir -p ${userDir}/data/
             ln -sf ${configFile} ${userDir}/data/server.cfg
             chown -R xonotic ${userDir}
+
+            ${config.preStart}
           '';
       }) cfg.servers);
   };
