@@ -38,8 +38,20 @@ in {
   };
 
   aule = makeHost {
-    host = "91.240.92.6";
+    host = "91.240.92.6"; # 195.39.221.50
     server = true;
+  };
+
+  melkor = makeHost {
+    host = "melkor.kloenk.de";
+    vm = true;
+    server = true;
+  };
+
+  bombadil = makeHost {
+    host = "195.39.221.52";
+    server = true;
+    vm = true;
   };
 
   barahir = makeHost {
@@ -65,12 +77,6 @@ in {
 
   sauron = makeHost {
     host = "sauron.kloenk.de";
-    vm = true;
-    server = true;
-  };
-
-  melkor = makeHost {
-    host = "melkor.kloenk.de";
     vm = true;
     server = true;
   };
@@ -150,11 +156,4 @@ in {
        bgp = pbbAS;
      };
   */
-
-  # for dotfiles only
-  adminpc = makeHost {
-    dotfiles = true;
-    nixos = false;
-    host = "10.66.6.42";
-  };
 }

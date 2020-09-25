@@ -42,7 +42,7 @@ let
     SOA = ((ttl 600) {
       nameServer = "ns1.kloenk.de.";
       adminEmail = "hostmaster@kloenk.de";
-      serial = 2020090501;
+      serial = 2020092501;
       refresh = 3600;
       expire = 604800;
       minimum = 600;
@@ -79,6 +79,7 @@ let
       manwe = hostTTL 1200 "195.39.221.187" null;
       sauron = hostTTL 1200 "195.39.221.54" "2a0f:4ac4:42:0:f199::1";
       melkor = hostTTL 1200 "195.39.221.51" null;
+      bombadil = hostTTL 1200 "195.39.221.52" null;
       aule = hostTTL 1200 "195.39.221.50" null;
 
       ns1 = iluvatar;

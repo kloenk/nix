@@ -128,6 +128,7 @@
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC9fXR2sAD3q5hHURKg2of2OoZiKz9Nr2Z7qx6nfLLMwK1nie1rFhbwSRK8/6QUC+jnpTvUmItUo+etRB1XwEOc3rabDUYQ4dQ+PMtQNIc4IuKfQLHvD7ug9ebJkKYaunq6+LFn8C2Tz4vbiLcPFSVpVlLb1+yaREUrN9Yk+J48M3qvySJt9+fa6PZbTxOAgKsuurRb8tYCaQ9TzefKJvZXIVd+W2tzYV381sSBKRyAJLu/8tA+niSJ8VwHntAHzaKzv6ozP5yBW2SB7R7owGd1cnP7znEPxB9jeDBBWLonsocwFalP1RGt1WsOiIGEPhytp5RDXWgZM5sIS42iL61hMB9Yz3PaQYLuR+1XNzdGRLIKPUDh58lGdk2P5HUqPnvE/FqfzU3jkv6ebJmcGfZiEN1TPc5ar8sQkpn56hB2DnJYWICuryTm0XpzSizf9fGyLGBw3GVBlnZjzTaBf7iokGFIu+ade5AqEjX6FxlNja1ESFNKhDAdLAHFnaKJ3u0= kloenk@kloenkX"
     ];
     port = lib.mkDefault 62954;
+    hostKeys = lib.mkDefault [ "/var/src/secrets/initrd/ed25519_host_key" ];
   };
 
   systemd.tmpfiles.rules = [
@@ -135,7 +136,14 @@
     "Q /persist/data 755 root - - -"
 
     "Q /persist/data/acme 750 nginx - - -"
-    "L /var/lib/acme - acme - - /persist/data/acme"
+    #"L /var/lib/acme - acme - - /persist/data/acme"
     #"L+ /etc/shadow - - - - /persist/data/shadow"
   ];
+
+  fileSystems."/var/lib/acme" = {
+    device = "/persist/data/acme";
+    fsType = "none";
+    options = [ "bind" ];
+  };
+
 }

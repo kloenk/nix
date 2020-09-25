@@ -39,6 +39,14 @@
            };
          }
       */
+
+      { # bombadil
+        wireguardPeerConfig = {
+          AllowedIPs = [ "192.168.242.52/32" ];
+          PublicKey = "zXEZM2MwTNHENXA5aSL5h0mVWvVWxTH3TlKmYoIxzCk=";
+        };
+      }
+
       { # thrain
         wireguardPeerConfig = {
           AllowedIPs = [ "192.168.242.101/32" ];
