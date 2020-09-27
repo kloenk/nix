@@ -43,7 +43,7 @@
     blueman
     mkpasswd
     lxappearance
-    dino
+    #dino
     spotify-tui
     xonotic
 

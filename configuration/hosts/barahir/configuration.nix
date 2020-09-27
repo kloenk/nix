@@ -130,7 +130,6 @@
   ];
 
   users.users.kloenk.packages = with pkgs; [
-    spotifywm
     steam
     steamcontroller
     minecraft

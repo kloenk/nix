@@ -75,10 +75,9 @@
     #owner = "kirelagin";
     repo = "nix-dns";
   };
-   
+
   outputs = inputs@{ self, nixpkgs, nix, hydra, home-manager, mail-server
-    , website, secrets, nixpkgs-mc, nixos-org, dns, ...
-    }:
+    , website, secrets, nixpkgs-mc, nixos-org, dns, ... }:
     let
 
       overlayCombined = system: [
@@ -184,7 +183,6 @@
             self.nixosModules.ferm2
             self.nixosModules.deluge2
             self.nixosModules.firefox
-            self.nixosModules.xonotic
             sourcesModule
             {
               # disable home-manager manpage (breaks hydra see https://github.com/rycee/home-manager/issues/1262)
@@ -208,7 +206,6 @@
         deluge2 = import ./modules/deluge.nix;
         autoUpgrade = import ./modules/upgrade;
         firefox = import ./modules/firefox;
-        xonotic = import ./modules/xonotic;
       };
 
       # apps

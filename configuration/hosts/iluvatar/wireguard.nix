@@ -16,6 +16,7 @@
       }
     }
   '';
+  services.ferm2.forwardPolicy = "ACCEPT";
 
   systemd.network.netdevs."30-wg0" = {
     netdevConfig = {

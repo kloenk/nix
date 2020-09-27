@@ -57,9 +57,19 @@ in {
       speedFactor = 4;
       supportedFeatures = [ "kvm" "nixos-test" "benchmark" "big-parallel" ];
     }
+    {
+      hostName = "localhost";
+      system = "x86_64-linux";
+      maxJobs = 8;
+      speedFactor = 1;
+      supportedFeatures = [ "kvm" ];
+    }
   ];
   users.users.hydra-queue-runner.extraGroups = [ "keys" ];
   krops.secrets.files."buildkey".owner = "hydra-queue-runner";
+
+  services.resolved.enable = false;
+  networking.nameservers = [ "1.1.1.1" ];
 
   programs.ssh.knownHosts = {
     lycus = {
@@ -78,9 +88,6 @@ in {
     };
   };
   programs.ssh.extraConfig = ''
-    Host lycus.yougen.de
-      Port 62954
-
     Host sauron
       HostName 195.39.221.54
       Port 62954
