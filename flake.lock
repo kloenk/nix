@@ -21,11 +21,11 @@
     "grahamc-config": {
       "flake": false,
       "locked": {
-        "lastModified": 1601496828,
-        "narHash": "sha256-DSsCoXxWRoxZN+2e4HSfdYGEfp6v5NP/4svMTkHKCQQ=",
+        "lastModified": 1601498388,
+        "narHash": "sha256-1A51SNiUoMJu2fTLWk0AUpq+gr0bCulAx/NGKapEGZU=",
         "owner": "grahamc",
         "repo": "nixos-config",
-        "rev": "1352f412c0c58336b2c36ed74383b0d5bc204eb9",
+        "rev": "59dc324df2a8603a89b91aa25e6128780e2125f3",
         "type": "github"
       },
       "original": {
