@@ -175,7 +175,7 @@
   services.prometheus.exporters.node.enabledCollectors = [ "tcpstat" "wifi" ];
 
   services.syncthing.dataDir = "/persist/syncthing/";
-  systemd.homed.enable = true;
+  #systemd.homed.enable = true;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
