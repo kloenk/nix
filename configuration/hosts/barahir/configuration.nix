@@ -28,6 +28,7 @@
   hardware.cpu.intel.updateMicrocode = true;
   boot.kernelModules = [
     #"vfio-pci"
+
     "amdgpu"
     "v4l2loopback"
   ];
@@ -61,6 +62,9 @@
   #'');
 
   boot.kernelParams = [
+    # freeze options
+    "cgroup_no_v1=all"
+    #"systemd.unified_cgroup_hierarchy=yes"
     #  "intel_iommu=on"
     #  "vfio-pci.ids=1002:699f,1002:aae0"
     "radeon.cik_support=0"

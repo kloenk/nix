@@ -11,6 +11,8 @@
   environment.systemPackages = with pkgs; [ qt5.qtwayland ];
 
   users.users.kloenk.packages = with pkgs; [
+    wl-freeze # TODO: assert if kernel params are set: cgroup_no_v1=all
+
     flameshot
     grim
     rustup

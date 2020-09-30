@@ -76,8 +76,15 @@
     repo = "nix-dns";
   };
 
+  inputs.grahamc-config = {
+    type = "github";
+    owner = "grahamc";
+    repo = "nixos-config";
+    flake = false;
+  };
+
   outputs = inputs@{ self, nixpkgs, nix, hydra, home-manager, mail-server
-    , website, secrets, nixpkgs-mc, nixos-org, dns, ... }:
+    , website, secrets, nixpkgs-mc, nixos-org, dns, grahamc-config, ... }:
     let
 
       overlayCombined = system: [
@@ -150,7 +157,15 @@
 
     in {
       overlay = final: prev:
-        ((import ./pkgs/overlay.nix final prev)
+        let
+          grahamc = (import (grahamc-config + "/packages/overlay.nix") {
+            secrets = null;
+          } final prev);
+        in ((import ./pkgs/overlay.nix final prev) // {
+          inherit (grahamc)
+            nixpkgs-maintainer-tools sway-cycle-workspace mutate wl-freeze
+            resholve abathur-resholved;
+        }
         #// (import (qyliss + "/overlays/patches/nixpkgs-wayland") final prev)
           // { });
 

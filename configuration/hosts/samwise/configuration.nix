@@ -44,7 +44,11 @@
     '';
   };
   boot.consoleLogLevel = 0;
-  boot.kernelParams = [ "quiet" ];
+  boot.kernelParams = [
+    "quiet"
+    # freeze options
+    "cgroup_no_v1=all"
+  ];
 
   boot.initrd.postMountCommands = ''
     cd /mnt-root
@@ -171,6 +175,7 @@
   services.prometheus.exporters.node.enabledCollectors = [ "tcpstat" "wifi" ];
 
   services.syncthing.dataDir = "/persist/syncthing/";
+  systemd.homed.enable = true;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

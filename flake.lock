@@ -18,6 +18,22 @@
         "type": "github"
       }
     },
+    "grahamc-config": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1601496828,
+        "narHash": "sha256-DSsCoXxWRoxZN+2e4HSfdYGEfp6v5NP/4svMTkHKCQQ=",
+        "owner": "grahamc",
+        "repo": "nixos-config",
+        "rev": "1352f412c0c58336b2c36ed74383b0d5bc204eb9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "grahamc",
+        "repo": "nixos-config",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -139,7 +155,7 @@
       "locked": {
         "lastModified": 1601119984,
         "narHash": "sha256-OBwnd2GzAXb0VtOuovgj3mv/Ax8Jyqelwh6j/TeMD5U=",
-        "owner": "nixos",
+        "owner": "NixOS",
         "repo": "nix",
         "rev": "8b4a542d1767e0df7b3c0902b766f34352cb0958",
         "type": "github"
@@ -244,6 +260,7 @@
     "root": {
       "inputs": {
         "dns": "dns",
+        "grahamc-config": "grahamc-config",
         "home-manager": "home-manager",
         "hydra": "hydra",
         "mail-server": "mail-server",
