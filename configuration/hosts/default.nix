@@ -38,7 +38,7 @@ in {
   };
 
   aule = makeHost {
-    host = "91.240.92.6"; # 195.39.221.50
+    host = "aule.kloenk.de"; # 195.39.221.50
     server = true;
   };
 
