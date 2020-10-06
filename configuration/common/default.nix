@@ -100,7 +100,8 @@
     rclone
     wireguard-tools
 
-    ghc
+    usbutils
+    pciutils
   ];
 
   environment.variables.EDITOR = "vim";

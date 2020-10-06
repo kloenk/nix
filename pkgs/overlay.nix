@@ -7,35 +7,9 @@ in {
   wallpapers = callPackage ./wallpapers { };
   fabric-server = callPackage ./fabric-server { };
   pam_nfc = callPackage ./pam_nfc {
-    #libnfc = final.libnfc0;
   };
 
   libnfc0 = callPackage ./libnfc { };
-
-  # broken packages
-  /* waybar = prev.waybar.overrideAttrs (oldAttrs: rec {
-       version = "0.9.1";
-       src = final.fetchFromGitHub {
-         owner = "Alexays";
-         repo = "Waybar";
-         rev = version;
-         sha256 = "0drlv8im5phz39jxp3gxkc40b6f85bb3piff2v3hmnfzh7ib915s";
-       };
-     });
-  */
-  /* waybar = prev.waybar.overrideAttrs (oldAttrs: rec {
-       buildInputs = oldAttrs.buildInputs ++ [ final.libinput ];
-     });
-  */
-
-  minecraft-20w20a = prev.minecraft-server.overrideAttrs (oldAttrs: rec {
-    version = "1.16-pre3";
-    src = final.fetchurl {
-      url =
-        "https://launcher.mojang.com/v1/objects/0b5653b65bc494fa55349682cebf50abf0d72ad9/server.jar";
-      sha1 = "0b5653b65bc494fa55349682cebf50abf0d72ad9";
-    };
-  });
 
   redshift = prev.redshift.overrideAttrs (oldAttrs: rec {
     src = final.fetchFromGitHub {
@@ -45,22 +19,6 @@ in {
       sha256 = "0rs9bxxrw4wscf4a8yl776a8g880m5gcm75q06yx2cn3lw2b7v22";
     };
   });
-  /* quassel = prev.quassel.overrideAttrs (oldAttrs: rec {
-       name = "quassel-${version}";
-       version = "0.14-pre";
-       buildInputs = oldAttrs.buildInputs ++ [ final.boost ];
-       src = final.fetchFromGitHub {
-         owner = "quassel";
-         repo = "quassel";
-         rev = "b134e777b822b929a78455fd92146bf7443e9aa1";
-         sha256 = "0yzbyjycsff1cw0py9nagd2j1il3sw8ihal4bpv80hlvwi9f07rr";
-       };
-       cmakeFlags = oldAttrs.cmakeFlags
-         ++ [ "-DPSQL_INCDIR=${final.postgresql}/include" ];
-     });
-  */
-
-  #inherit (final.callPackage ./hydra { }) hydra-unstable;
 
   inherit (final.callPackage ./firefox { })
     firefoxPolicies firefox-policies-wrapped;
@@ -68,42 +26,39 @@ in {
   nix-serve = prev.nix-serve.overrideAttrs (oldAttrs: rec {
     meta = oldAttrs.meta // { platforms = final.lib.platforms.linux; };
   });
+
+  rustc_nightly = prev.rustc.overrideAttrs (oldAttrs: {
+    configureFlags = map (flag:
+      if
+        flag == "--release-channel=stable"
+      then
+        "--release-channel=nightly"
+      else
+        flag
+    ) oldAttrs.configureFlags;
+  });
+
+
+  linux_rust = let
+    linux_rust_pkg = { fetchFromGitHub, buildLinux, clang_11, llvm_11, rustc_nightly, cargo, ... } @ args:
+      buildLinux (args // rec {
+        version = "5.9.0-rc2";
+        modDirVersion = version;
+
+        src = fetchFromGitHub {
+          owner = "kloenk";
+          repo = "linux";
+          rev = "cc175e9a774a4b758029c1e6ca69db00b5e19fdc";
+          sha256 = "sha256-EYCVtEd2/t98d0UbmINlMoJuioRqD3ZxrSVMADm22SE=";
+        };
+        kernelPatches = [];
+
+        extraNativePackages = [ clang_11 llvm_11 rustc_nightly cargo ];
+
+        extraMeta.branch = "5.9";
+
+
+      } // (args.argsOverride or {}));
+  in callPackage linux_rust_pkg { };
 }
 
-/* let
-     #lib = pkgs.lib;
-     callPackage = lib.callPackageWith (pkgs // newpkgs);
-
-     newpkgs = {
-       collectd-wireguard = callPackage ./collectd-wireguard { };
-       jblock = callPackage ./jblock { };
-       quassel = pkgs.quassel.overrideAttrs (oldAttrs: rec {
-         name = "quassel-${version}";
-         version = "0.14-pre";
-         buildInputs = oldAttrs.buildInputs ++ [ pkgs.boost ];
-         src = pkgs.fetchFromGitHub {
-           owner = "quassel";
-           repo = "quassel";
-           rev = "b134e777b822b929a78455fd92146bf7443e9aa1";
-           sha256 = "0yzbyjycsff1cw0py9nagd2j1il3sw8ihal4bpv80hlvwi9f07rr";
-         };
-         cmakeFlags = oldAttrs.cmakeFlags ++ [ "-DPSQL_INCDIR=${pkgs.postgresql}/include" ];
-       });
-       #engelsystem = callPackage ./engelsystem { };
-       #engelsystem = callPackage ./engelsystem { };
-       #rifo = callPackage ./rifo { };
-       #rwm = callPackage ./rwm { };
-       #dwm = callPackage ./dwm { rwm = newpkgs.rwm; };
-       #slstatus = callPackage ./slstatus { };
-       #ftb = callPackage ./ftb { libXxf86vm = pkgs.xorg.libXxf86vm; };
-       #flameshot = pkgs.libsForQt5.callPackage ./flameshot { };
-       #llgCompanion = callPackage ./llgCompanion { };
-       #shelfie = callPackage ./shelfie { };
-       #pytradfri = callPackage ./pytradfri { buildPythonPackage = pkgs.python37Packages.buildPythonPackage; fetchPypi = pkgs.python37Packages.fetchPypi; cython = pkgs.python37Packages.cython; };
-       #aiocoap = callPackage ./aiocoap { buildPythonPackage = pkgs.python37Packages.buildPythonPackage; fetchPypi = pkgs.python37Packages.fetchPypi; cython = pkgs.python37Packages.cython; };
-       #inherit (callPackage ./minecraft-server { })
-       #  minecraft-server_1_14_2;
-     };
-
-   in newpkgs
-*/
