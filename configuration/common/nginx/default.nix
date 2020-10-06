@@ -54,7 +54,7 @@
     #serverAliases = [ "default" ];
     #enableACME = true;
     #forceSSL = true;
-    locations."/public/".alias = lib.mkDefault "/home/public/";
+    locations."/public/".alias = lib.mkDefault "/persist/data/public";
     locations."/public/".extraConfig = "autoindex on;";
   };
 }
