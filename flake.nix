@@ -74,6 +74,7 @@
     owner = "kloenk";
     #owner = "kirelagin";
     repo = "nix-dns";
+    inputs.nixpkgs.follows = "/nixpkgs";
   };
 
   inputs.grahamc-config = {
