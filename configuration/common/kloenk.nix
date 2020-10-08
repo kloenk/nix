@@ -29,7 +29,7 @@
       progress
       pv
       file
-      elinks
+      #elinks
       bc
       #zstd
       unzip

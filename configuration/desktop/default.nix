@@ -13,12 +13,12 @@
   users.users.kloenk.packages = with pkgs; [
     wl-freeze # TODO: assert if kernel params are set: cgroup_no_v1=all
 
-    flameshot
+    #flameshot
     grim
     rustup
     gcc
     yarn
-    nodejs-10_x
+    #nodejs-10_x
     python3
 
     powertop
@@ -28,17 +28,17 @@
     inkscape
     krita
     sshfs
-    quasselClient
+    #quasselClient
     pavucontrol
     gnupg
     mpv
     #tdesktop
-    evince
-    youtubeDL
+    #evince
+    #youtubeDL
     calcurse
     #neomutt
-    bind # for dig
-    screen # for usb serial
+    bind.dnsutils # for dig
+    #screen # for usb serial
     pass-otp
     mosh
     #libreoffice
@@ -54,7 +54,7 @@
     # java
     jdk
     gradle
-    (jetbrains.idea-community.override { jdk = jdk; })
+    #(jetbrains.idea-community.override { jdk = jdk; })
 
     # elixir
     elixir
@@ -72,23 +72,23 @@
     sxiv
     feh
     rofi-pass
-    xclip
-    xorg.xmodmap
+    #xclip
+    #xorg.xmodmap
 
     # audio
     #audacity
 
     # KiCad pcb layout tool
     #kicad
-    openscad
+    #openscad
 
     # vs code (mit license)
     #vscodium
-    atom
-    gvfs
-    gnome3.nautilus # Dependency for atom?
+    #atom
+    #gvfs
+    #gnome3.nautilus # Dependency for atom?
 
-    notable
+    #notable
 
     # web browser
     firefox-wayland

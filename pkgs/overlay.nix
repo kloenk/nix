@@ -6,8 +6,7 @@ in {
   deploy_secrets = callPackage ./deploy_secrets { };
   wallpapers = callPackage ./wallpapers { };
   fabric-server = callPackage ./fabric-server { };
-  pam_nfc = callPackage ./pam_nfc {
-  };
+  pam_nfc = callPackage ./pam_nfc { };
 
   libnfc0 = callPackage ./libnfc { };
 
@@ -20,6 +19,8 @@ in {
     };
   });
 
+  spidermonkey_38 = null;
+
   inherit (final.callPackage ./firefox { })
     firefoxPolicies firefox-policies-wrapped;
 
@@ -29,18 +30,15 @@ in {
 
   rustc_nightly = prev.rustc.overrideAttrs (oldAttrs: {
     configureFlags = map (flag:
-      if
-        flag == "--release-channel=stable"
-      then
+      if flag == "--release-channel=stable" then
         "--release-channel=nightly"
       else
-        flag
-    ) oldAttrs.configureFlags;
+        flag) oldAttrs.configureFlags;
   });
 
-
   linux_rust = let
-    linux_rust_pkg = { fetchFromGitHub, buildLinux, clang_11, llvm_11, rustc_nightly, cargo, ... } @ args:
+    linux_rust_pkg = { fetchFromGitHub, buildLinux, clang_11, llvm_11
+      , rustc_nightly, cargo, ... }@args:
       buildLinux (args // rec {
         version = "5.9.0-rc2";
         modDirVersion = version;
@@ -51,14 +49,13 @@ in {
           rev = "cc175e9a774a4b758029c1e6ca69db00b5e19fdc";
           sha256 = "sha256-EYCVtEd2/t98d0UbmINlMoJuioRqD3ZxrSVMADm22SE=";
         };
-        kernelPatches = [];
+        kernelPatches = [ ];
 
         extraNativePackages = [ clang_11 llvm_11 rustc_nightly cargo ];
 
         extraMeta.branch = "5.9";
 
-
-      } // (args.argsOverride or {}));
+      } // (args.argsOverride or { }));
   in callPackage linux_rust_pkg { };
 }
 
