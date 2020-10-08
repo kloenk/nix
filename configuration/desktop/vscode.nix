@@ -8,7 +8,7 @@ let
       llvm-org.lldb-vscode
       bbenoist.Nix
       justusadam.language-haskell
-      matklad.rust-analyzer
+      #matklad.rust-analyzer
       redhat.vscode-yaml
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {

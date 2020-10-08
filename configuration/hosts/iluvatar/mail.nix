@@ -128,6 +128,7 @@
           "telegram@kloenk.de"
           "fff@kloenk.de"
           "punkte@kloenk.de"
+          "lkml@kloenk.de"
         ];
 
         catchAll = [ "kloenk.de" "ad.kloenk.de" ];
@@ -169,9 +170,10 @@
         catchAll = [ "burscheider-imkerverein.de" ];
       };
 
-      /*"danny@kloenk.de" ={
-        hashedPasswordFile = config.krops.secrets.files."mail/danny@kloenk.de.sha512".path;
-      };*/
+      /* "danny@kloenk.de" ={
+           hashedPasswordFile = config.krops.secrets.files."mail/danny@kloenk.de.sha512".path;
+         };
+      */
     };
 
     extraVirtualAliases = {
