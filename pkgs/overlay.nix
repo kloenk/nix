@@ -39,7 +39,7 @@ in {
   });
 
 
-  linux_rust = let
+  linux_rust = with final.stdenv.lib.kernel; let
     linux_rust_pkg = { fetchFromGitHub, buildLinux, clang_11, llvm_11, rustc_nightly, cargo, ... } @ args:
       buildLinux (args // rec {
         version = "5.9.0-rc2";
@@ -57,8 +57,15 @@ in {
 
         extraMeta.branch = "5.9";
 
+        structuredExtraConfig = {
+          #HAS_RUST = yes;
+          #RUST_EXAMPLE = module;
+          BUILD_SALT = freeform "nix-kernel";
+        };
+
 
       } // (args.argsOverride or {}));
+      stdenv = final.llvmPackages_11.stdenv;
   in callPackage linux_rust_pkg { };
 }
 

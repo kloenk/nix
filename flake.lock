@@ -229,12 +229,10 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1600866210,
-        "narHash": "sha256-k9Ue8ycNoWApXeUQDLCbtXAV7B3kAOjnCvRSJhE2PcU=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "7fab0b1c1acfa89634ed4a330a550c3e39ea59cc",
-        "type": "github"
+        "lastModified": 1601989939,
+        "narHash": "sha256-GDpt8lBUwx34/ER5yDuQMFA+i/3/hJ+J3lkO5Nac5uw=",
+        "type": "git",
+        "url": "file:///home/kloenk/proj/nixpkgs"
       },
       "original": {
         "owner": "nixos",
