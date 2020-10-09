@@ -11,7 +11,7 @@
   environment.systemPackages = with pkgs; [ qt5.qtwayland ];
 
   users.users.kloenk.packages = with pkgs; [
-    wl-freeze # TODO: assert if kernel params are set: cgroup_no_v1=all
+    #wl-freeze # TODO: assert if kernel params are set: cgroup_no_v1=all
 
     #flameshot
     grim
@@ -26,15 +26,15 @@
     imagemagick
     gimp
     inkscape
-    krita
+    #krita
     sshfs
     #quasselClient
     pavucontrol
     gnupg
     mpv
     #tdesktop
-    #evince
-    #youtubeDL
+    evince
+    youtubeDL
     calcurse
     #neomutt
     bind.dnsutils # for dig
