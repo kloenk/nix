@@ -24,6 +24,9 @@ in {
   mixnix = callPackage (inputs.mixnix + "/nix/mix2nix.nix") { };
   pleroma = callPackage ./pleroma { };
 
+  #let source = callPackage ./sourcegraph { }; in inherit (source) ;
+  inherit (callPackage ./sourcegraph { }) sourcegraph_go sourcegraph_web;
+
   inherit (final.callPackage ./firefox { })
     firefoxPolicies firefox-policies-wrapped;
 
