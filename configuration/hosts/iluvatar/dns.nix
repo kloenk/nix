@@ -23,6 +23,10 @@ in {
       master = true;
       inherit slaves;
     })
+    (import ../../dns/dev.kloenk.nix {
+      master = true;
+      inherit slaves;
+    })
   ];
 
   networking.firewall = {
