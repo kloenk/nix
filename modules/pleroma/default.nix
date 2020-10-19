@@ -57,13 +57,10 @@ in {
     services.postgresql = {
       enable = true;
       ensureDatabases = [ "pleroma" ];
-      /* ensureUsers = [
-           {
-             name = "pleroma";
-             ensurePermissions."DATABASE pleroma" = "ALL PRIVILEGES";
-           }
-         ];
-      */
+      ensureUsers = [{
+        name = "pleroma";
+        ensurePermissions."DATABASE pleroma" = "ALL PRIVILEGES";
+      }];
     };
 
     users.groups.pleroma = lib.mkIf (cfg.group == "pleroma") { };

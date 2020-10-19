@@ -1,6 +1,12 @@
 { pkgs, ... }:
 
 {
+  fileSystems."/var/lib/pleroma" = {
+    device = "/persist/data/pleroma";
+    fsType = "none";
+    options = [ "bind" ];
+  };
+
   services.pleroma = {
     enable = true;
     domain = "pleroma.kloenk.dev";

@@ -14,9 +14,9 @@ let
   spfKloenk = with dns.combinators.spf;
     map (dns.combinators.ttl 600) [
       (strict [
-        "a:kloenk.de"
-        "a:mail.kloenk.de"
-        "a:iluvatar.kloenk.de"
+        "a:kloenk.dev"
+        "a:mail.kloenk.dev"
+        "a:iluvatar.kloenk.dev"
         "ip4:195.39.247.6/32"
         "ip6:2a0f:4ac0::6/128"
       ])
