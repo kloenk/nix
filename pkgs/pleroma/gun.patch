@@ -1,0 +1,10 @@
+diff --git a/rebar.config b/rebar.config
+index 68165f2..2197205 100644
+--- a/rebar.config
++++ b/rebar.config
+@@ -1,4 +1,2 @@
+-{deps, [
+-{cowlib,".*",{git,"https://github.com/ninenines/cowlib","2.9.0"}}
+-]}.
++{deps, []}.
+ {erl_opts, [debug_info,warn_export_vars,warn_shadow_vars,warn_obsolete_guard]}.

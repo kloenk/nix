@@ -1,4 +1,4 @@
-final: prev:
+inputs: final: prev:
 let inherit (final) callPackage;
 in {
   collectd-wireguard = callPackage ./collectd-wireguard { };
@@ -20,6 +20,9 @@ in {
   });
 
   spidermonkey_38 = null;
+
+  mixnix = callPackage (inputs.mixnix + "/nix/mix2nix.nix") { };
+  pleroma = callPackage ./pleroma { };
 
   inherit (final.callPackage ./firefox { })
     firefoxPolicies firefox-policies-wrapped;

@@ -10,6 +10,7 @@
     ./postgres.nix
     ./redis.nix
     ./mysql.nix
+    ./pleroma
 
     ../../default.nix
     ../../common

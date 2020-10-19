@@ -127,6 +127,22 @@
         "type": "gitlab"
       }
     },
+    "mixnix": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1587327380,
+        "narHash": "sha256-+VkwVR1SKS8Bzs0V8E166R3utaB7oSFd2ueH8mHVJjs=",
+        "ref": "master",
+        "rev": "450d1dd2e9550b67db49accf4e67e560add5c32b",
+        "revCount": 3,
+        "type": "git",
+        "url": "https://git.petabyte.dev/petabyteboy/mixnix"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.petabyte.dev/petabyteboy/mixnix"
+      }
+    },
     "nix": {
       "inputs": {
         "lowdown-src": "lowdown-src",
@@ -252,6 +268,7 @@
         "home-manager": "home-manager",
         "hydra": "hydra",
         "mail-server": "mail-server",
+        "mixnix": "mixnix",
         "nix": "nix_2",
         "nixos-org": "nixos-org",
         "nixpkgs": "nixpkgs_2",

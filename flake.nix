@@ -84,6 +84,9 @@
     flake = false;
   };
 
+  inputs.mixnix.url = "git+https://git.petabyte.dev/petabyteboy/mixnix";
+  inputs.mixnix.flake = false;
+
   outputs = inputs@{ self, nixpkgs, nix, hydra, home-manager, mail-server
     , website, secrets, nixpkgs-mc, nixos-org, dns, grahamc-config, ... }:
     let
@@ -162,7 +165,7 @@
           grahamc = (import (grahamc-config + "/packages/overlay.nix") {
             secrets = null;
           } final prev);
-        in ((import ./pkgs/overlay.nix final prev) // {
+        in ((import ./pkgs/overlay.nix inputs final prev) // {
           inherit (grahamc)
             nixpkgs-maintainer-tools sway-cycle-workspace mutate wl-freeze
             resholve abathur-resholved;
@@ -199,6 +202,7 @@
             self.nixosModules.ferm2
             self.nixosModules.deluge2
             self.nixosModules.firefox
+            self.nixosModules.pleroma
             sourcesModule
             {
               # disable home-manager manpage (breaks hydra see https://github.com/rycee/home-manager/issues/1262)
@@ -222,6 +226,7 @@
         deluge2 = import ./modules/deluge.nix;
         autoUpgrade = import ./modules/upgrade;
         firefox = import ./modules/firefox;
+        pleroma = import ./modules/pleroma;
       };
 
       # apps
