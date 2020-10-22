@@ -54,6 +54,7 @@
     type = "git";
     url = "https://git.petabyte.dev/kloenk/website.git";
     flake = false;
+    ref = "lexbeserious";
   };
 
   inputs.secrets = {
