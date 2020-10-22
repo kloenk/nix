@@ -83,6 +83,8 @@ in {
 
   samwise = makeHost { host = "6.0.2.4"; };
 
+  robotnix = makeHost { host = "195.39.221.59"; };
+
   # https://lotr.fandom.com/wiki/V%C3%ABantur
   veantur = makeHost {
     system = "aarch64-linux";

@@ -39,7 +39,7 @@ let
     SOA = ((ttl 600) {
       nameServer = "ns1.kloenk.dev.";
       adminEmail = "hostmaster.kloenk.de."; # TODO: change mail
-      serial = 2020101901;
+      serial = 2020102301;
       refresh = 3600;
       expire = 604800;
       minimum = 600;
@@ -63,6 +63,8 @@ let
       aule = hostTTL 1200 "195.39.221.50" null;
 
       ns1 = iluvatar;
+
+      lexbeserious = iluvatar;
 
       _dmarc.TXT = dmarc;
 

@@ -52,7 +52,7 @@
 
   inputs.website = {
     type = "git";
-    url = "https://git.pbb.lc/kloenk/website.git";
+    url = "https://git.petabyte.dev/kloenk/website.git";
     flake = false;
   };
 
