@@ -72,8 +72,8 @@
   programs.sysdig.enable = lib.mkDefault true;
   security.sudo.wheelNeedsPassword = false;
 
-  services.nftables2.enable = true;
-  services.nftables2.forwardPolicy = lib.mkDefault "DROP";
+  networking.nftables2.enable = true;
+  networking.nftables2.forwardPolicy = lib.mkDefault "DROP";
 
   services.journald.extraConfig = "SystemMaxUse=2G";
 
