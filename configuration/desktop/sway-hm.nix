@@ -14,6 +14,7 @@
           xkb_layout = "de";
           xkb_variant = "neo";
           xkb_options = if remap_win then "altwin:swap_lalt_lwin" else "''";
+          natural_scroll = "enable";
         };
         "Wacom ISDv4 90 Pen".map_to_output = "'Unknown 0x02D8 0x00000000'";
       };

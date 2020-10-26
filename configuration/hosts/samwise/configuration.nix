@@ -157,8 +157,6 @@
 
   services.udev.packages = [ pkgs.openocd ];
 
-  services.dbus.socketActivated = true;
-
   services.pcscd.enable = true;
   #services.pcscd.plugins = with pkgs; [ ccid pcsc-cyberjack ];
 

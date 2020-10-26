@@ -9,14 +9,19 @@
   # NATING
   boot.kernel.sysctl = { "net.ipv4.ip_forward" = 1; };
 
-  services.ferm2.extraConfig4 = ''
-    table nat {
-      chain POSTROUTING {
-        outerface enp1s0 SNAT to 195.39.247.6;
+  #chain POSTROUTING {
+  #  outerface enp1s0 SNAT to 195.39.247.6
+  #}
+  services.nftables2.extraConfig = ''
+    table ip nat {
+      chain postrouting {
+        type nat hook postrouting priority 100
+        ip saddr 192.168.242.0/24 oif wg0 snat 195.39.247.6
+        oif enp1s0 masquerade
       }
     }
   '';
-  services.ferm2.forwardPolicy = "ACCEPT";
+  services.nftables2.forwardPolicy = "accept";
 
   systemd.network.netdevs."30-wg0" = {
     netdevConfig = {

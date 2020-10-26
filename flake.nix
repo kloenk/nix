@@ -200,7 +200,7 @@
             home-manager.nixosModules.home-manager
             (import (./configuration + "/hosts/${name}/configuration.nix"))
             self.nixosModules.secrets
-            self.nixosModules.ferm2
+            self.nixosModules.nftables
             self.nixosModules.deluge2
             self.nixosModules.firefox
             self.nixosModules.pleroma
@@ -224,6 +224,7 @@
       nixosModules = {
         secrets = import ./modules/secrets;
         ferm2 = import ./modules/ferm2;
+        nftables = import ./modules/nftables;
         deluge2 = import ./modules/deluge.nix;
         autoUpgrade = import ./modules/upgrade;
         firefox = import ./modules/firefox;
