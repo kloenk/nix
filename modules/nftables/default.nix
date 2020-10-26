@@ -2,7 +2,7 @@
 
 let
   fwcfg = config.networking.firewall;
-  cfg = config.nyantec.nftables;
+  cfg = config.networking.nftables2;
 
   doDocker = config.virtualisation.docker.enable && cfg.generateDockerRules;
 

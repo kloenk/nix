@@ -39,7 +39,7 @@ let
     SOA = ((ttl 600) {
       nameServer = "ns1.kloenk.dev.";
       adminEmail = "hostmaster.kloenk.de."; # TODO: change mail
-      serial = 2020102301;
+      serial = 2020102601;
       refresh = 3600;
       expire = 604800;
       minimum = 600;
@@ -63,6 +63,8 @@ let
       aule = hostTTL 1200 "195.39.221.50" null;
 
       ns1 = iluvatar;
+
+      git = iluvatar;
 
       lexbeserious = iluvatar;
 
