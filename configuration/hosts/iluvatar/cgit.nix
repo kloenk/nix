@@ -2,6 +2,8 @@
 
 let gitDir = "${config.services.gitolite.dataDir}/repositories";
 in {
+  networking.firewall.allowedTCPPorts = [ 22 ];
+
   services.gitolite = {
     enable = true;
     user = "git";
