@@ -8,7 +8,8 @@
     #./minecraft.nix
     ./bitwarden.nix
     ./postgres.nix
-    ./gitea.nix
+    #./gitea.nix
+    ./cgit.nix
     ./website.nix
     ./restic.nix
 
