@@ -69,7 +69,7 @@ in {
 
         #repos
     		repo.url=kloenk/nix
-        repo.path=${gitDir}/nix.git
+        repo.path=${gitDir}/kloenk/nix.git
         repo.desc=NixOS configs
         repo.readme=master:README.md
 
@@ -79,7 +79,7 @@ in {
         repo.readme=master:README.md
 
         repo.url=linux/rust/kloenk
-        repo.path=${gitDir}/linux/rust.git
+        repo.path=${gitDir}/linux/rust/kloenk.git
         repo.desc=Linux Kernel with rust support
         repo.readme=rust:README
       '';
