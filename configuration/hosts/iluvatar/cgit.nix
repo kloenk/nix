@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let gitDir = config.services.gitolite.dataDir;
+let gitDir = "${config.services.gitolite.dataDir}/repositories";
 in {
   services.gitolite = {
     enable = true;
@@ -76,7 +76,7 @@ in {
         repo.readme=master:README.md
 
         repo.url=linux/rust/kloenk
-        repo.path=${gitDir}/linux-rust-kloenk.git
+        repo.path=${gitDir}/linux/rust.git
         repo.desc=Linux Kernel with rust support
         repo.readme=rust:README
       '';
